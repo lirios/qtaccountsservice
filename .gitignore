@@ -1,0 +1,7 @@
+*.o
+*~
+*.moc
+lib*.so
+lib*.so.*
+Makefile
+doc/html
