@@ -1,6 +1,8 @@
 *.o
 *~
 *.moc
+*_interface.cpp
+*_interface.h
 lib*.so
 lib*.so.*
 Makefile
