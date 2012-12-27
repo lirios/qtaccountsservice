@@ -25,8 +25,10 @@
  ***************************************************************************/
 
 #include "useraccount.h"
+#include "user_interface.h"
 #include "useraccount_p.h"
-#include "userinterface.h"
+
+QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
 /*
  * UserAccountPrivate
@@ -429,4 +431,4 @@ void UserAccount::setXSession(const QString &session)
     emit xsessionChanged();
 }
 
-#include "moc_useraccount.cpp"
+QT_END_NAMESPACE_ACCOUNTSSERVICE

@@ -27,8 +27,6 @@
 #ifndef ACCOUNTSMANAGER_P_H
 #define ACCOUNTSMANAGER_P_H
 
-#include "accountsinterface.h"
-
 //
 //  W A R N I N G
 //  -------------
@@ -39,6 +37,8 @@
 //
 // We mean it.
 //
+
+QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
 class AccountsManagerPrivate
 {
@@ -55,5 +55,7 @@ public:
 protected:
     AccountsManager *const q_ptr;
 };
+
+QT_END_NAMESPACE_ACCOUNTSSERVICE
 
 #endif // ACCOUNTSMANAGER_P_H

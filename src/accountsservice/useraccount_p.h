@@ -27,8 +27,6 @@
 #ifndef USERACCOUNT_P_H
 #define USERACCOUNT_P_H
 
-#include <QString>
-
 //
 //  W A R N I N G
 //  -------------
@@ -40,7 +38,7 @@
 // We mean it.
 //
 
-class OrgFreedesktopAccountsUserInterface;
+QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
 class UserAccountPrivate
 {
@@ -49,5 +47,7 @@ public:
 
     OrgFreedesktopAccountsUserInterface *user;
 };
+
+QT_END_NAMESPACE_ACCOUNTSSERVICE
 
 #endif // USERACCOUNT_P_H

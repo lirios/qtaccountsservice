@@ -27,10 +27,13 @@
 #include <QtCore/QDebug>
 
 #include "accountsmanager.h"
+#include "accounts_interface.h"
 #include "accountsmanager_p.h"
 #include "useraccount.h"
 
 #include <unistd.h>
+
+QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
 /*
  * AccountsManagerPrivate
@@ -155,7 +158,7 @@ UserAccountList AccountsManager::listCachedUsers()
 
     UserAccountList list;
 
-    QDBusPendingReply<QList<QDBusObjectPath>> reply = d->interface->ListCachedUsers();
+    QDBusPendingReply< QList<QDBusObjectPath> > reply = d->interface->ListCachedUsers();
     reply.waitForFinished();
 
     if (reply.isError()) {
@@ -279,4 +282,4 @@ bool AccountsManager::deleteUser(uid_t uid, bool removeFiles)
     return true;
 }
 
-#include "moc_accountsmanager.cpp"
+QT_END_NAMESPACE_ACCOUNTSSERVICE
