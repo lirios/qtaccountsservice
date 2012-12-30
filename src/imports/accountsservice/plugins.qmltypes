@@ -1,0 +1,63 @@
+import QtQuick.tooling 1.1
+
+// This file describes the plugin-supplied types contained in the library.
+// It is used for QML tooling purposes only.
+//
+// This file was auto-generated with the command 'qmlplugindump -notrelocatable QtAccountsService 5.0'.
+
+Module {
+    Component {
+        name: "QtAddOn::AccountsService::AccountsManager"
+        prototype: "QObject"
+        exports: ["QtAccountsService/AccountsManager 5.0"]
+        Property { name: "defaultUser"; type: "UserAccount"; isReadonly: true; isPointer: true }
+        Signal {
+            name: "userAdded"
+            Parameter { type: "UserAccount"; isPointer: true }
+        }
+        Signal {
+            name: "userDeleted"
+            Parameter { type: "UserAccount"; isPointer: true }
+        }
+    }
+    Component {
+        name: "QtAddOn::AccountsService::UserAccount"
+        prototype: "QObject"
+        exports: ["QtAccountsService/UserAccount 5.0"]
+        Enum {
+            name: "AccountType"
+            values: {
+                "StandardAccountType": 0,
+                "AdministratorAccountType": 1
+            }
+        }
+        Enum {
+            name: "PasswordMode"
+            values: {
+                "RegularPasswordMode": 0,
+                "SetAtLoginPasswordMode": 1,
+                "NonePasswordMode": 2
+            }
+        }
+        Property { name: "uid"; type: "int"; isReadonly: true }
+        Property { name: "accountType"; type: "AccountType" }
+        Property { name: "locked"; type: "bool" }
+        Property { name: "automaticLogin"; type: "bool" }
+        Property { name: "loginFrequency"; type: "qlonglong"; isReadonly: true }
+        Property { name: "loginTime"; type: "qlonglong"; isReadonly: true }
+        Property { name: "passwordMode"; type: "PasswordMode" }
+        Property { name: "passwordHint"; type: "string"; isReadonly: true }
+        Property { name: "localAccount"; type: "bool"; isReadonly: true }
+        Property { name: "systemAccount"; type: "bool"; isReadonly: true }
+        Property { name: "userName"; type: "string" }
+        Property { name: "realName"; type: "string" }
+        Property { name: "displayName"; type: "string"; isReadonly: true }
+        Property { name: "homeDirectory"; type: "string" }
+        Property { name: "shell"; type: "string" }
+        Property { name: "iconFileName"; type: "string" }
+        Property { name: "email"; type: "string" }
+        Property { name: "language"; type: "string" }
+        Property { name: "location"; type: "string" }
+        Property { name: "xsession"; type: "string" }
+    }
+}
