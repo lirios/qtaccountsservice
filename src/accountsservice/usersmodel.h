@@ -24,32 +24,54 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef USERACCOUNT_P_H
-#define USERACCOUNT_P_H
+#ifndef USERSMODEL_H
+#define USERSMODEL_H
 
-#include "user_interface.h"
+#include <QAbstractListModel>
 
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt AccountsService Addon API.  It exists
-// purely as an implementation detail.  This header file may change from
-// version to version without notice, or even be removed.
-//
-// We mean it.
-//
+#include <QtAccountsService/accountsservice_global.h>
+
+QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
-class UserAccountPrivate
-{
-public:
-    explicit UserAccountPrivate();
+class UserAccount;
+class UsersModelPrivate;
 
-    OrgFreedesktopAccountsUserInterface *user;
+class UsersModel : public QAbstractListModel
+{
+    Q_OBJECT
+    Q_ENUMS(Roles)
+public:
+    enum Roles {
+        UserIdRole = Qt::UserRole + 1,
+        UserNameRole,
+        RealNameRole,
+        IconFileNameRole,
+        AccountTypeRole,
+        LanguageRole
+    };
+
+    explicit UsersModel(QObject *parent = 0);
+
+    QHash<int, QByteArray> roleNames() const;
+
+    int rowCount(const QModelIndex &parent) const;
+
+    QVariant data(const QModelIndex &index, int role) const;
+    bool setData(const QModelIndex &index, const QVariant &value, int role);
+
+    UserAccount *userAccount(const QModelIndex &index);
+
+protected:
+    UsersModelPrivate *d_ptr;
+
+private:
+    Q_DECLARE_PRIVATE(UsersModel)
 };
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE
 
-#endif // USERACCOUNT_P_H
+QT_END_HEADER
+
+#endif // USERSMODEL_H

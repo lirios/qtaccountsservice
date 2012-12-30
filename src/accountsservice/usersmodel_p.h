@@ -24,10 +24,11 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef USERACCOUNT_P_H
-#define USERACCOUNT_P_H
+#ifndef USERSMODEL_P_H
+#define USERSMODEL_P_H
 
-#include "user_interface.h"
+#include <QtAccountsService/accountsmanager.h>
+#include <QtAccountsService/useraccount.h>
 
 //
 //  W A R N I N G
@@ -42,14 +43,20 @@
 
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
-class UserAccountPrivate
+class UsersModelPrivate
 {
+    Q_DECLARE_PUBLIC(UsersModel)
 public:
-    explicit UserAccountPrivate();
+    explicit UsersModelPrivate();
+    ~UsersModelPrivate();
 
-    OrgFreedesktopAccountsUserInterface *user;
+    void populate();
+
+    UsersModel *q_ptr;
+    AccountsManager *manager;
+    UserAccountList list;
 };
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE
 
-#endif // USERACCOUNT_P_H
+#endif // USERSMODEL_P_H

@@ -11,7 +11,8 @@
 );
 %classnames = (
     "accountsmanager.h" => "AccountsManager",
-    "useraccount.h" => "UserAccount"
+    "useraccount.h" => "UserAccount",
+    "usersmodel.h" => "UsersModel"
 );
 # Module dependencies.
 # Every module that is required to build this module should have one entry.
