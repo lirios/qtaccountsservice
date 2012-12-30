@@ -43,8 +43,8 @@ AccountsManagerPrivate::AccountsManagerPrivate(AccountsManager *self)
     : q_ptr(self)
 {
     interface = new OrgFreedesktopAccountsInterface(
-        "org.freedesktop.Accounts",
-        "/org/freedesktop/Accounts",
+        QLatin1String("org.freedesktop.Accounts"),
+        QLatin1String("/org/freedesktop/Accounts"),
         QDBusConnection::systemBus());
 }
 

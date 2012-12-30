@@ -58,9 +58,11 @@ UserAccountPrivate::UserAccountPrivate()
 UserAccount::UserAccount(uid_t uid)
     : d_ptr(new UserAccountPrivate)
 {
+    QString objectPath = QLatin1String("/org/freedesktop/Accounts/User") + QString::number(uid);
+
     d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface("org.freedesktop.Accounts",
-                                                QString("/org/freedesktop/Accounts/User%1").arg(uid),
+        new OrgFreedesktopAccountsUserInterface(QLatin1String("org.freedesktop.Accounts"),
+                                                objectPath,
                                                 QDBusConnection::systemBus(),
                                                 this);
 }
@@ -75,7 +77,7 @@ UserAccount::UserAccount(const QString &objectPath)
     : d_ptr(new UserAccountPrivate)
 {
     d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface("org.freedesktop.Accounts",
+        new OrgFreedesktopAccountsUserInterface(QLatin1String("org.freedesktop.Accounts"),
                                                 objectPath,
                                                 QDBusConnection::systemBus(),
                                                 this);
