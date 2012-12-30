@@ -38,7 +38,7 @@ QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 class UserAccount;
 class UsersModelPrivate;
 
-class UsersModel : public QAbstractListModel
+class Q_ACCOUNTSSERVICE_EXPORT UsersModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_ENUMS(Roles)
