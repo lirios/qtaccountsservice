@@ -27,9 +27,7 @@
 #include <QtCore/QDebug>
 
 #include "accountsmanager.h"
-#include "accounts_interface.h"
 #include "accountsmanager_p.h"
-#include "useraccount.h"
 
 #include <unistd.h>
 
@@ -39,8 +37,7 @@ QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
  * AccountsManagerPrivate
  */
 
-AccountsManagerPrivate::AccountsManagerPrivate(AccountsManager *self)
-    : q_ptr(self)
+AccountsManagerPrivate::AccountsManagerPrivate()
 {
     interface = new OrgFreedesktopAccountsInterface(
         QLatin1String("org.freedesktop.Accounts"),
@@ -79,8 +76,10 @@ void AccountsManagerPrivate::_q_userDeleted(const QDBusObjectPath &path)
     Constructs a AccountsManager object.
 */
 AccountsManager::AccountsManager()
-    : d_ptr(new AccountsManagerPrivate(this))
+    : d_ptr(new AccountsManagerPrivate)
 {
+    d_ptr->q_ptr = this;
+
     connect(d_ptr->interface, SIGNAL(UserAdded(QDBusObjectPath)),
             this, SLOT(_q_userAdded(QDBusObjectPath)));
     connect(d_ptr->interface, SIGNAL(UserDeleted(QDBusObjectPath)),

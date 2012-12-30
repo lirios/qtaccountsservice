@@ -30,7 +30,9 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-#include "accountsservice_global.h"
+#include <QtAccountsService/accountsservice_global.h>
+
+QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
@@ -41,7 +43,6 @@ class UserAccountPrivate;
 class Q_ACCOUNTSSERVICE_EXPORT UserAccount : public QObject
 {
     Q_OBJECT
-    Q_DECLARE_PRIVATE(UserAccount)
     Q_PROPERTY(int uid READ userId CONSTANT)
     Q_PROPERTY(AccountType accountType READ accountType WRITE setAccountType NOTIFY accountTypeChanged)
     Q_PROPERTY(bool locked READ isLocked WRITE setLocked NOTIFY lockedChanged)
@@ -147,11 +148,14 @@ Q_SIGNALS:
     void locationChanged();
     void xsessionChanged();
 
+protected:
+    UserAccountPrivate *d_ptr;
+
 private:
     friend class AccountsManager;
     friend class AccountsManagerPrivate;
 
-    UserAccountPrivate *const d_ptr;
+    Q_DECLARE_PRIVATE(UserAccount)
 
     UserAccount(const QString &objectPath);
 };
@@ -159,5 +163,7 @@ private:
 typedef QList<UserAccount *> UserAccountList;
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE
+
+QT_END_HEADER
 
 #endif // VUSERACCOUNT_H

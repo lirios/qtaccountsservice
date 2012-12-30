@@ -25,7 +25,6 @@
  ***************************************************************************/
 
 #include "useraccount.h"
-#include "user_interface.h"
 #include "useraccount_p.h"
 
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE

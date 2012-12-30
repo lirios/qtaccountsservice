@@ -27,6 +27,8 @@
 #ifndef ACCOUNTSMANAGER_P_H
 #define ACCOUNTSMANAGER_P_H
 
+#include "accounts_interface.h"
+
 //
 //  W A R N I N G
 //  -------------
@@ -44,16 +46,14 @@ class AccountsManagerPrivate
 {
     Q_DECLARE_PUBLIC(AccountsManager)
 public:
-    AccountsManagerPrivate(AccountsManager *self);
+    AccountsManagerPrivate();
     ~AccountsManagerPrivate();
+
+    AccountsManager *q_ptr;
+    OrgFreedesktopAccountsInterface *interface;
 
     void _q_userAdded(const QDBusObjectPath &path);
     void _q_userDeleted(const QDBusObjectPath &path);
-
-    OrgFreedesktopAccountsInterface *interface;
-
-protected:
-    AccountsManager *const q_ptr;
 };
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE

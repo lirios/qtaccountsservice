@@ -27,6 +27,8 @@
 #ifndef USERACCOUNT_P_H
 #define USERACCOUNT_P_H
 
+#include "user_interface.h"
+
 //
 //  W A R N I N G
 //  -------------

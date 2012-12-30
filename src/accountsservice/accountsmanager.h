@@ -27,7 +27,14 @@
 #ifndef ACCOUNTSMANAGER_H
 #define ACCOUNTSMANAGER_H
 
-#include "useraccount.h"
+#include <QtCore/qobject.h>
+
+#include <QtAccountsService/useraccount.h>
+#include "accountsmanager_p.h"
+
+QT_BEGIN_HEADER
+
+QT_FORWARD_DECLARE_CLASS(QDBusObjectPath)
 
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
@@ -36,7 +43,6 @@ class AccountsManagerPrivate;
 class Q_ACCOUNTSSERVICE_EXPORT AccountsManager : public QObject
 {
     Q_OBJECT
-    Q_DECLARE_PRIVATE(AccountsManager)
     Q_PROPERTY(UserAccount *defaultUser READ defaultUser CONSTANT)
 public:
     explicit AccountsManager();
@@ -62,13 +68,17 @@ Q_SIGNALS:
     void userAdded(UserAccount *);
     void userDeleted(UserAccount *);
 
-private:
-    AccountsManagerPrivate *const d_ptr;
+protected:
+    AccountsManagerPrivate *d_ptr;
 
-    Q_PRIVATE_SLOT(d_ptr, void _q_userAdded(const QDBusObjectPath &path))
-    Q_PRIVATE_SLOT(d_ptr, void _q_userDeleted(const QDBusObjectPath &path))
+private:
+    Q_DECLARE_PRIVATE(AccountsManager)
+    Q_PRIVATE_SLOT(d_func(), void _q_userAdded(const QDBusObjectPath &path))
+    Q_PRIVATE_SLOT(d_func(), void _q_userDeleted(const QDBusObjectPath &path))
 };
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE
+
+QT_END_HEADER
 
 #endif // ACCOUNTSMANAGER_H

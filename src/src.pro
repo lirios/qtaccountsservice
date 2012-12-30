@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
-
-SUBDIRS = accountsservice
+CONFIG += ordered
+!isEmpty(QT.dbus.name): SUBDIRS = accountsservice
