@@ -282,3 +282,5 @@ bool AccountsManager::deleteUser(uid_t uid, bool removeFiles)
 }
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE
+
+#include "moc_accountsmanager.cpp"

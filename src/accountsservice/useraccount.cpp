@@ -433,3 +433,5 @@ void UserAccount::setXSession(const QString &session)
 }
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE
+
+#include "moc_useraccount.cpp"

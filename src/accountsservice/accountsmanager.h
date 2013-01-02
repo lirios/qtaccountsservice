@@ -30,7 +30,6 @@
 #include <QtCore/qobject.h>
 
 #include <QtAccountsService/useraccount.h>
-#include "accountsmanager_p.h"
 
 QT_BEGIN_HEADER
 
