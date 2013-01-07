@@ -27,6 +27,8 @@
 #include "useraccount.h"
 #include "useraccount_p.h"
 
+#include <unistd.h>
+
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
 /*
@@ -48,6 +50,21 @@ UserAccountPrivate::UserAccountPrivate()
 
     \sa AccountsManager
 */
+
+/*!
+    Constructs a UserAccount object for the currently logged in user.
+*/
+UserAccount::UserAccount()
+    : d_ptr(new UserAccountPrivate)
+{
+    QString objectPath = QLatin1String("/org/freedesktop/Accounts/User") + QString::number(getuid());
+
+    d_ptr->user =
+        new OrgFreedesktopAccountsUserInterface(QLatin1String("org.freedesktop.Accounts"),
+                                                objectPath,
+                                                QDBusConnection::systemBus(),
+                                                this);
+}
 
 /*!
     Constructs a UserAccount object for the specified \a uid.

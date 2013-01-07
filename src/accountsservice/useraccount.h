@@ -76,6 +76,7 @@ public:
         NonePasswordMode
     };
 
+    UserAccount();
     explicit UserAccount(uid_t uid);
     ~UserAccount();
 
