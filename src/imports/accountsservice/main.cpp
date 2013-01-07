@@ -44,8 +44,7 @@ public:
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtAccountsService"));
 
         qmlRegisterType<QtAddOn::AccountsService::AccountsManager>(uri, 5, 0, "AccountsManager");
-        qmlRegisterUncreatableType<QtAddOn::AccountsService::UserAccount>(uri, 5, 0, "UserAccount",
-                                                                          trUtf8("UserAccount is provided by AccountsManager"));
+        qmlRegisterType<QtAddOn::AccountsService::UserAccount>(uri, 5, 0, "UserAccount");
     }
 
     void initializeEngine(QQmlEngine *engine, const char *uri) {
