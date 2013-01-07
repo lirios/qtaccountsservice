@@ -1,2 +1,3 @@
+module QtAccountsService
 plugin declarative_accountsservice
 typeinfo plugins.qmltypes
