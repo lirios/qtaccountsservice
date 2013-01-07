@@ -42,7 +42,6 @@ class AccountsManagerPrivate;
 class Q_ACCOUNTSSERVICE_EXPORT AccountsManager : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(UserAccount *defaultUser READ defaultUser CONSTANT)
 public:
     explicit AccountsManager();
     ~AccountsManager();
@@ -52,8 +51,6 @@ public:
     void uncacheUser(UserAccount *account);
 
     UserAccountList listCachedUsers();
-
-    UserAccount *defaultUser();
 
     UserAccount *findUserById(uid_t uid);
     UserAccount *findUserByName(const QString &userName);

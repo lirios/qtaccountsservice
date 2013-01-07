@@ -29,8 +29,6 @@
 #include "accountsmanager.h"
 #include "accountsmanager_p.h"
 
-#include <unistd.h>
-
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
 /*
@@ -172,16 +170,6 @@ UserAccountList AccountsManager::listCachedUsers()
         list.append(new UserAccount(value.at(i).path()));
 
     return list;
-}
-
-/*!
-    Returns the currently logged in user.
-    \return a UserAccount object representing the currently logged
-            in user.
-*/
-UserAccount *AccountsManager::defaultUser()
-{
-    return findUserById(getuid());
 }
 
 /*!
