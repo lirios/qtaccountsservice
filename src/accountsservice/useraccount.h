@@ -32,8 +32,6 @@
 
 #include <QtAccountsService/accountsservice_global.h>
 
-QT_BEGIN_HEADER
-
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
 class AccountsManager;
@@ -164,7 +162,5 @@ private:
 typedef QList<UserAccount *> UserAccountList;
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE
-
-QT_END_HEADER
 
 #endif // VUSERACCOUNT_H

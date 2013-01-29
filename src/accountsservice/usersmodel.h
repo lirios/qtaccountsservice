@@ -31,8 +31,6 @@
 
 #include <QtAccountsService/accountsservice_global.h>
 
-QT_BEGIN_HEADER
-
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
 class UserAccount;
@@ -71,7 +69,5 @@ private:
 };
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE
-
-QT_END_HEADER
 
 #endif // USERSMODEL_H
