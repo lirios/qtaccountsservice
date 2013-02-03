@@ -64,6 +64,7 @@ UserAccount::UserAccount()
                                                 objectPath,
                                                 QDBusConnection::systemBus(),
                                                 this);
+    connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
 }
 
 /*!
@@ -81,6 +82,7 @@ UserAccount::UserAccount(uid_t uid)
                                                 objectPath,
                                                 QDBusConnection::systemBus(),
                                                 this);
+    connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
 }
 
 /*!
@@ -97,6 +99,7 @@ UserAccount::UserAccount(const QString &objectPath)
                                                 objectPath,
                                                 QDBusConnection::systemBus(),
                                                 this);
+    connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
 }
 
 /*!

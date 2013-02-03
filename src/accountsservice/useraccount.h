@@ -132,6 +132,7 @@ public:
     void setXSession(const QString &session);
 
 Q_SIGNALS:
+    void accountChanged();
     void accountTypeChanged();
     void lockedChanged();
     void automaticLoginChanged();
