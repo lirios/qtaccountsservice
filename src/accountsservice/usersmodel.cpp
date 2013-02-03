@@ -46,6 +46,27 @@ UsersModelPrivate::~UsersModelPrivate()
     delete manager;
 }
 
+void UsersModelPrivate::_q_userAdded(UserAccount *account)
+{
+    q_ptr->beginInsertRows(QModelIndex(), list.size(), list.size());
+    list.append(account);
+    q_ptr->endInsertRows();
+}
+
+void UsersModelPrivate::_q_userDeleted(UserAccount *account)
+{
+    for (int i = 0; i < list.size(); i++) {
+        UserAccount *curAccount = list.at(i);
+
+        if (curAccount->userId() == account->userId()) {
+            q_ptr->beginRemoveRows(QModelIndex(), i, i);
+            list.removeOne(curAccount);
+            q_ptr->endRemoveRows();
+            break;
+        }
+    }
+}
+
 /*
  * UsersModel
  */
@@ -55,6 +76,10 @@ UsersModel::UsersModel(QObject *parent)
     , d_ptr(new UsersModelPrivate)
 {
     d_ptr->q_ptr = this;
+    connect(d_ptr->manager, SIGNAL(userAdded(UserAccount*)),
+            this, SLOT(_q_userAdded(UserAccount*)));
+    connect(d_ptr->manager, SIGNAL(userDeleted(UserAccount*)),
+            this, SLOT(_q_userDeleted(UserAccount*)));
 }
 
 QHash<int, QByteArray> UsersModel::roleNames() const
@@ -89,22 +114,22 @@ QVariant UsersModel::data(const QModelIndex &index, int role) const
     int row = index.row();
 
     switch (role) {
-        case Qt::DisplayRole:
-            return d->list[row]->displayName();
-        case Qt::DecorationRole:
-            return QPixmap(d->list[row]->iconFileName());
-        case UsersModel::UserIdRole:
-            return d->list[row]->userId();
-        case UsersModel::UserNameRole:
-            return d->list[row]->userName();
-        case UsersModel::RealNameRole:
-            return d->list[row]->realName();
-        case UsersModel::IconFileNameRole:
-            return d->list[row]->iconFileName();
-        case UsersModel::AccountTypeRole:
-            return d->list[row]->accountType();
-        case UsersModel::LanguageRole:
-            return d->list[row]->language();
+    case Qt::DisplayRole:
+        return d->list[row]->displayName();
+    case Qt::DecorationRole:
+        return QPixmap(d->list[row]->iconFileName());
+    case UsersModel::UserIdRole:
+        return d->list[row]->userId();
+    case UsersModel::UserNameRole:
+        return d->list[row]->userName();
+    case UsersModel::RealNameRole:
+        return d->list[row]->realName();
+    case UsersModel::IconFileNameRole:
+        return d->list[row]->iconFileName();
+    case UsersModel::AccountTypeRole:
+        return d->list[row]->accountType();
+    case UsersModel::LanguageRole:
+        return d->list[row]->language();
     }
 
     return QVariant();
@@ -120,23 +145,23 @@ bool UsersModel::setData(const QModelIndex &index, const QVariant &value, int ro
     UserAccount *user = d->list[index.row()];
 
     switch (role) {
-        case UsersModel::UserNameRole:
-            user->setUserName(value.toString());
-            break;
-        case UsersModel::RealNameRole:
-            user->setRealName(value.toString());
-            break;
-        case UsersModel::IconFileNameRole:
-            user->setIconFileName(value.toString());
-            break;
-        case UsersModel::AccountTypeRole:
-            user->setAccountType((UserAccount::AccountType) value.toInt());
-            break;
-        case UsersModel::LanguageRole:
-            user->setLanguage(value.toString());
-            break;
-        default:
-            return false;
+    case UsersModel::UserNameRole:
+        user->setUserName(value.toString());
+        break;
+    case UsersModel::RealNameRole:
+        user->setRealName(value.toString());
+        break;
+    case UsersModel::IconFileNameRole:
+        user->setIconFileName(value.toString());
+        break;
+    case UsersModel::AccountTypeRole:
+        user->setAccountType((UserAccount::AccountType) value.toInt());
+        break;
+    case UsersModel::LanguageRole:
+        user->setLanguage(value.toString());
+        break;
+    default:
+        return false;
     }
 
     return true;
@@ -153,3 +178,5 @@ UserAccount *UsersModel::userAccount(const QModelIndex &index)
 }
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE
+
+#include "moc_usersmodel.cpp"

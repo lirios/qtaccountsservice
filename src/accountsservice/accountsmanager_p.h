@@ -40,7 +40,11 @@
 // We mean it.
 //
 
+class OrgFreedesktopAccountsInterface;
+
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
+
+class AccountsManager;
 
 class AccountsManagerPrivate
 {

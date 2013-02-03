@@ -43,11 +43,13 @@
 
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
+class UsersModel;
+
 class UsersModelPrivate
 {
     Q_DECLARE_PUBLIC(UsersModel)
 public:
-    explicit UsersModelPrivate();
+    UsersModelPrivate();
     ~UsersModelPrivate();
 
     void populate();
@@ -55,6 +57,10 @@ public:
     UsersModel *q_ptr;
     AccountsManager *manager;
     UserAccountList list;
+
+public Q_SLOTS:
+    void _q_userAdded(UserAccount *account);
+    void _q_userDeleted(UserAccount *account);
 };
 
 QT_END_NAMESPACE_ACCOUNTSSERVICE
