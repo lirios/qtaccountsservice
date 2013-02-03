@@ -269,6 +269,18 @@ bool AccountsManager::deleteUser(uid_t uid, bool removeFiles)
     return true;
 }
 
+/*!
+    Deletes the specified \a account.
+
+    \param account The account to remove.
+    \param removeFiles If true all files owned by the user will be removed.
+    \return whether the user was deleted successfully.
+*/
+bool AccountsManager::deleteUser(UserAccount *account, bool removeFiles)
+{
+    return deleteUser(account->userId(), removeFiles);
+}
+
 QT_END_NAMESPACE_ACCOUNTSSERVICE
 
 #include "moc_accountsmanager.cpp"
