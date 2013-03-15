@@ -27,7 +27,9 @@
 #include "useraccount.h"
 #include "useraccount_p.h"
 
+#include <sys/types.h>
 #include <unistd.h>
+#include <pwd.h>
 
 QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
 
@@ -117,6 +119,34 @@ uid_t UserAccount::userId() const
 {
     Q_D(const UserAccount);
     return d->user->uid();
+}
+
+/*!
+    Returns group identifier.
+*/
+gid_t UserAccount::groupId() const
+{
+    Q_D(const UserAccount);
+
+    size_t bufsize = ::sysconf(_SC_GETPW_R_SIZE_MAX);
+    if (bufsize <= 0)
+        bufsize = 16384;
+    char *buf = (char *)::malloc(bufsize);
+    if (!buf)
+        qFatal("Cannot allocate %lu bytes: %s", bufsize, strerror(errno));
+
+    struct passwd pwd;
+    struct passwd *result;
+    int s = ::getpwuid_r(d->user->uid(), &pwd, buf, bufsize, &result);
+    if (!result) {
+        if (s == 0)
+            qCritical("User with uid %ld not found", (long)d->user->uid());
+        else
+            qCritical("Failed to get group information: %s", strerror(s));
+        return -1;
+    }
+
+    return pwd.pw_gid;
 }
 
 /*!

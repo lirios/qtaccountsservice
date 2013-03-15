@@ -42,6 +42,7 @@ class Q_ACCOUNTSSERVICE_EXPORT UserAccount : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int uid READ userId CONSTANT)
+    Q_PROPERTY(int gid READ groupId CONSTANT)
     Q_PROPERTY(AccountType accountType READ accountType WRITE setAccountType NOTIFY accountTypeChanged)
     Q_PROPERTY(bool locked READ isLocked WRITE setLocked NOTIFY lockedChanged)
     Q_PROPERTY(bool automaticLogin READ automaticLogin WRITE setAutomaticLogin NOTIFY automaticLoginChanged)
@@ -79,6 +80,7 @@ public:
     ~UserAccount();
 
     uid_t userId() const;
+    gid_t groupId() const;
 
     AccountType accountType() const;
     void setAccountType(AccountType type);
