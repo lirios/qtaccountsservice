@@ -36,15 +36,15 @@
 #endif
 
 #if defined(QT_NAMESPACE)
-#  define QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE namespace QT_NAMESPACE { namespace QtAddOn { namespace AccountsService {
-#  define QT_END_NAMESPACE_ACCOUNTSSERVICE } } }
-#  define QT_USE_NAMESPACE_ACCOUNTSSERVICE using namespace QT_NAMESPACE::QtAddOn::AccountsService;
-#  define QT_PREPEND_NAMESPACE_ACCOUNTSSERVICE(name) ::QT_NAMESPACE::QtAddOn::AccountsService::name
-#else
-#  define QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE namespace QtAddOn { namespace AccountsService {
+#  define QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE namespace QT_NAMESPACE { namespace AccountsService {
 #  define QT_END_NAMESPACE_ACCOUNTSSERVICE } }
-#  define QT_USE_NAMESPACE_ACCOUNTSSERVICE using namespace QtAddOn::AccountsService;
-#  define QT_PREPEND_NAMESPACE_ACCOUNTSSERVICE(name) ::QtAddOn::AccountsService::name
+#  define QT_USE_NAMESPACE_ACCOUNTSSERVICE using namespace QT_NAMESPACE::AccountsService;
+#  define QT_PREPEND_NAMESPACE_ACCOUNTSSERVICE(name) ::QT_NAMESPACE::AccountsService::name
+#else
+#  define QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE namespace AccountsService {
+#  define QT_END_NAMESPACE_ACCOUNTSSERVICE }
+#  define QT_USE_NAMESPACE_ACCOUNTSSERVICE using namespace AccountsService;
+#  define QT_PREPEND_NAMESPACE_ACCOUNTSSERVICE(name) ::AccountsService::name
 #endif
 
 // A workaround for moc - if there is a header file that doesn't use the namespace,

@@ -27,8 +27,8 @@
 #ifndef USERSMODEL_P_H
 #define USERSMODEL_P_H
 
-#include <QtAccountsService/accountsmanager.h>
-#include <QtAccountsService/useraccount.h>
+#include <QtAccountsService/AccountsManager>
+#include <QtAccountsService/UserAccount>
 
 //
 //  W A R N I N G

@@ -29,7 +29,7 @@
 
 #include <QtCore/qobject.h>
 
-#include <QtAccountsService/useraccount.h>
+#include <QtAccountsService/UserAccount>
 
 QT_FORWARD_DECLARE_CLASS(QDBusObjectPath)
 

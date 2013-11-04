@@ -29,8 +29,8 @@
 #include <QtQml/qqmlengine.h>
 #include <QtQml/qqmlcomponent.h>
 
-#include <QtAccountsService/accountsmanager.h>
-#include <QtAccountsService/useraccount.h>
+#include <QtAccountsService/AccountsManager>
+#include <QtAccountsService/UserAccount>
 
 QT_BEGIN_NAMESPACE
 
@@ -43,8 +43,8 @@ public:
     virtual void registerTypes(const char *uri) {
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtAccountsService"));
 
-        qmlRegisterType<QtAddOn::AccountsService::AccountsManager>(uri, 5, 0, "AccountsManager");
-        qmlRegisterType<QtAddOn::AccountsService::UserAccount>(uri, 5, 0, "UserAccount");
+        qmlRegisterType<AccountsService::AccountsManager>(uri, 1, 0, "AccountsManager");
+        qmlRegisterType<AccountsService::UserAccount>(uri, 1, 0, "UserAccount");
     }
 
     void initializeEngine(QQmlEngine *engine, const char *uri) {

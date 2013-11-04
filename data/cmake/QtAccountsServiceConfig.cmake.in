@@ -1,0 +1,33 @@
+# QtAccountsServiceConfig.cmake provides information about the installed QtAccountsService library.
+# It can be used directly from CMake via find_package(QtAccountsService NO_MODULE)
+#
+# The following CMake variables are provided:
+#   QtAccountsService_VERSION_MAJOR - the major version number of QtAccountsService
+#   QtAccountsService_VERSION_MINOR - the minor version number of QtAccountsService
+#   QtAccountsService_VERSION_PATCH - the patch version number of QtAccountsService
+#   QtAccountsService_INCLUDE_DIRS  - the include directories to use
+#   QtAccountsService_LIBRARIES     - the libraries to link against
+#
+# Additionally, the following imported library targets are created, which may be used directly
+# with target_link_libraries():
+#   QtAccountsService::qtaccountsservice-qt5 - the QtAccountsService library for Qt 5.x
+
+@PACKAGE_INIT@
+
+# Any changes in this ".cmake" file will be overwritten by CMake, the source is the ".cmake.in" file.
+
+set(QtAccountsService_VERSION_MAJOR "@QT_ACCOUNTSSERVICE_VERSION_MAJOR@")
+set(QtAccountsService_VERSION_MINOR "@QT_ACCOUNTSSERVICE_VERSION_MINOR@")
+set(QtAccountsService_VERSION_PATCH "@QT_ACCOUNTSSERVICE_VERSION_PATCH@")
+
+set(QtAccountsService_INSTALL_PREFIX "@PACKAGE_CMAKE_INSTALL_PREFIX@")
+set_and_check(QtAccountsService_INCLUDE_DIR "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@")
+
+if(NOT TARGET QtAccountsService)
+  include("${CMAKE_CURRENT_LIST_DIR}/QtAccountsServiceTargets.cmake")
+endif()
+
+# "public" variables:
+
+set(QtAccountsService_INCLUDE_DIRS ${QtAccountsService_INCLUDE_DIR} ${QtAccountsService_INCLUDE_DIR}/QtAccountsService)
+set(QtAccountsService_LIBRARIES QtAccountsService::qtaccountsservice-qt5)
