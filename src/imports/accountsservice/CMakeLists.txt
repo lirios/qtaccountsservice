@@ -9,3 +9,5 @@ set_target_properties(declarative_accountsservice PROPERTIES PREFIX "")
 qt5_use_modules(declarative_accountsservice Qml Quick)
 install(TARGETS declarative_accountsservice
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/hawaii/qml/QtAccountsService)
+install(FILES plugins.qmltypes qmldir
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/hawaii/qml/QtAccountsService)
