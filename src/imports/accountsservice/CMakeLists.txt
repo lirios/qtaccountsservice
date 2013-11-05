@@ -5,8 +5,8 @@ include_directories(
 )
 
 add_library(declarative_accountsservice SHARED main.cpp)
-set_target_properties(declarative_accountsservice PROPERTIES PREFIX "")
 qt5_use_modules(declarative_accountsservice Qml Quick)
+target_link_libraries(declarative_accountsservice qtaccountsservice-qt5)
 install(TARGETS declarative_accountsservice
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/hawaii/qml/QtAccountsService)
 install(FILES plugins.qmltypes qmldir
