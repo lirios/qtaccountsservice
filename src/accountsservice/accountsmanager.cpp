@@ -222,6 +222,21 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
 }
 
 /*!
+    Find user iconFileName
+ 
+ */
+QString AccountsManager::findUserIconFile(const QString &userName) 
+{
+    UserAccount *user = findUserByName(userName);
+    
+    if (user) {
+        return user->iconFileName();
+    }
+
+    return QString();
+}
+
+/*!
     Creates a new \a accountType type user account whose name is \a userName,
     real name is \a fullName.
 

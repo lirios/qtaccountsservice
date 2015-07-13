@@ -53,6 +53,8 @@ public:
     UserAccount *findUserById(uid_t uid);
     UserAccount *findUserByName(const QString &userName);
 
+    Q_INVOKABLE QString findUserIconFile(const QString &userName);
+
     bool createUser(const QString &userName,
                     const QString &fullName,
                     UserAccount::AccountType accountType);

@@ -1,4 +1,4 @@
-import QtQuick.tooling 1.1
+import QtQuick.tooling 1.2
 
 // This file describes the plugin-supplied types contained in the library.
 // It is used for QML tooling purposes only.
@@ -7,6 +7,7 @@ import QtQuick.tooling 1.1
 // 'qmlplugindump -notrelocatable QtAccountsService 1.0'
 
 Module {
+    dependencies: []
     Component {
         name: "AccountsService::AccountsManager"
         prototype: "QObject"
@@ -19,6 +20,11 @@ Module {
         Signal {
             name: "userDeleted"
             Parameter { type: "UserAccount"; isPointer: true }
+        }
+        Method {
+            name: "findUserIconFile"
+            type: "string"
+            Parameter { name: "userName"; type: "string" }
         }
     }
     Component {
