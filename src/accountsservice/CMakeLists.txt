@@ -23,7 +23,7 @@ qt5_add_dbus_interface(SOURCES
                        accounts_interface)
 
 add_library(qtaccountsservice-qt5 SHARED ${SOURCES})
-qt5_use_modules(qtaccountsservice-qt5 Core Gui DBus)
+qt5_use_modules(qtaccountsservice-qt5 Core DBus)
 set_target_properties(qtaccountsservice-qt5 PROPERTIES
     VERSION ${QT_ACCOUNTSSERVICE_VERSION_STRING}
     SOVERSION ${QT_ACCOUNTSSERVICE_VERSION_MAJOR}.${QT_ACCOUNTSSERVICE_VERSION_MINOR}.${QT_ACCOUNTSSERVICE_VERSION_PATCH})

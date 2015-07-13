@@ -54,7 +54,7 @@ if(CMAKE_BUILD_TYPE MATCHES "^[Rr]elease$")
 endif()
 
 # Find Qt5
-find_package(Qt5 5.0 REQUIRED COMPONENTS Core Gui DBus)
+find_package(Qt5 5.0 REQUIRED COMPONENTS Core DBus)
 
 # Subdirectories
 add_subdirectory(data)
