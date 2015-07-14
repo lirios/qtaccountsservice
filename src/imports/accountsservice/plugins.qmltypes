@@ -21,6 +21,10 @@ Module {
             name: "userDeleted"
             Parameter { type: "UserAccount"; isPointer: true }
         }
+        Signal {
+            name: "iconFileChanged"
+            Parameter { name: "iconFile"; type: "string" }
+        }
         Method {
             name: "findUserIconFile"
             type: "string"

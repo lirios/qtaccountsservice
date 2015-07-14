@@ -65,9 +65,13 @@ public:
 Q_SIGNALS:
     void userAdded(UserAccount *);
     void userDeleted(UserAccount *);
+    void iconFileChanged(QString iconFile);
 
 protected:
     AccountsManagerPrivate *d_ptr;
+
+private Q_SLOTS:
+    void iconFileNameChanged(UserAccount *);
 
 private:
     Q_DECLARE_PRIVATE(AccountsManager)

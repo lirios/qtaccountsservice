@@ -221,15 +221,25 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
     return new UserAccount(path.path());
 }
 
+void AccountsManager::iconFileNameChanged(UserAccount *user) 
+{
+    if (user)
+        emit iconFileChanged(user->iconFileName());
+}
+
 /*!
     Find user iconFileName
- 
+    
+    \param userName The name of the user you want to find
+    \return the iconFile path
  */
 QString AccountsManager::findUserIconFile(const QString &userName) 
 {
     UserAccount *user = findUserByName(userName);
     
     if (user) {
+        connect(user, SIGNAL(iconFileNameChanged()), 
+                this, SLOT(iconFileNameChanged(user)));
         return user->iconFileName();
     }
 
