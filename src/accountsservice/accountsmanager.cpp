@@ -29,7 +29,7 @@
 #include "accountsmanager.h"
 #include "accountsmanager_p.h"
 
-QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
+namespace QtAccountsService {
 
 /*
  * AccountsManagerPrivate
@@ -305,6 +305,6 @@ bool AccountsManager::deleteUser(UserAccount *account, bool removeFiles)
     return deleteUser(account->userId(), removeFiles);
 }
 
-QT_END_NAMESPACE_ACCOUNTSSERVICE
+}
 
 #include "moc_accountsmanager.cpp"

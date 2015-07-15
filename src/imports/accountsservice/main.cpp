@@ -43,8 +43,8 @@ public:
     virtual void registerTypes(const char *uri) {
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtAccountsService"));
 
-        qmlRegisterType<AccountsService::AccountsManager>(uri, 1, 0, "AccountsManager");
-        qmlRegisterType<AccountsService::UserAccount>(uri, 1, 0, "UserAccount");
+        qmlRegisterType<QtAccountsService::AccountsManager>(uri, 1, 0, "AccountsManager");
+        qmlRegisterType<QtAccountsService::UserAccount>(uri, 1, 0, "UserAccount");
     }
 
     void initializeEngine(QQmlEngine *engine, const char *uri) {

@@ -31,7 +31,7 @@
 #include <unistd.h>
 #include <pwd.h>
 
-QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
+namespace QtAccountsService {
 
 /*
  * UserAccountPrivate
@@ -482,6 +482,6 @@ void UserAccount::setXSession(const QString &session)
     emit xsessionChanged();
 }
 
-QT_END_NAMESPACE_ACCOUNTSSERVICE
+}
 
 #include "moc_useraccount.cpp"

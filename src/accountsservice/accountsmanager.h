@@ -33,11 +33,11 @@
 
 QT_FORWARD_DECLARE_CLASS(QDBusObjectPath)
 
-QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
+namespace QtAccountsService {
 
 class AccountsManagerPrivate;
 
-class Q_ACCOUNTSSERVICE_EXPORT AccountsManager : public QObject
+class QTACCOUNTSSERVICE_EXPORT AccountsManager : public QObject
 {
     Q_OBJECT
 public:
@@ -79,6 +79,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_userDeleted(const QDBusObjectPath &path))
 };
 
-QT_END_NAMESPACE_ACCOUNTSSERVICE
+}
 
 #endif // ACCOUNTSMANAGER_H

@@ -30,15 +30,15 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-#include <QtAccountsService/accountsservice_global.h>
+#include <qtaccountsservice/qtaccountsservice_export.h>
 
-QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
+namespace QtAccountsService {
 
 class AccountsManager;
 class AccountsManagerPrivate;
 class UserAccountPrivate;
 
-class Q_ACCOUNTSSERVICE_EXPORT UserAccount : public QObject
+class QTACCOUNTSSERVICE_EXPORT UserAccount : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int uid READ userId CONSTANT)
@@ -164,6 +164,6 @@ private:
 
 typedef QList<UserAccount *> UserAccountList;
 
-QT_END_NAMESPACE_ACCOUNTSSERVICE
+}
 
 #endif // VUSERACCOUNT_H

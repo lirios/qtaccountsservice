@@ -41,7 +41,7 @@
 // We mean it.
 //
 
-QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
+namespace QtAccountsService {
 
 class UsersModel;
 
@@ -63,6 +63,6 @@ public Q_SLOTS:
     void _q_userDeleted(UserAccount *account);
 };
 
-QT_END_NAMESPACE_ACCOUNTSSERVICE
+}
 
 #endif // USERSMODEL_P_H

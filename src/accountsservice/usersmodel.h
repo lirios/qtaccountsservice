@@ -29,14 +29,14 @@
 
 #include <QAbstractListModel>
 
-#include <QtAccountsService/accountsservice_global.h>
+#include <qtaccountsservice/qtaccountsservice_export.h>
 
-QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
+namespace QtAccountsService {
 
 class UserAccount;
 class UsersModelPrivate;
 
-class Q_ACCOUNTSSERVICE_EXPORT UsersModel : public QAbstractListModel
+class QTACCOUNTSSERVICE_EXPORT UsersModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_ENUMS(Roles)
@@ -70,6 +70,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_userDeleted(UserAccount *account))
 };
 
-QT_END_NAMESPACE_ACCOUNTSSERVICE
+}
 
 #endif // USERSMODEL_H

@@ -42,7 +42,7 @@
 
 class OrgFreedesktopAccountsInterface;
 
-QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
+namespace QtAccountsService {
 
 class AccountsManager;
 
@@ -60,6 +60,6 @@ public:
     void _q_userDeleted(const QDBusObjectPath &path);
 };
 
-QT_END_NAMESPACE_ACCOUNTSSERVICE
+}
 
 #endif // ACCOUNTSMANAGER_P_H

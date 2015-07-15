@@ -10,7 +10,7 @@ target_link_libraries(declarative_accountsservice
                       Qt5::Gui
                       Qt5::Qml
                       Qt5::Quick
-                      qtaccountsservice-qt5
+                      QtAccountsService::QtAccountsService
 )
 install(TARGETS declarative_accountsservice
         LIBRARY DESTINATION ${QML_INSTALL_DIR}/QtAccountsService)

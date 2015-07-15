@@ -40,7 +40,7 @@
 // We mean it.
 //
 
-QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
+namespace QtAccountsService {
 
 class UserAccountPrivate
 {
@@ -50,6 +50,6 @@ public:
     OrgFreedesktopAccountsUserInterface *user;
 };
 
-QT_END_NAMESPACE_ACCOUNTSSERVICE
+}
 
 #endif // USERACCOUNT_P_H

@@ -29,7 +29,7 @@
 #include "usersmodel.h"
 #include "usersmodel_p.h"
 
-QT_BEGIN_NAMESPACE_ACCOUNTSSERVICE
+namespace QtAccountsService {
 
 /*
  * UsersModelPrivate
@@ -177,6 +177,6 @@ UserAccount *UsersModel::userAccount(const QModelIndex &index)
     return d->list[index.row()];
 }
 
-QT_END_NAMESPACE_ACCOUNTSSERVICE
+}
 
 #include "moc_usersmodel.cpp"
