@@ -39,8 +39,10 @@ set_package_properties(ECM PROPERTIES
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} "${CMAKE_SOURCE_DIR}/cmake")
 
-# Installation directories
+# ECM macros
 include(KDEInstallDirs)
+include(KDECompilerSettings)
+include(KDECMakeSettings)
 
 # Add custom uninstall target
 if ("${ECM_VERSION}" VERSION_LESS "1.7.0")
