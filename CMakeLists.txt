@@ -3,10 +3,29 @@ project(QtAccountsServices)
 cmake_minimum_required(VERSION 2.8.12)
 
 # Set version
-set(QT_ACCOUNTSSERVICE_VERSION_MAJOR 0)
-set(QT_ACCOUNTSSERVICE_VERSION_MINOR 1)
-set(QT_ACCOUNTSSERVICE_VERSION_PATCH 2)
-set(QT_ACCOUNTSSERVICE_VERSION_STRING "${QT_ACCOUNTSSERVICE_VERSION_MAJOR}.${QT_ACCOUNTSSERVICE_VERSION_MINOR}.${QT_ACCOUNTSSERVICE_VERSION_PATCH}")
+set(PROJECT_VERSION "0.1.2")
+set(PROJECT_VERSION_MAJOR 0)
+set(PROJECT_SOVERSION 0)
+
+# Set up packaging
+set(CPACK_PACKAGE_NAME "qtaccountsservice")
+set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
+set(CPACK_GENERATOR "TGZ")
+set(CPACK_SET_DESTDIR FALSE)
+set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
+set(CPACK_SOURCE_IGNORE_FILES "/build/;/.git;/.tx/;~$;${CPACK_SOURCE_IGNORE_FILES}")
+include(CPack)
+add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
+
+# Assume release build by default
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "" FORCE)
+endif()
+
+# Disable debug output for release builds
+if(CMAKE_BUILD_TYPE MATCHES "^[Rr]elease$")
+    add_definitions(-DQT_NO_DEBUG_OUTPUT)
+endif()
 
 # Macros
 include(FeatureSummary)
@@ -31,29 +50,6 @@ if ("${ECM_VERSION}" VERSION_LESS "1.7.0")
         "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
         IMMEDIATE @ONLY)
     add_custom_target(uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
-endif()
-
-# Set up packaging
-set(CPACK_PACKAGE_NAME "qtaccountsservice")
-set(CPACK_PACKAGE_VERSION "${QT_ACCOUNTSSERVICE_VERSION_STRING}")
-set(CPACK_GENERATOR "TGZ")
-set(CPACK_SET_DESTDIR FALSE)
-set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
-set(CPACK_SOURCE_IGNORE_FILES "/build/;/.git;/.tx/;~$;${CPACK_SOURCE_IGNORE_FILES}")
-include(CPack)
-add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
-
-# Build flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wno-unused-parameter -std=c++0x")
-
-# Assume release build by default
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "" FORCE)
-endif()
-
-# Disable debug output for release builds
-if(CMAKE_BUILD_TYPE MATCHES "^[Rr]elease$")
-    add_definitions(-DQT_NO_DEBUG_OUTPUT)
 endif()
 
 # Find Qt5

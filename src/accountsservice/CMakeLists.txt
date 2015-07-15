@@ -28,8 +28,8 @@ target_link_libraries(qtaccountsservice-qt5
                       Qt5::DBus
 )
 set_target_properties(qtaccountsservice-qt5 PROPERTIES
-    VERSION ${QT_ACCOUNTSSERVICE_VERSION_STRING}
-    SOVERSION ${QT_ACCOUNTSSERVICE_VERSION_MAJOR}.${QT_ACCOUNTSSERVICE_VERSION_MINOR}.${QT_ACCOUNTSSERVICE_VERSION_PATCH})
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_SOVERSION})
 install(TARGETS qtaccountsservice-qt5
         EXPORT QtAccountsServiceTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

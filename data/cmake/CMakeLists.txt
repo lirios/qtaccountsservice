@@ -7,7 +7,7 @@ configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/QtAccountsServiceConf
                               INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
                               PATH_VARS CMAKE_INSTALL_PREFIX CMAKE_INSTALL_INCLUDEDIR)
 write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/QtAccountsServiceConfigVersion.cmake"
-                                 VERSION ${QT_ACCOUNTSSERVICE_VERSION_STRING}
+                                 VERSION ${PROJECT_VERSION}
                                  COMPATIBILITY AnyNewerVersion)
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/QtAccountsServiceConfig.cmake"
