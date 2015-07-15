@@ -1,6 +1,6 @@
 project(QtAccountsServices)
 
-cmake_minimum_required(VERSION 2.8.9)
+cmake_minimum_required(VERSION 2.8.12)
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -14,11 +14,15 @@ set(QT_ACCOUNTSSERVICE_VERSION_MINOR 1)
 set(QT_ACCOUNTSSERVICE_VERSION_PATCH 2)
 set(QT_ACCOUNTSSERVICE_VERSION_STRING "${QT_ACCOUNTSSERVICE_VERSION_MAJOR}.${QT_ACCOUNTSSERVICE_VERSION_MINOR}.${QT_ACCOUNTSSERVICE_VERSION_PATCH}")
 
-# Installation directories
-include(GNUInstallDirs)
-
-# Macro to print feature summary
 include(FeatureSummary)
+find_package(ECM 5.12.0  NO_MODULE)                                             
+set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
+feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
+                                                                                
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+# Installation directories
+include(KDEInstallDirs)
 
 # Our CMake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
