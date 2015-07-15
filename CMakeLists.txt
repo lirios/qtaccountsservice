@@ -2,12 +2,6 @@ project(QtAccountsServices)
 
 cmake_minimum_required(VERSION 2.8.12)
 
-# Find includes in corresponding build directories
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-# Instruct CMake to run moc automatically when needed
-set(CMAKE_AUTOMOC ON)
-
 # Set version
 set(QT_ACCOUNTSSERVICE_VERSION_MAJOR 0)
 set(QT_ACCOUNTSSERVICE_VERSION_MINOR 1)
@@ -60,7 +54,8 @@ if(CMAKE_BUILD_TYPE MATCHES "^[Rr]elease$")
 endif()
 
 # Find Qt5
-find_package(Qt5 5.0 REQUIRED COMPONENTS Core DBus)
+set(REQUIRED_QT_VERSION 5.0.0)
+find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Qml Quick)
 
 # Subdirectories
 add_subdirectory(data)
