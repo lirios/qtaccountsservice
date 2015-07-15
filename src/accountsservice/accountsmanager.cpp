@@ -221,10 +221,9 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
     return new UserAccount(path.path());
 }
 
-void AccountsManager::iconFileNameChanged(UserAccount *user) 
+void AccountsManager::slotUserAccountChanged() 
 {
-    if (user)
-        emit iconFileChanged(user->iconFileName());
+    emit userAccountChanged();
 }
 
 /*!
@@ -238,8 +237,8 @@ QString AccountsManager::findUserIconFile(const QString &userName)
     UserAccount *user = findUserByName(userName);
     
     if (user) {
-        connect(user, SIGNAL(iconFileNameChanged()), 
-                this, SLOT(iconFileNameChanged(user)));
+        connect(user, SIGNAL(accountChanged()), 
+                this, SLOT(slotUserAccountChanged()));
         return user->iconFileName();
     }
 
