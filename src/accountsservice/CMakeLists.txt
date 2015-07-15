@@ -26,6 +26,7 @@ add_library(qtaccountsservice-qt5 SHARED ${SOURCES})
 target_link_libraries(qtaccountsservice-qt5
                       Qt5::Core
                       Qt5::DBus
+                      Qt5::Gui
 )
 set_target_properties(qtaccountsservice-qt5 PROPERTIES
     VERSION ${PROJECT_VERSION}
