@@ -482,6 +482,18 @@ void UserAccount::setXSession(const QString &session)
     emit xsessionChanged();
 }
 
+/*!
+    Sets the password for the user account.
+
+    \param password.
+    \param hint passwordHint.
+ */
+void UserAccount::setPassword(const QString &password, const QString &hint)
+{
+    Q_D(UserAccount);
+    d->user->SetPassword(password, hint);
+}
+
 }
 
 #include "moc_useraccount.cpp"

@@ -133,6 +133,8 @@ public:
     QString xsession() const;
     void setXSession(const QString &session);
 
+    void setPassword(const QString &password, const QString &hint = "");
+
 Q_SIGNALS:
     void accountChanged();
     void accountTypeChanged();
