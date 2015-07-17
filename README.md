@@ -17,8 +17,7 @@ cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr    \
     -DLIB_INSTALL_DIR=lib   \
     -DKDE_INSTALL_USE_QT_SYS_PATHS=ON
+make
+sudo make install
 ```
 
-## TODO
-
-- [ ] Migrate to the latest AccountsService, for example, SetPassword support
