@@ -9,7 +9,7 @@ import QtQuick.tooling 1.2
 Module {
     dependencies: []
     Component {
-        name: "AccountsService::AccountsManager"
+        name: "QtAccountsService::AccountsManager"
         prototype: "QObject"
         exports: ["QtAccountsService/AccountsManager 1.0"]
         exportMetaObjectRevisions: [0]
@@ -29,7 +29,7 @@ Module {
         }
     }
     Component {
-        name: "AccountsService::UserAccount"
+        name: "QtAccountsService::UserAccount"
         prototype: "QObject"
         exports: ["QtAccountsService/UserAccount 1.0"]
         exportMetaObjectRevisions: [0]
