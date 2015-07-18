@@ -59,6 +59,7 @@ set(REQUIRED_QT_VERSION 5.0.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Qml Quick)
 
 # Subdirectories
+add_subdirectory(examples)
 add_subdirectory(src)
 
 # Display featute summary
