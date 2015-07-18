@@ -31,6 +31,7 @@
 
 #include <QtAccountsService/AccountsManager>
 #include <QtAccountsService/UserAccount>
+#include <QtAccountsService/UsersModel>
 
 QT_BEGIN_NAMESPACE
 
@@ -45,6 +46,7 @@ public:
 
         qmlRegisterType<QtAccountsService::AccountsManager>(uri, 1, 0, "AccountsManager");
         qmlRegisterType<QtAccountsService::UserAccount>(uri, 1, 0, "UserAccount");
+        qmlRegisterType<QtAccountsService::UsersModel>(uri, 1, 0, "UsersModel");
     }
 
     void initializeEngine(QQmlEngine *engine, const char *uri) {
