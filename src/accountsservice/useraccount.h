@@ -24,8 +24,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef VUSERACCOUNT_H
-#define VUSERACCOUNT_H
+#ifndef QTACCOUNTSSERVICE_USERACCOUNT_H
+#define QTACCOUNTSSERVICE_USERACCOUNT_H
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -168,4 +168,4 @@ typedef QList<UserAccount *> UserAccountList;
 
 }
 
-#endif // VUSERACCOUNT_H
+#endif // QTACCOUNTSSERVICE_USERACCOUNT_H

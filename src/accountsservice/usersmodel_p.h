@@ -24,8 +24,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef USERSMODEL_P_H
-#define USERSMODEL_P_H
+#ifndef QTACCOUNTSSERVICE_USERSMODEL_P_H
+#define QTACCOUNTSSERVICE_USERSMODEL_P_H
 
 #include <QtAccountsService/AccountsManager>
 #include <QtAccountsService/UserAccount>
@@ -65,4 +65,4 @@ public Q_SLOTS:
 
 }
 
-#endif // USERSMODEL_P_H
+#endif // QTACCOUNTSSERVICE_USERSMODEL_P_H

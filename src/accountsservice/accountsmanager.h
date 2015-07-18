@@ -24,10 +24,10 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef ACCOUNTSMANAGER_H
-#define ACCOUNTSMANAGER_H
+#ifndef QTACCOUNTSSERVICE_ACCOUNTSMANAGER_H
+#define QTACCOUNTSSERVICE_ACCOUNTSMANAGER_H
 
-#include <QtCore/qobject.h>
+#include <QtCore/QObject>
 
 #include <QtAccountsService/UserAccount>
 
@@ -81,4 +81,4 @@ private:
 
 }
 
-#endif // ACCOUNTSMANAGER_H
+#endif // QTACCOUNTSSERVICE_ACCOUNTSMANAGER_H

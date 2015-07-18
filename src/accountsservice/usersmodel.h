@@ -24,10 +24,10 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef USERSMODEL_H
-#define USERSMODEL_H
+#ifndef QTACCOUNTSSERVICE_USERSMODEL_H
+#define QTACCOUNTSSERVICE_USERSMODEL_H
 
-#include <QAbstractListModel>
+#include <QtCore/QAbstractListModel>
 
 #include <qtaccountsservice/qtaccountsservice_export.h>
 
@@ -72,4 +72,4 @@ private:
 
 }
 
-#endif // USERSMODEL_H
+#endif // QTACCOUNTSSERVICE_USERSMODEL_H

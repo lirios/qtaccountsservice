@@ -43,7 +43,7 @@ UserAccountPrivate::UserAccountPrivate()
 }
 
 /*!
-    \class VUserAcccount
+    \class UserAcccount
     \brief The UserAccount class describes user accounts.
 
     This class describes user accounts retrieved with AccountsManager.

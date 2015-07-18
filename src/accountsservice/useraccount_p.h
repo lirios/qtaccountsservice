@@ -24,8 +24,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef USERACCOUNT_P_H
-#define USERACCOUNT_P_H
+#ifndef QTACCOUNTSSERVICE_USERACCOUNT_P_H
+#define QTACCOUNTSSERVICE_USERACCOUNT_P_H
 
 #include "user_interface.h"
 
@@ -52,4 +52,4 @@ public:
 
 }
 
-#endif // USERACCOUNT_P_H
+#endif // QTACCOUNTSSERVICE_USERACCOUNT_P_H

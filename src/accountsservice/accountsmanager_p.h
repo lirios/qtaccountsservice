@@ -24,8 +24,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef ACCOUNTSMANAGER_P_H
-#define ACCOUNTSMANAGER_P_H
+#ifndef QTACCOUNTSSERVICE_ACCOUNTSMANAGER_P_H
+#define QTACCOUNTSSERVICE_ACCOUNTSMANAGER_P_H
 
 #include "accounts_interface.h"
 
@@ -62,4 +62,4 @@ public:
 
 }
 
-#endif // ACCOUNTSMANAGER_P_H
+#endif // QTACCOUNTSSERVICE_ACCOUNTSMANAGER_P_H
