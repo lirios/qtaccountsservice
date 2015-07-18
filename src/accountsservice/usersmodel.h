@@ -59,7 +59,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
 
-    UserAccount *userAccount(const QModelIndex &index);
+    UserAccount *userAccount(const QModelIndex &index) const;
 
 protected:
     UsersModelPrivate *d_ptr;

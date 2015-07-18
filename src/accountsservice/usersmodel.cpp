@@ -108,28 +108,27 @@ QVariant UsersModel::data(const QModelIndex &index, int role) const
 {
     Q_D(const UsersModel);
 
-    if (!index.isValid())
+    UserAccount *user = userAccount(index);
+    if (!user)
         return QVariant();
-
-    int row = index.row();
 
     switch (role) {
     case Qt::DisplayRole:
-        return d->list[row]->displayName();
+        return user->displayName();
     case Qt::DecorationRole:
-        return QPixmap(d->list[row]->iconFileName());
+        return QPixmap(user->iconFileName());
     case UsersModel::UserIdRole:
-        return d->list[row]->userId();
+        return user->userId();
     case UsersModel::UserNameRole:
-        return d->list[row]->userName();
+        return user->userName();
     case UsersModel::RealNameRole:
-        return d->list[row]->realName();
+        return user->realName();
     case UsersModel::IconFileNameRole:
-        return d->list[row]->iconFileName();
+        return user->iconFileName();
     case UsersModel::AccountTypeRole:
-        return d->list[row]->accountType();
+        return user->accountType();
     case UsersModel::LanguageRole:
-        return d->list[row]->language();
+        return user->language();
     }
 
     return QVariant();
@@ -139,10 +138,9 @@ bool UsersModel::setData(const QModelIndex &index, const QVariant &value, int ro
 {
     Q_D(UsersModel);
 
-    if (!index.isValid())
+    UserAccount *user = userAccount(index);
+    if (!user)
         return false;
-
-    UserAccount *user = d->list[index.row()];
 
     switch (role) {
     case UsersModel::UserNameRole:
@@ -167,12 +165,14 @@ bool UsersModel::setData(const QModelIndex &index, const QVariant &value, int ro
     return true;
 }
 
-UserAccount *UsersModel::userAccount(const QModelIndex &index)
+UserAccount *UsersModel::userAccount(const QModelIndex &index) const
 {
-    Q_D(UsersModel);
+    Q_D(const UsersModel);
 
     if (!index.isValid())
-        return 0;
+        return Q_NULLPTR;
+    if (index.row() >= d->list.size())
+        return Q_NULLPTR;
 
     return d->list[index.row()];
 }
