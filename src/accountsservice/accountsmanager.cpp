@@ -115,6 +115,8 @@ UserAccount *AccountsManager::cacheUser(const QString &userName)
     }
 
     QDBusObjectPath path = reply.argumentAt<0>();
+    if (path.path().isEmpty())
+        return Q_NULLPTR;
     return new UserAccount(path.path());
 }
 
@@ -193,6 +195,8 @@ UserAccount *AccountsManager::findUserById(uid_t uid)
     }
 
     QDBusObjectPath path = reply.argumentAt<0>();
+    if (path.path().isEmpty())
+        return Q_NULLPTR;
     return new UserAccount(path.path());
 }
 
@@ -218,6 +222,8 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
     }
 
     QDBusObjectPath path = reply.argumentAt<0>();
+    if (path.path().isEmpty())
+        return Q_NULLPTR;
     return new UserAccount(path.path());
 }
 
