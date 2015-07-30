@@ -35,12 +35,12 @@ namespace QtAccountsService {
  * AccountsManagerPrivate
  */
 
-AccountsManagerPrivate::AccountsManagerPrivate()
+AccountsManagerPrivate::AccountsManagerPrivate(const QDBusConnection &bus)
 {
     interface = new OrgFreedesktopAccountsInterface(
         QLatin1String("org.freedesktop.Accounts"),
         QLatin1String("/org/freedesktop/Accounts"),
-        QDBusConnection::systemBus());
+        bus);
 }
 
 AccountsManagerPrivate::~AccountsManagerPrivate()
@@ -73,8 +73,8 @@ void AccountsManagerPrivate::_q_userDeleted(const QDBusObjectPath &path)
 /*!
     Constructs a AccountsManager object.
 */
-AccountsManager::AccountsManager()
-    : d_ptr(new AccountsManagerPrivate)
+AccountsManager::AccountsManager(const QDBusConnection &bus)
+    : d_ptr(new AccountsManagerPrivate(bus))
 {
     d_ptr->q_ptr = this;
 

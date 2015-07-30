@@ -50,7 +50,7 @@ class AccountsManagerPrivate
 {
     Q_DECLARE_PUBLIC(AccountsManager)
 public:
-    AccountsManagerPrivate();
+    AccountsManagerPrivate(const QDBusConnection &bus);
     ~AccountsManagerPrivate();
 
     AccountsManager *q_ptr;

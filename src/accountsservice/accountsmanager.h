@@ -28,6 +28,7 @@
 #define QTACCOUNTSSERVICE_ACCOUNTSMANAGER_H
 
 #include <QtCore/QObject>
+#include <QtDBus/QDBusConnection>
 
 #include <QtAccountsService/UserAccount>
 
@@ -41,7 +42,7 @@ class QTACCOUNTSSERVICE_EXPORT AccountsManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit AccountsManager();
+    explicit AccountsManager(const QDBusConnection &bus = QDBusConnection::systemBus());
     ~AccountsManager();
 
     UserAccount *cacheUser(const QString &userName);
