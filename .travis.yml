@@ -2,7 +2,7 @@ language: cpp
 
 cache: ccache
 
-sudo: false
+sudo: required
 
 compiler:
   - gcc
@@ -23,6 +23,8 @@ addons:
 install:
   # compiler
   - export CXX="g++-4.8"
+  # qt
+  - sudo apt-get install qtdeclarative5-dev qttools5-dev qttools5-dev-tools
   # cmake
   - wget http://www.cmake.org/files/v3.3/cmake-3.3.0-Linux-x86_64.tar.gz -O /tmp/cmake.tar.gz
   - tar -xzf /tmp/cmake.tar.gz
