@@ -258,7 +258,7 @@ bool AccountsManager::deleteUser(uid_t uid, bool removeFiles)
 {
     Q_D(AccountsManager);
 
-    QDBusPendingReply<QDBusObjectPath> reply = d->interface->DeleteUser(uid, removeFiles);
+    QDBusPendingReply<> reply = d->interface->DeleteUser(uid, removeFiles);
     if (reply.isError()) {
         QDBusError error = reply.error();
         qWarning("Couldn't delete user %d: %s", uid,
