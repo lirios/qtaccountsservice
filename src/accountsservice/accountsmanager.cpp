@@ -221,30 +221,6 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
     return new UserAccount(path.path());
 }
 
-void AccountsManager::slotUserAccountChanged() 
-{
-    emit userAccountChanged();
-}
-
-/*!
-    Find user iconFileName
-    
-    \param userName The name of the user you want to find
-    \return the iconFile path
- */
-QString AccountsManager::findUserIconFile(const QString &userName) 
-{
-    UserAccount *user = findUserByName(userName);
-    
-    if (user) {
-        connect(user, SIGNAL(accountChanged()), 
-                this, SLOT(slotUserAccountChanged()));
-        return user->iconFileName();
-    }
-
-    return QString();
-}
-
 /*!
     Creates a new \a accountType type user account whose name is \a userName,
     real name is \a fullName.
