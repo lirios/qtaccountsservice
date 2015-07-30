@@ -21,12 +21,6 @@ Module {
             name: "userDeleted"
             Parameter { type: "UserAccount"; isPointer: true }
         }
-        Signal { name: "userAccountChanged" }
-        Method {
-            name: "findUserIconFile"
-            type: "string"
-            Parameter { name: "userName"; type: "string" }
-        }
     }
     Component {
         name: "QtAccountsService::UserAccount"
