@@ -29,6 +29,7 @@
 #include "fakeaccounts.h"
 #include "fakeaccountsadaptor.h"
 #include "accountsmanager.h"
+#include "useraccount.h"
 
 using namespace QtAccountsService;
 
@@ -62,10 +63,42 @@ private Q_SLOTS:
 
     void createAccounts()
     {
+        // Find a user that doesn't exist
+        QVERIFY(manager->findUserById(1000) == Q_NULLPTR);
+
+        // Create user
         bool ret = manager->createUser(QStringLiteral("testuser"),
                                        QStringLiteral("Test User"),
                                        UserAccount::StandardAccountType);
         QVERIFY(ret == true);
+
+        // Find the same user
+        UserAccount *account = manager->findUserById(1000);
+        QVERIFY(account->userName() == QStringLiteral("testuser"));
+    }
+
+    void cacheAccounts()
+    {
+        UserAccountList cachedUsers;
+
+        // We start with no cached users
+        cachedUsers = manager->listCachedUsers();
+        QCOMPARE(cachedUsers.size(), 0);
+
+        // Cache one user
+        UserAccount *account = manager->cacheUser(QStringLiteral("testuser"));
+        QVERIFY(account->userName() == QStringLiteral("testuser"));
+
+        // Verify we have 1 cached user
+        cachedUsers = manager->listCachedUsers();
+        QCOMPARE(cachedUsers.size(), 1);
+
+        // Uncache the user
+        manager->uncacheUser(QStringLiteral("testuser"));
+
+        // No cached users
+        cachedUsers = manager->listCachedUsers();
+        QCOMPARE(cachedUsers.size(), 0);
     }
 
     void deleteAccounts()
