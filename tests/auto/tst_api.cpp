@@ -70,11 +70,8 @@ private Q_SLOTS:
 
     void deleteAccounts()
     {
-        bool ret;
-        ret = manager->deleteUser(1000, false);
+        bool ret = manager->deleteUser(1000, false);
         QVERIFY(ret == true);
-        ret = manager->deleteUser(1000, false);
-        QVERIFY(ret == false);
     }
 
 private:
