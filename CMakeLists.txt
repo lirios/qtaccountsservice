@@ -61,6 +61,7 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Qml Quick)
 # Subdirectories
 add_subdirectory(examples)
 add_subdirectory(src)
+add_subdirectory(tests)
 
 # Display featute summary
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
