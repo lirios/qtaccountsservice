@@ -9,6 +9,7 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Test)
 
 set(SOURCES
     fakeaccounts.cpp
+    fakeuser.cpp
     tst_api.cpp
 )
 
@@ -16,10 +17,10 @@ qt5_add_dbus_adaptor(SOURCES
                      ${CMAKE_SOURCE_DIR}/src/accountsservice/org.freedesktop.Accounts.xml
                      fakeaccounts.h FakeAccounts
                      fakeaccountsadaptor FakeAccountsAdaptor)
-#qt5_add_dbus_adaptor(SOURCES
-#                     ${CMAKE_SOURCE_DIR}/src/accountsservice/org.freedesktop.Accounts.User.xml
-#                     fakeuser.h FakeUser
-#                     fakeuseradaptor FakeUserAdaptor)
+qt5_add_dbus_adaptor(SOURCES
+                     ${CMAKE_SOURCE_DIR}/src/accountsservice/org.freedesktop.Accounts.User.xml
+                     fakeuser.h FakeUser
+                     fakeuseradaptor FakeUserAdaptor)
 
 add_executable(tst_api ${SOURCES})
 target_link_libraries(tst_api Qt5::Test QtAccountsService)

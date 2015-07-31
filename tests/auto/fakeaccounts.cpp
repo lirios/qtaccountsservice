@@ -29,6 +29,7 @@
 #include <QtDBus/QDBusError>
 
 #include "fakeaccounts.h"
+#include "fakeuseradaptor.h"
 
 FakeAccounts::FakeAccounts(QObject *parent)
     : QObject(parent)
@@ -56,10 +57,10 @@ QDBusObjectPath FakeAccounts::CacheUser(const QString &name)
 {
     qDebug() << "Cache user" << name;
 
-    Q_FOREACH (UserEntry *entry, m_users) {
-        if (entry->name == name) {
+    Q_FOREACH (FakeUser *entry, m_users) {
+        if (entry->userName() == name) {
             entry->cached = true;
-            return entry->path;
+            return entry->path();
         }
     }
 
@@ -70,8 +71,8 @@ void FakeAccounts::UncacheUser(const QString &name)
 {
     qDebug() << "Uncache user" << name;
 
-    Q_FOREACH (UserEntry *entry, m_users) {
-        if (entry->name == name) {
+    Q_FOREACH (FakeUser *entry, m_users) {
+        if (entry->userName() == name) {
             entry->cached = false;
             return;
         }
@@ -84,9 +85,9 @@ QList<QDBusObjectPath> FakeAccounts::ListCachedUsers()
 
     QList<QDBusObjectPath> paths;
 
-    Q_FOREACH (UserEntry *entry, m_users) {
+    Q_FOREACH (FakeUser *entry, m_users) {
         if (entry->cached)
-            paths.append(entry->path);
+            paths.append(entry->path());
     }
 
     return paths;
@@ -99,16 +100,11 @@ QDBusObjectPath FakeAccounts::CreateUser(const QString &name,
     qDebug() << "Create user" << name;
 
     const QString path = QString("/org/freedesktop/Accounts/User%1").arg(m_lastUid);
-    UserEntry *entry = new UserEntry;
-    entry->uid = m_lastUid;
-    entry->name = name;
-    entry->fullName = fullName;
-    entry->accountType = accountType;
-    entry->path = QDBusObjectPath(path);
-    entry->cached = false;
-    m_users.append(entry),
+    FakeUser *entry = new FakeUser(path, m_lastUid, name, fullName, accountType, this);
+    new FakeUserAdaptor(entry);
+    m_users.append(entry);
     m_lastUid++;
-    return entry->path;
+    return entry->path();
 }
 
 void FakeAccounts::DeleteUser(qlonglong id, bool removeFiles)
@@ -117,8 +113,8 @@ void FakeAccounts::DeleteUser(qlonglong id, bool removeFiles)
 
     Q_UNUSED(removeFiles);
 
-    Q_FOREACH (UserEntry *entry, m_users) {
-        if (entry->uid == id) {
+    Q_FOREACH (FakeUser *entry, m_users) {
+        if ((qlonglong)entry->uid() == id) {
             m_users.removeOne(entry);
             delete entry;
             return;
@@ -130,9 +126,9 @@ QDBusObjectPath FakeAccounts::FindUserById(qlonglong id)
 {
     qDebug() << "Find user by id" << id;
 
-    Q_FOREACH (UserEntry *entry, m_users) {
-        if (entry->uid == id)
-            return entry->path;
+    Q_FOREACH (FakeUser *entry, m_users) {
+        if ((qlonglong)entry->uid() == id)
+            return entry->path();
     }
 
     return QDBusObjectPath();
@@ -142,9 +138,9 @@ QDBusObjectPath FakeAccounts::FindUserByName(const QString &name)
 {
     qDebug() << "Find user by name" << name;
 
-    Q_FOREACH (UserEntry *entry, m_users) {
-        if (entry->name == name)
-            return entry->path;
+    Q_FOREACH (FakeUser *entry, m_users) {
+        if (entry->userName() == name)
+            return entry->path();
     }
 
     return QDBusObjectPath();

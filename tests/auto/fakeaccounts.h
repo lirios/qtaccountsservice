@@ -28,17 +28,8 @@
 #define FAKEACCOUNTS_H
 
 #include <QtCore/QObject>
-#include <QtDBus/QDBusObjectPath>
 
-struct UserEntry
-{
-    qlonglong uid;
-    QString name;
-    QString fullName;
-    int accountType;
-    QDBusObjectPath path;
-    bool cached;
-};
+#include "fakeuser.h"
 
 class FakeAccounts : public QObject
 {
@@ -69,7 +60,7 @@ Q_SIGNALS:
 
 private:
     qlonglong m_lastUid;
-    QList<UserEntry *> m_users;
+    QList<FakeUser *> m_users;
 };
 
 #endif // FAKEACCOUNTS_H

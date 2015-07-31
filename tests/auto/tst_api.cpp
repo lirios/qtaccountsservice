@@ -74,7 +74,9 @@ private Q_SLOTS:
 
         // Find the same user
         UserAccount *account = manager->findUserById(1000);
-        QVERIFY(account->userName() == QStringLiteral("testuser"));
+        QVERIFY(account != Q_NULLPTR);
+        if (account)
+            QCOMPARE(account->userName(), QStringLiteral("testuser"));
     }
 
     void cacheAccounts()
@@ -87,7 +89,7 @@ private Q_SLOTS:
 
         // Cache one user
         UserAccount *account = manager->cacheUser(QStringLiteral("testuser"));
-        QVERIFY(account->userName() == QStringLiteral("testuser"));
+        QCOMPARE(account->userName(), QStringLiteral("testuser"));
 
         // Verify we have 1 cached user
         cachedUsers = manager->listCachedUsers();
