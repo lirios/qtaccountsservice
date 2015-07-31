@@ -51,13 +51,13 @@ AccountsManagerPrivate::~AccountsManagerPrivate()
 void AccountsManagerPrivate::_q_userAdded(const QDBusObjectPath &path)
 {
     Q_Q(AccountsManager);
-    emit q->userAdded(new UserAccount(path.path(), interface->connection()));
+    Q_EMIT q->userAdded(new UserAccount(path.path(), interface->connection()));
 }
 
 void AccountsManagerPrivate::_q_userDeleted(const QDBusObjectPath &path)
 {
     Q_Q(AccountsManager);
-    emit q->userDeleted(new UserAccount(path.path(), interface->connection()));
+    Q_EMIT q->userDeleted(new UserAccount(path.path(), interface->connection()));
 }
 
 /*!
