@@ -25,6 +25,7 @@
  ***************************************************************************/
 
 #include <QtCore/QDebug>
+#include <QtDBus/QDBusPendingCallWatcher>
 
 #include "accountsmanager.h"
 #include "accountsmanager_p.h"
@@ -97,27 +98,30 @@ AccountsManager::~AccountsManager()
     The user name may be a remote user, but the system must be able to lookup
     the user name and resolve the user information.
 
+    A userCached() signal with a UserAccount pointer will be emitted as soon
+    as the user account has been cached by AccountsService.
+
     \param userName The user name for the user.
 */
-UserAccount *AccountsManager::cacheUser(const QString &userName)
+void AccountsManager::cacheUser(const QString &userName)
 {
     Q_D(AccountsManager);
 
-    QDBusPendingReply<QDBusObjectPath> reply = d->interface->CacheUser(userName);
-    reply.waitForFinished();
-
-    if (reply.isError()) {
-        QDBusError error = reply.error();
-        qWarning("Couldn't cache user %s: %s",
-                 userName.toUtf8().constData(),
-                 error.errorString(error.type()).toUtf8().constData());
-        return 0;
-    }
-
-    QDBusObjectPath path = reply.argumentAt<0>();
-    if (path.path().isEmpty())
-        return Q_NULLPTR;
-    return new UserAccount(path.path(), d->interface->connection());
+    QDBusPendingCall call = d->interface->CacheUser(userName);
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
+        QDBusPendingReply<QDBusObjectPath> reply = *w;
+        if (reply.isError()) {
+            QDBusError error = reply.error();
+            qWarning("Couldn't cache user %s: %s",
+                     userName.toUtf8().constData(),
+                     error.errorString(error.type()).toUtf8().constData());
+        } else {
+            QDBusObjectPath path = reply.argumentAt<0>();
+            if (!path.path().isEmpty())
+                Q_EMIT userCached(new UserAccount(path.path(), d->interface->connection()));
+        }
+    });
 }
 
 /*!

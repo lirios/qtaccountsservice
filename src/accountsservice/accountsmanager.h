@@ -45,7 +45,7 @@ public:
     explicit AccountsManager(const QDBusConnection &bus = QDBusConnection::systemBus());
     ~AccountsManager();
 
-    UserAccount *cacheUser(const QString &userName);
+    void cacheUser(const QString &userName);
     void uncacheUser(const QString &userName);
     void uncacheUser(UserAccount *account);
 
@@ -64,6 +64,7 @@ public:
 Q_SIGNALS:
     void userAdded(UserAccount *);
     void userDeleted(UserAccount *);
+    void userCached(UserAccount *);
 
 protected:
     AccountsManagerPrivate *d_ptr;

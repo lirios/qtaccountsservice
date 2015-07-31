@@ -88,7 +88,11 @@ private Q_SLOTS:
         QCOMPARE(cachedUsers.size(), 0);
 
         // Cache one user
-        UserAccount *account = manager->cacheUser(QStringLiteral("testuser"));
+        QSignalSpy spyCacheUser(manager, SIGNAL(userCached(UserAccount*)));
+        manager->cacheUser(QStringLiteral("testuser"));
+        QVERIFY(spyCacheUser.wait(1000));
+        QCOMPARE(spyCacheUser.count(), 1);
+        UserAccount *account = qvariant_cast<UserAccount *>(spyCacheUser.at(0).at(0));
         QVERIFY(account != Q_NULLPTR);
         if (account)
             QCOMPARE(account->userName(), QStringLiteral("testuser"));
