@@ -24,7 +24,6 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtCore/QDebug>
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusError>
 
@@ -55,8 +54,6 @@ QString FakeAccounts::daemonVersion() const
 
 QDBusObjectPath FakeAccounts::CacheUser(const QString &name)
 {
-    qDebug() << "Cache user" << name;
-
     Q_FOREACH (FakeUser *entry, m_users) {
         if (entry->userName() == name) {
             entry->cached = true;
@@ -69,8 +66,6 @@ QDBusObjectPath FakeAccounts::CacheUser(const QString &name)
 
 void FakeAccounts::UncacheUser(const QString &name)
 {
-    qDebug() << "Uncache user" << name;
-
     Q_FOREACH (FakeUser *entry, m_users) {
         if (entry->userName() == name) {
             entry->cached = false;
@@ -81,8 +76,6 @@ void FakeAccounts::UncacheUser(const QString &name)
 
 QList<QDBusObjectPath> FakeAccounts::ListCachedUsers()
 {
-    qDebug() << "List cached users";
-
     QList<QDBusObjectPath> paths;
 
     Q_FOREACH (FakeUser *entry, m_users) {
@@ -97,8 +90,6 @@ QDBusObjectPath FakeAccounts::CreateUser(const QString &name,
                                          const QString &fullName,
                                          int accountType)
 {
-    qDebug() << "Create user" << name;
-
     const QString path = QString("/org/freedesktop/Accounts/User%1").arg(m_lastUid);
     FakeUser *entry = new FakeUser(path, m_lastUid, name, fullName, accountType, this);
     new FakeUserAdaptor(entry);
@@ -109,8 +100,6 @@ QDBusObjectPath FakeAccounts::CreateUser(const QString &name,
 
 void FakeAccounts::DeleteUser(qlonglong id, bool removeFiles)
 {
-    qDebug() << "Delete user" << id;
-
     Q_UNUSED(removeFiles);
 
     Q_FOREACH (FakeUser *entry, m_users) {
@@ -124,8 +113,6 @@ void FakeAccounts::DeleteUser(qlonglong id, bool removeFiles)
 
 QDBusObjectPath FakeAccounts::FindUserById(qlonglong id)
 {
-    qDebug() << "Find user by id" << id;
-
     Q_FOREACH (FakeUser *entry, m_users) {
         if ((qlonglong)entry->uid() == id)
             return entry->path();
@@ -136,8 +123,6 @@ QDBusObjectPath FakeAccounts::FindUserById(qlonglong id)
 
 QDBusObjectPath FakeAccounts::FindUserByName(const QString &name)
 {
-    qDebug() << "Find user by name" << name;
-
     Q_FOREACH (FakeUser *entry, m_users) {
         if (entry->userName() == name)
             return entry->path();
