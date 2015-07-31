@@ -56,16 +56,14 @@ UserAccountPrivate::UserAccountPrivate()
 /*!
     Constructs a UserAccount object for the currently logged in user.
 */
-UserAccount::UserAccount()
+UserAccount::UserAccount(const QDBusConnection &bus)
     : d_ptr(new UserAccountPrivate)
 {
     QString objectPath = QLatin1String("/org/freedesktop/Accounts/User") + QString::number(getuid());
 
     d_ptr->user =
         new OrgFreedesktopAccountsUserInterface(QLatin1String("org.freedesktop.Accounts"),
-                                                objectPath,
-                                                QDBusConnection::systemBus(),
-                                                this);
+                                                objectPath, bus, this);
     connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
 }
 
@@ -74,16 +72,14 @@ UserAccount::UserAccount()
 
     \param uid User identifier.
 */
-UserAccount::UserAccount(uid_t uid)
+UserAccount::UserAccount(uid_t uid, const QDBusConnection &bus)
     : d_ptr(new UserAccountPrivate)
 {
     QString objectPath = QLatin1String("/org/freedesktop/Accounts/User") + QString::number(uid);
 
     d_ptr->user =
         new OrgFreedesktopAccountsUserInterface(QLatin1String("org.freedesktop.Accounts"),
-                                                objectPath,
-                                                QDBusConnection::systemBus(),
-                                                this);
+                                                objectPath, bus, this);
     connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
 }
 
@@ -93,14 +89,12 @@ UserAccount::UserAccount(uid_t uid)
 
     \param objectPath Accounts Service object path for the user account.
 */
-UserAccount::UserAccount(const QString &objectPath)
+UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus)
     : d_ptr(new UserAccountPrivate)
 {
     d_ptr->user =
         new OrgFreedesktopAccountsUserInterface(QLatin1String("org.freedesktop.Accounts"),
-                                                objectPath,
-                                                QDBusConnection::systemBus(),
-                                                this);
+                                                objectPath, bus, this);
     connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
 }
 

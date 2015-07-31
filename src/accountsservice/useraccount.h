@@ -29,6 +29,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
+#include <QtDBus/QDBusConnection>
 
 #include <qtaccountsservice/qtaccountsservice_export.h>
 
@@ -75,8 +76,9 @@ public:
         NonePasswordMode
     };
 
-    UserAccount();
-    explicit UserAccount(uid_t uid);
+    UserAccount(const QDBusConnection &bus = QDBusConnection::systemBus());
+    explicit UserAccount(uid_t uid,
+                         const QDBusConnection &bus = QDBusConnection::systemBus());
     ~UserAccount();
 
     uid_t userId() const;
@@ -161,7 +163,8 @@ private:
 
     Q_DECLARE_PRIVATE(UserAccount)
 
-    UserAccount(const QString &objectPath);
+    UserAccount(const QString &objectPath,
+                const QDBusConnection &bus = QDBusConnection::systemBus());
 };
 
 typedef QList<UserAccount *> UserAccountList;

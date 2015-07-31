@@ -51,13 +51,13 @@ AccountsManagerPrivate::~AccountsManagerPrivate()
 void AccountsManagerPrivate::_q_userAdded(const QDBusObjectPath &path)
 {
     Q_Q(AccountsManager);
-    emit q->userAdded(new UserAccount(path.path()));
+    emit q->userAdded(new UserAccount(path.path(), interface->connection()));
 }
 
 void AccountsManagerPrivate::_q_userDeleted(const QDBusObjectPath &path)
 {
     Q_Q(AccountsManager);
-    emit q->userDeleted(new UserAccount(path.path()));
+    emit q->userDeleted(new UserAccount(path.path(), interface->connection()));
 }
 
 /*!
@@ -117,7 +117,7 @@ UserAccount *AccountsManager::cacheUser(const QString &userName)
     QDBusObjectPath path = reply.argumentAt<0>();
     if (path.path().isEmpty())
         return Q_NULLPTR;
-    return new UserAccount(path.path());
+    return new UserAccount(path.path(), d->interface->connection());
 }
 
 /*!
@@ -169,7 +169,7 @@ UserAccountList AccountsManager::listCachedUsers()
 
     QList<QDBusObjectPath> value = reply.argumentAt<0>();
     for (int i = 0; i < value.size(); i++)
-        list.append(new UserAccount(value.at(i).path()));
+        list.append(new UserAccount(value.at(i).path(), d->interface->connection()));
 
     return list;
 }
@@ -197,7 +197,7 @@ UserAccount *AccountsManager::findUserById(uid_t uid)
     QDBusObjectPath path = reply.argumentAt<0>();
     if (path.path().isEmpty())
         return Q_NULLPTR;
-    return new UserAccount(path.path());
+    return new UserAccount(path.path(), d->interface->connection());
 }
 
 /*!
@@ -224,7 +224,7 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
     QDBusObjectPath path = reply.argumentAt<0>();
     if (path.path().isEmpty())
         return Q_NULLPTR;
-    return new UserAccount(path.path());
+    return new UserAccount(path.path(), d->interface->connection());
 }
 
 /*!
