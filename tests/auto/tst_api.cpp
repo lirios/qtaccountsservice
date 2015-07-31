@@ -89,7 +89,9 @@ private Q_SLOTS:
 
         // Cache one user
         UserAccount *account = manager->cacheUser(QStringLiteral("testuser"));
-        QCOMPARE(account->userName(), QStringLiteral("testuser"));
+        QVERIFY(account != Q_NULLPTR);
+        if (account)
+            QCOMPARE(account->userName(), QStringLiteral("testuser"));
 
         // Verify we have 1 cached user
         cachedUsers = manager->listCachedUsers();
