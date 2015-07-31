@@ -59,10 +59,10 @@ UserAccountPrivate::UserAccountPrivate()
 UserAccount::UserAccount(const QDBusConnection &bus)
     : d_ptr(new UserAccountPrivate)
 {
-    QString objectPath = QLatin1String("/org/freedesktop/Accounts/User") + QString::number(getuid());
+    QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(getuid());
 
     d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface(QLatin1String("org.freedesktop.Accounts"),
+        new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
                                                 objectPath, bus, this);
     connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
 }
@@ -75,10 +75,10 @@ UserAccount::UserAccount(const QDBusConnection &bus)
 UserAccount::UserAccount(uid_t uid, const QDBusConnection &bus)
     : d_ptr(new UserAccountPrivate)
 {
-    QString objectPath = QLatin1String("/org/freedesktop/Accounts/User") + QString::number(uid);
+    QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(uid);
 
     d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface(QLatin1String("org.freedesktop.Accounts"),
+        new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
                                                 objectPath, bus, this);
     connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
 }
@@ -93,7 +93,7 @@ UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus)
     : d_ptr(new UserAccountPrivate)
 {
     d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface(QLatin1String("org.freedesktop.Accounts"),
+        new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
                                                 objectPath, bus, this);
     connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
 }

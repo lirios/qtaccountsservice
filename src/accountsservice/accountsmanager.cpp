@@ -38,8 +38,8 @@ namespace QtAccountsService {
 AccountsManagerPrivate::AccountsManagerPrivate(const QDBusConnection &bus)
 {
     interface = new OrgFreedesktopAccountsInterface(
-        QLatin1String("org.freedesktop.Accounts"),
-        QLatin1String("/org/freedesktop/Accounts"),
+        QStringLiteral("org.freedesktop.Accounts"),
+        QStringLiteral("/org/freedesktop/Accounts"),
         bus);
 }
 
