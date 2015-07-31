@@ -111,6 +111,7 @@ void AccountsManager::cacheUser(const QString &userName)
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
         QDBusPendingReply<QDBusObjectPath> reply = *w;
+        w->deleteLater();
         if (reply.isError()) {
             QDBusError error = reply.error();
             qWarning("Couldn't cache user %s: %s",
