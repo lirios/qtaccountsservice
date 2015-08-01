@@ -50,6 +50,7 @@ public:
     void uncacheUser(UserAccount *account);
 
     UserAccountList listCachedUsers();
+    void listCachedUsersAsync();
 
     UserAccount *findUserById(uid_t uid);
     UserAccount *findUserByName(const QString &userName);
@@ -65,6 +66,7 @@ Q_SIGNALS:
     void userAdded(UserAccount *);
     void userDeleted(UserAccount *);
     void userCached(UserAccount *);
+    void listCachedUsersFinished(UserAccountList userList);
 
 protected:
     AccountsManagerPrivate *d_ptr;

@@ -180,6 +180,33 @@ UserAccountList AccountsManager::listCachedUsers()
 }
 
 /*!
+    Cached a list of user accounts.
+    Async unblocking API.
+*/
+void AccountsManager::listCachedUsersAsync()
+{
+    Q_D(AccountsManager);
+
+    QDBusPendingCall call = d->interface->ListCachedUsers();
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
+        QDBusPendingReply< QList<QDBusObjectPath> > reply = *w;
+        w->deleteLater();
+        if (reply.isError()) {
+            QDBusError error = reply.error();
+            qWarning("Couldn't list cached users: %s",
+                     error.errorString(error.type()).toUtf8().constData());
+        } else {
+            UserAccountList userList;
+            QList<QDBusObjectPath> value = reply.argumentAt<0>();
+            for (int i = 0; i < value.size(); i++)
+                userList.append(new UserAccount(value.at(i).path(), d->interface->connection()));
+            Q_EMIT listCachedUsersFinished(userList);
+        }
+    });
+}
+
+/*!
     Finds a user by \a uid.
 
     \param uid The uid to look up.
