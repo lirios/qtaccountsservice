@@ -1,11 +1,11 @@
 Qt AccountsService binding
 ==========================
 
+[![IRC Network](https://img.shields.io/badge/irc-freenode-blue.svg "IRC Freenode")](https://webchat.freenode.net/?channels=hawaii-desktop)
 [![GitHub release](https://img.shields.io/github/release/hawaii-desktop/qtaccountsservice.svg)](https://github.com/hawaii-desktop/qtaccountsservice)
 [![GitHub issues](https://img.shields.io/github/issues/hawaii-desktop/qtaccountsservice.svg)](https://github.com/hawaii-desktop/qtaccountsservice/issues)
 [![Build Status](https://travis-ci.org/hawaii-desktop/qtaccountsservice.svg)](https://travis-ci.org/hawaii-desktop/qtaccountsservice)
 [![Coverity Status](https://img.shields.io/coverity/scan/5911.svg)](https://scan.coverity.com/projects/5911)
-[![IRC Network](https://img.shields.io/badge/irc-freenode-blue.svg "IRC Freenode")](https://webchat.freenode.net/?channels=hawaii-desktop)
 
 Qt-style API to use freedesktop.org's AccountsService DBus service.
 
