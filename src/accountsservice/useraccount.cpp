@@ -377,7 +377,7 @@ void UserAccount::setShell(const QString &shell)
 QString UserAccount::iconFileName() const
 {
     Q_D(const UserAccount);
-    return d->user->iconFile();
+    return QFile::exists(d->user->iconFile()) ? d->user->iconFile() : QString();
 }
 
 /*!
