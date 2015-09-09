@@ -32,6 +32,9 @@ if(CMAKE_BUILD_TYPE MATCHES "^[Rr]elease$")
     add_definitions(-DQT_NO_DEBUG_OUTPUT)
 endif()
 
+# Definitions
+add_definitions(-DQT_NO_CAST_FROM_ASCII)
+
 # Macros
 include(FeatureSummary)
 
