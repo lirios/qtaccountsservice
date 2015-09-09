@@ -66,7 +66,7 @@ Q_SIGNALS:
     void userAdded(UserAccount *);
     void userDeleted(UserAccount *);
     void userCached(UserAccount *);
-    void listCachedUsersFinished(UserAccountList userList);
+    void listCachedUsersFinished(const UserAccountList &userList);
 
 protected:
     AccountsManagerPrivate *d_ptr;
