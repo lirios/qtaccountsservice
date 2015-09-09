@@ -193,6 +193,8 @@ UserAccountList AccountsManager::listCachedUsers()
     }
 
     QList<QDBusObjectPath> value = reply.argumentAt<0>();
+    list.reserve(value.size());
+
     for (int i = 0; i < value.size(); i++) {
         const QString path = value.at(i).path();
         UserAccount *account = d->usersCache.value(path, Q_NULLPTR);
@@ -225,7 +227,9 @@ void AccountsManager::listCachedUsersAsync()
                      error.errorString(error.type()).toUtf8().constData());
         } else {
             UserAccountList userList;
+
             QList<QDBusObjectPath> value = reply.argumentAt<0>();
+            userList.reserve(value.size());
             for (int i = 0; i < value.size(); i++) {
                 const QString path = value.at(i).path();
                 UserAccount *account = d->usersCache.value(path, Q_NULLPTR);
