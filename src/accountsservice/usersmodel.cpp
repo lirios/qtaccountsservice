@@ -106,8 +106,6 @@ int UsersModel::rowCount(const QModelIndex &parent) const
 
 QVariant UsersModel::data(const QModelIndex &index, int role) const
 {
-    Q_D(const UsersModel);
-
     UserAccount *user = userAccount(index);
     if (!user)
         return QVariant();
@@ -136,8 +134,6 @@ QVariant UsersModel::data(const QModelIndex &index, int role) const
 
 bool UsersModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    Q_D(UsersModel);
-
     UserAccount *user = userAccount(index);
     if (!user)
         return false;
