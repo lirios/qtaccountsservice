@@ -55,6 +55,7 @@ public:
 
     AccountsManager *q_ptr;
     OrgFreedesktopAccountsInterface *interface;
+    QMap<QString, UserAccount *> usersCache;
 
     void _q_userAdded(const QDBusObjectPath &path);
     void _q_userDeleted(const QDBusObjectPath &path);

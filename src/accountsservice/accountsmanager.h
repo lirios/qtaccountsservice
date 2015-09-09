@@ -64,7 +64,7 @@ public:
 
 Q_SIGNALS:
     void userAdded(UserAccount *);
-    void userDeleted(UserAccount *);
+    void userDeleted(uid_t uid);
     void userCached(UserAccount *);
     void listCachedUsersFinished(const UserAccountList &userList);
 

@@ -46,19 +46,32 @@ AccountsManagerPrivate::AccountsManagerPrivate(const QDBusConnection &bus)
 
 AccountsManagerPrivate::~AccountsManagerPrivate()
 {
+    qDeleteAll(usersCache);
     delete interface;
 }
 
 void AccountsManagerPrivate::_q_userAdded(const QDBusObjectPath &path)
 {
     Q_Q(AccountsManager);
-    Q_EMIT q->userAdded(new UserAccount(path.path(), interface->connection()));
+
+    if (usersCache.contains(path.path())) {
+        Q_EMIT q->userAdded(usersCache[path.path()]);
+        return;
+    }
+
+    UserAccount *account = new UserAccount(path.path(), interface->connection());
+    usersCache[path.path()] = account;
+    Q_EMIT q->userAdded(account);
 }
 
 void AccountsManagerPrivate::_q_userDeleted(const QDBusObjectPath &path)
 {
     Q_Q(AccountsManager);
-    Q_EMIT q->userDeleted(new UserAccount(path.path(), interface->connection()));
+
+    UserAccount *account = usersCache.value(path.path(), Q_NULLPTR);
+    usersCache.remove(path.path());
+    Q_EMIT q->userDeleted(account->userId());
+    account->deleteLater();
 }
 
 /*!
@@ -119,8 +132,15 @@ void AccountsManager::cacheUser(const QString &userName)
                      error.errorString(error.type()).toUtf8().constData());
         } else {
             QDBusObjectPath path = reply.argumentAt<0>();
-            if (!path.path().isEmpty())
-                Q_EMIT userCached(new UserAccount(path.path(), d->interface->connection()));
+            if (path.path().isEmpty())
+                return;
+
+            UserAccount *account = d->usersCache.value(path.path(), Q_NULLPTR);
+            if (!account) {
+                account = new UserAccount(path.path(), d->interface->connection());
+                d->usersCache[path.path()] = account;
+            }
+            Q_EMIT userCached(account);
         }
     });
 }
@@ -173,8 +193,15 @@ UserAccountList AccountsManager::listCachedUsers()
     }
 
     QList<QDBusObjectPath> value = reply.argumentAt<0>();
-    for (int i = 0; i < value.size(); i++)
-        list.append(new UserAccount(value.at(i).path(), d->interface->connection()));
+    for (int i = 0; i < value.size(); i++) {
+        const QString path = value.at(i).path();
+        UserAccount *account = d->usersCache.value(path, Q_NULLPTR);
+        if (!account) {
+            account = new UserAccount(path, d->interface->connection());
+            d->usersCache[path] = account;
+        }
+        list.append(account);
+    }
 
     return list;
 }
@@ -199,8 +226,15 @@ void AccountsManager::listCachedUsersAsync()
         } else {
             UserAccountList userList;
             QList<QDBusObjectPath> value = reply.argumentAt<0>();
-            for (int i = 0; i < value.size(); i++)
-                userList.append(new UserAccount(value.at(i).path(), d->interface->connection()));
+            for (int i = 0; i < value.size(); i++) {
+                const QString path = value.at(i).path();
+                UserAccount *account = d->usersCache.value(path, Q_NULLPTR);
+                if (!account) {
+                    account = new UserAccount(path, d->interface->connection());
+                    d->usersCache[path] = account;
+                }
+                userList.append(account);
+            }
             Q_EMIT listCachedUsersFinished(userList);
         }
     });
@@ -229,7 +263,13 @@ UserAccount *AccountsManager::findUserById(uid_t uid)
     QDBusObjectPath path = reply.argumentAt<0>();
     if (path.path().isEmpty())
         return Q_NULLPTR;
-    return new UserAccount(path.path(), d->interface->connection());
+
+    UserAccount *account = d->usersCache.value(path.path(), Q_NULLPTR);
+    if (!account) {
+        account = new UserAccount(path.path(), d->interface->connection());
+        d->usersCache[path.path()] = account;
+    }
+    return account;
 }
 
 /*!
@@ -256,7 +296,13 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
     QDBusObjectPath path = reply.argumentAt<0>();
     if (path.path().isEmpty())
         return Q_NULLPTR;
-    return new UserAccount(path.path(), d->interface->connection());
+
+    UserAccount *account = d->usersCache.value(path.path(), Q_NULLPTR);
+    if (!account) {
+        account = new UserAccount(path.path(), d->interface->connection());
+        d->usersCache[path.path()] = account;
+    }
+    return account;
 }
 
 /*!
