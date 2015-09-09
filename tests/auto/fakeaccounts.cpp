@@ -90,7 +90,7 @@ QDBusObjectPath FakeAccounts::CreateUser(const QString &name,
                                          const QString &fullName,
                                          int accountType)
 {
-    const QString path = QString("/org/freedesktop/Accounts/User%1").arg(m_lastUid);
+    const QString path = QStringLiteral("/org/freedesktop/Accounts/User%1").arg(m_lastUid);
     FakeUser *entry = new FakeUser(path, m_lastUid, name, fullName, accountType, this);
     new FakeUserAdaptor(entry);
     m_users.append(entry);
