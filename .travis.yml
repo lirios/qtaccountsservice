@@ -40,8 +40,8 @@ install:
   - if [ "$CXX" == "g++" ]; then sudo apt-get install -qq gcc-4.8 g++-4.8; fi
   - if [ "$CXX" == "g++" ]; then export CC="gcc-4.8"; export CXX="g++-4.8"; fi
   # clang
-  - if [ "$CXX" == "clang++" ]; then sudo apt-get install -qq clang-3.6; fi
-  - if [ "$CXX" == "clang++" ]; then export CC="clang-3.6"; export CXX="clang++-3.6"; fi
+  #- if [ "$CXX" == "clang++" ]; then sudo apt-get install -qq clang-3.6; fi
+  #- if [ "$CXX" == "clang++" ]; then export CC="clang-3.6"; export CXX="clang++-3.6"; fi
   # qt
   - sudo apt-get -y install qt54declarative qt54tools
 
