@@ -1,10 +1,10 @@
 /****************************************************************************
  * This file is part of Qt AccountsService Addon.
  *
- * Copyright (C) 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+ * Copyright (C) 2015-2016 Leslie Zhai
  *
  * Author(s):
- *    Leslie Zhai
+ *    Leslie Zhai <xiang.zhai@i-soft.com.cn>
  *
  * $BEGIN_LICENSE:GPL2+$
  *
