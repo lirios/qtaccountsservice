@@ -12,15 +12,17 @@ set(PROJECT_VERSION "0.6.0")
 set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_SOVERSION 0)
 
-# Set up packaging
-set(CPACK_PACKAGE_NAME "qtaccountsservice")
-set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
-set(CPACK_GENERATOR "TGZ")
-set(CPACK_SET_DESTDIR FALSE)
-set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
-set(CPACK_SOURCE_IGNORE_FILES "/build/;/.git;/.tx/;~$;${CPACK_SOURCE_IGNORE_FILES}")
-include(CPack)
-add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
+if(NOT USE_SUPERBUILD)
+    # Set up packaging
+    set(CPACK_PACKAGE_NAME "qtaccountsservice")
+    set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
+    set(CPACK_GENERATOR "TGZ")
+    set(CPACK_SET_DESTDIR FALSE)
+    set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
+    set(CPACK_SOURCE_IGNORE_FILES "/build/;/.git;/.tx/;~$;${CPACK_SOURCE_IGNORE_FILES}")
+    include(CPack)
+    add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
+endif()
 
 # Assume release build by default
 if(NOT CMAKE_BUILD_TYPE)
@@ -45,7 +47,11 @@ set_package_properties(ECM PROPERTIES
     DESCRIPTION "Extra CMake Modules"
     URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH
+    "${ECM_MODULE_PATH}"
+    "${ECM_KDE_MODULE_DIR}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake"
+)
 
 # ECM macros
 include(KDEInstallDirs)
