@@ -127,6 +127,8 @@ QVariant UsersModel::data(const QModelIndex &index, int role) const
         return user->accountType();
     case UsersModel::LanguageRole:
         return user->language();
+    default:
+        break;
     }
 
     return QVariant();
