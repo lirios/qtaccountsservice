@@ -49,4 +49,4 @@ today=$(date +"%Y-%m-%d")
 mkdir -p $builddir || exit $?
 cat $curdir/bintray.json | sed -e "s,@GITREV@,$gitrev,g" -e "s,@GITDATE@,$gitdate,g" -e "s,@TODAY@,$today,g" > $builddir/bintray.json || exit $?
 sudo make install DESTDIR=$artifactsdir || exit $?
-tar -cJf $builddir/qtaccountsservice.tar.xz -C $artifactsdir . || exit $?
+tar -cJf $builddir/qtaccountsservice-${CC}.tar.xz -C $artifactsdir . || exit $?
