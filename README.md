@@ -1,75 +1,51 @@
-Qt AccountsService binding
-==========================
+Qt Accounts Service
+===================
+
+[![ZenHub.io](https://img.shields.io/badge/supercharged%20by-zenhub.io-blue.svg)](https://zenhub.io)
 
 [![IRC Network](https://img.shields.io/badge/irc-freenode-blue.svg "IRC Freenode")](https://webchat.freenode.net/?channels=hawaii-desktop)
+[![License](https://img.shields.io/badge/license-GPLv3.0%2B-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![GitHub release](https://img.shields.io/github/release/hawaii-desktop/qtaccountsservice.svg)](https://github.com/hawaii-desktop/qtaccountsservice)
-[![GitHub issues](https://img.shields.io/github/issues/hawaii-desktop/qtaccountsservice.svg)](https://github.com/hawaii-desktop/qtaccountsservice/issues)
 [![Build Status](https://travis-ci.org/hawaii-desktop/qtaccountsservice.svg)](https://travis-ci.org/hawaii-desktop/qtaccountsservice)
 [![Coverity Status](https://img.shields.io/coverity/scan/5911.svg)](https://scan.coverity.com/projects/5911)
+[![GitHub issues](https://img.shields.io/github/issues/hawaii-desktop/qtaccountsservice.svg)](https://github.com/hawaii-desktop/qtaccountsservice/issues)
+[![Maintained](https://img.shields.io/maintenance/yes/2016.svg)](https://github.com/hawaii-desktop/qtaccountsservice/commits/develop)
 
 Qt-style API to use freedesktop.org's AccountsService DBus service.
 
-For more information see:
-    http://www.freedesktop.org/wiki/Software/AccountsService
+For more information [read here](http://www.freedesktop.org/wiki/Software/AccountsService)
 
-No build dependencies besides Qt 5.x, but to use this library you need
-the AccountsService daemon running.
+## Dependencies
 
-## Build && Install
+Qt >= 5.0.0 with at least the following modules is required:
 
-```
-mkdir build
-cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=/usr    \
-    -DLIB_INSTALL_DIR=lib   \
-    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON
-make
-sudo make install
-```
+ * [qtbase](http://code.qt.io/cgit/qt/qtbase.git)
+ * [qtdeclarative](http://code.qt.io/cgit/qt/qtdeclarative.git)
 
+The following modules and their dependencies are required:
 
-## Build
-
-Building this project is a piece of cake.
-
-Assuming you are in the source directory, just create a build directory
-and run cmake:
-
-```sh
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX=/opt/hawaii ..
-```
-
-To do a debug build the last command can be:
-
-```sh
-cmake -DCMAKE_INSTALL_PREFIX=/opt/hawaii -DCMAKE_BUILD_TYPE=Debug ..
-```
-
-To do a release build instead it can be:
-
-```sh
-cmake -DCMAKE_INSTALL_PREFIX=/opt/hawaii -DCMAKE_BUILD_TYPE=Release ..
-```
-
-If not passed, the `CMAKE_INSTALL_PREFIX` parameter defaults to /usr/local.
-You have to specify a path that fits your needs, /opt/hawaii is just an example.
-
-Package maintainers would pass `-DCMAKE_INSTALL_PREFIX=/usr`.
-
-The `CMAKE_BUILD_TYPE` parameter allows the following values:
-
-* **Debug:** debug build
-* **Release:** release build
-* **RelWithDebInfo:** release build with debugging information
+ * [ECM >= 1.7.0](http://quickgit.kde.org/?p=extra-cmake-modules.git)
 
 ## Installation
 
-It's really easy, it's just a matter of typing:
+From the root of the repository, run:
 
 ```sh
-make install
+mkdir build; cd build
+cmake .. -DKDE_INSTALL_USE_QT_SYS_PATHS=ON
+make
+make install # use sudo if necessary
 ```
 
-from the build directory.
+On the `cmake` line, you can specify additional configuration parameters:
+
+ * `-DCMAKE_INSTALL_PREFIX=/path/to/install` (for example, `/opt/qtaccountsservice` or `/usr`)
+ * `-DCMAKE_BUILD_TYPE=<build_type>`, where `<build_type>` is one of:
+   * **Debug:** debug build
+   * **Release:** release build
+   * **RelWithDebInfo:** release build with debugging information
+
+## Licensing
+
+Licensed under the terms of the GNU General Public License version 2.1 or,
+at your option, any later version.
