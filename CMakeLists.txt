@@ -25,19 +25,6 @@ set(CPACK_SOURCE_IGNORE_FILES "/build/;/.git;/.tx/;~$;${CPACK_SOURCE_IGNORE_FILE
 include(CPack)
 add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
-# Assume release build by default
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "" FORCE)
-endif()
-
-# Disable debug output for release builds
-if(CMAKE_BUILD_TYPE MATCHES "^[Rr]elease$")
-    add_definitions(-DQT_NO_DEBUG_OUTPUT)
-endif()
-
-# Definitions
-add_definitions(-DQT_NO_CAST_FROM_ASCII)
-
 # Macros
 include(FeatureSummary)
 
@@ -53,6 +40,25 @@ list(APPEND CMAKE_MODULE_PATH
 include(KDEInstallDirs)
 include(KDECompilerSettings)
 include(KDECMakeSettings)
+
+# Build flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -Werror -Wall -Wextra -Wformat -Wswitch-default -Wunused-parameter -pedantic -std=c++11")
+
+# qCDebug() uses zero variadic arguments, so we need to disable this warning
+# as it would become an error with -Werror
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-gnu-zero-variadic-macro-arguments")
+endif()
+
+# Definitions
+#add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
+add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_STRICT_ITERATORS -DQT_NO_CAST_FROM_BYTEARRAY)
+
+# Assume release build by default
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "" FORCE)
+endif()
 
 # Find Qt5
 set(REQUIRED_QT_VERSION 5.0.0)
