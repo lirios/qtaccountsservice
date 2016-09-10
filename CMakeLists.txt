@@ -41,29 +41,18 @@ add_definitions(-DQT_NO_CAST_FROM_ASCII)
 # Macros
 include(FeatureSummary)
 
-# ECM setup
-find_package(ECM 1.4.0 REQUIRED NO_MODULE)
-set_package_properties(ECM PROPERTIES
-    TYPE REQUIRED
-    DESCRIPTION "Extra CMake Modules"
-    URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
-feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} "${CMAKE_SOURCE_DIR}/cmake")
+# ECM
+find_package(ECM 1.7.0 REQUIRED NO_MODULE)
+list(APPEND CMAKE_MODULE_PATH
+    "${ECM_MODULE_PATH}"
+    "${ECM_KDE_MODULE_DIR}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake"
+)
 
-# ECM macros
+# Macros
 include(KDEInstallDirs)
 include(KDECompilerSettings)
 include(KDECMakeSettings)
-
-# Add custom uninstall target
-if ("${ECM_VERSION}" VERSION_LESS "1.7.0")
-    # ECM 1.7.0 provides this target, so we can't roll our own
-    configure_file(
-        "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
-        "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-        IMMEDIATE @ONLY)
-    add_custom_target(uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
-endif()
 
 # Find Qt5
 set(REQUIRED_QT_VERSION 5.0.0)
