@@ -1,11 +1,14 @@
 project(QtAccountsServices)
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
+cmake_policy(VERSION 3.4.1)
 
-# Silence CMake warnings
-if(POLICY CMP0063)
-    cmake_policy(SET CMP0063 NEW)
-endif()
+# Instruct CMake to run moc and rrc automatically when needed
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+# Apple-specific configuration
+set(APPLE_SUPPRESS_X11_WARNING ON)
 
 # Set version
 set(PROJECT_VERSION "0.6.0")
