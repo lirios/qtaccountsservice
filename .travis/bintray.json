@@ -1,0 +1,28 @@
+{
+  "package": {
+    "name": "qtaccountsservice",
+    "repo": "ci",
+    "subject": "qtaccountsservice",
+    "desc": "Qt-style API for freedesktop.org's AccountsService DBus service",
+    "website_url": "http://hawaiios.org",
+    "issue_tracker_url": "https://github.com/hawaii-desktop/qtaccountsservice",
+    "vcs_url": "https://github.com/hawaii-desktop/qtaccountsservice",
+    "licenses": ["GPL-2.0", "LGPL-2.1"],
+    "labels": ["qt", "dbus", "accounts"]
+  },
+  "version": {
+    "name": "latest_build",
+    "desc": "Continuous integration build",
+    "released": "@TODAY@",
+    "vcs_tag": "@GITREV@",
+    "attributes": [
+      {"name": "gitrevision", "values": ["@GITREV@"], "type": "string"},
+      {"name": "gitdate", "values": ["@GITDATE@"], "type": "date"}
+    ],
+    "gpgSign": false
+  },
+  "files": [
+    {"includePattern": "build/(qtaccountsservice.tar.xz)", "uploadPattern": "$1"}
+  ],
+  "publish": true
+}
