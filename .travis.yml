@@ -35,7 +35,7 @@ arch:
     - if [ "$CC" = "clang" ]; then cmake . -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DCMAKE_INSTALL_PREFIX=/usr; fi
     - make
     - sudo make install
-    - make test
+    #- make test
 
 script:
   - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
