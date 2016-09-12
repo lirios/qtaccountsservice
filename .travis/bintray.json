@@ -2,7 +2,7 @@
   "package": {
     "name": "qtaccountsservice",
     "repo": "ci",
-    "subject": "qtaccountsservice",
+    "subject": "hawaii",
     "desc": "Qt-style API for freedesktop.org's AccountsService DBus service",
     "website_url": "http://hawaiios.org",
     "issue_tracker_url": "https://github.com/hawaii-desktop/qtaccountsservice",
