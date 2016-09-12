@@ -22,7 +22,8 @@
     "gpgSign": false
   },
   "files": [
-    {"includePattern": "build/(qtaccountsservice.tar.xz)", "uploadPattern": "$1"}
+    {"includePattern": "build/(qtaccountsservice-gcc.tar.xz)", "uploadPattern": "$1"},
+    {"includePattern": "build/(qtaccountsservice-clang.tar.xz)", "uploadPattern": "$1"}
   ],
   "publish": true
 }
