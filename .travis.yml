@@ -47,7 +47,7 @@ deploy:
   file: build/bintray.json
   user: plfiorini
   key:
-    secure: AXgDeE2nJmBEMSU0zegjeesXkRE5Z5t3bW9w7tVxdwhlqiLv3UXLHiPazdkmxGWQDFhIIwSMz+BolpaTMRwYMOgPhzBahxYyHV5Q1yN4yn4XbwHqXegcpRzPuhHBidDaWJGJZJu6Wi2+CTTZ1WwEl8iXrHxqXs/4fy1GayUQEfg=
+    secure: Okf6QOVZssbKDETn/kqwyPX7bFZJcaEG0ybATOoo7p7JQNA8BEld7jdA7YoGegzzK7qPIp2dP0wiLRi7p6XQCSOCZCkK9zcnUoNWHJ2Tc3hYz2PIu3T9cBSQDVQtzh1ZNn5c5ao/yvT5pnCLnMl4foJyai4cL3I3tBaUKJ1iMQc=
 
 notifications:
   email: false
