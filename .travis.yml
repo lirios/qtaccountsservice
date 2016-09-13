@@ -8,9 +8,11 @@ sudo: required
 
 env:
   global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "ACWDq/vepvntxIQyyon/emc2fXCPYZhpCFkQ/cWmVJ+hS6eGEBl5sEoyXZicPmZNxcdGyhGCprtcoMGwqfR31B0MSD5O0GVWrS+NNN5imH+Fqvyf2KcG+ByJSOLmeyn9UzrByS41hw2A8AfzwQg50sQjPHY27LmJNZsXizLTGt0="
+    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+    #   via the "travis encrypt" command using the project repo's public key
+    - secure: "ACWDq/vepvntxIQyyon/emc2fXCPYZhpCFkQ/cWmVJ+hS6eGEBl5sEoyXZicPmZNxcdGyhGCprtcoMGwqfR31B0MSD5O0GVWrS+NNN5imH+Fqvyf2KcG+ByJSOLmeyn9UzrByS41hw2A8AfzwQg50sQjPHY27LmJNZsXizLTGt0="
+  matrix:
+    - ARCH_TRAVIS_MIRROR=http://mirrors.kernel.org/archlinux
 
 addons:
   coverity_scan:
