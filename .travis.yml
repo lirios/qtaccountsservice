@@ -42,10 +42,13 @@ script:
   - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
 
 deploy:
-  on: develop
   provider: bintray
-  file: build/bintray.json
-  user: plfiorini
+  on:
+    branch: develop
+    condition: "$CC = gcc"
+  file: cibuild/bintray.json
+  user:
+    secure: G2c3nZZcWddSx5/KlQN0b8kc9CuKo6H75L6Q7p6uPjtViwMfkVRWZQplfuPzHWdKhhmmEmOA8XvwtKOI3Q1lryBwx0I+/0gwwmktBbI4h0dSK0iPuBJw8iObm0MJXs6aiTKX2wuOnYnRXR0TFEgYBP93APoxI4NNji2HnpOpVxU=
   key:
     secure: Okf6QOVZssbKDETn/kqwyPX7bFZJcaEG0ybATOoo7p7JQNA8BEld7jdA7YoGegzzK7qPIp2dP0wiLRi7p6XQCSOCZCkK9zcnUoNWHJ2Tc3hYz2PIu3T9cBSQDVQtzh1ZNn5c5ao/yvT5pnCLnMl4foJyai4cL3I3tBaUKJ1iMQc=
 

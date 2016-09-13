@@ -1,7 +1,7 @@
 {
   "package": {
     "name": "qtaccountsservice",
-    "repo": "ci",
+    "repo": "archlinux-@GITBRANCH@",
     "subject": "hawaii",
     "desc": "Qt-style API for freedesktop.org's AccountsService DBus service",
     "website_url": "http://hawaiios.org",
@@ -11,8 +11,8 @@
     "labels": ["qt", "dbus", "accounts"]
   },
   "version": {
-    "name": "latest_build",
-    "desc": "Continuous integration build",
+    "name": "@PKGVER@",
+    "desc": "Arch Linux build from CI",
     "released": "@TODAY@",
     "vcs_tag": "@GITREV@",
     "attributes": [
@@ -22,8 +22,8 @@
     "gpgSign": false
   },
   "files": [
-    {"includePattern": "build/(qtaccountsservice-gcc.tar.xz)", "uploadPattern": "$1"},
-    {"includePattern": "build/(qtaccountsservice-clang.tar.xz)", "uploadPattern": "$1"}
+    {"includePattern": "cibuild/(qtaccountsservice-git-.*.pkg.tar.xz)", "uploadPattern": "@ARCH@/$1", "matrixParams": {"override": 1}},
+    {"includePattern": "cibuild/(qtaccountsservice.db.tar.gz)", "uploadPattern": "@ARCH@/qtaccountsservice.db", "matrixParams": {"override": 1}}
   ],
   "publish": true
 }
