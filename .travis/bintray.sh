@@ -48,6 +48,11 @@ pkgver=$(git log -1 --format="%cd" --date=short | tr -d '-').$(git log -1 --form
 version="${_gitdate}.${_gitver}"
 today=$(date +"%Y-%m-%d")
 
+# Restrict Bintray deployment to certain branches
+if [ $TRAVIS_BRANCH != "master" -a $TRAVIS_BRANCH != "develop" ]; then
+    exit 0
+fi
+
 # Deploy only once (useful if CI builds for multiple compilers)
 if [ -f $builddir/done ]; then
     exit 0
