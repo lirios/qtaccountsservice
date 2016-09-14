@@ -42,7 +42,6 @@ curdir=$(dirname `readlink -f $0`)
 builddir=$curdir/../cibuild
 arch=$(uname -m)
 gitreponame=$(basename `git rev-parse --show-toplevel`)
-gitbranch=$(git rev-parse --abbrev-ref HEAD)
 gitrev=$(git log -1 --format="%h")
 gitdate=$(date -d @$(git log -1 --format="%at") +%Y-%m-%dT%H:%M:%S%z)
 pkgver=$(git log -1 --format="%cd" --date=short | tr -d '-').$(git log -1 --format="%h")
@@ -58,13 +57,13 @@ mkdir -p $builddir || exit $?
 cat $curdir/bintray.json.in | \
 sed -e "s,@GITREV@,$gitrev,g" \
     -e "s,@GITDATE@,$gitdate,g" \
-    -e "s,@GITBRANCH@,$gitbranch,g" \
+    -e "s,@GITBRANCH@,$TRAVIS_BRANCH,g" \
     -e "s,@PKGVER@,$pkgver,g" \
     -e "s,@ARCH@,$arch,g" \
     -e "s,@TODAY@,$today,g" \
     > $builddir/bintray.json || exit $?
 cat $curdir/PKGBUILD.in | \
-sed -e "s,@GITBRANCH@,$gitbranch,g" \
+sed -e "s,@GITBRANCH@,$TRAVIS_BRANCH,g" \
     > $builddir/PKGBUILD
 pushd $builddir >/dev/null
 makepkg || exit $?
