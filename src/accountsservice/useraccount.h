@@ -63,18 +63,19 @@ class QTACCOUNTSSERVICE_EXPORT UserAccount : public QObject
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString location READ location WRITE setLocation NOTIFY locationChanged)
     Q_PROPERTY(QString xsession READ xsession WRITE setXSession NOTIFY xsessionChanged)
-    Q_ENUMS(AccountType PasswordMode)
 public:
     enum AccountType {
         StandardAccountType = 0,
         AdministratorAccountType
     };
+    Q_ENUM(AccountType)
 
     enum PasswordMode {
         RegularPasswordMode = 0,
         SetAtLoginPasswordMode,
         NonePasswordMode
     };
+    Q_ENUM(PasswordMode)
 
     UserAccount(const QDBusConnection &bus = QDBusConnection::systemBus());
     explicit UserAccount(uid_t uid,
