@@ -8,11 +8,14 @@ sudo: required
 
 env:
   global:
-    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-    #   via the "travis encrypt" command using the project repo's public key
+    # COVERITY_SCAN_TOKEN
     - secure: "ACWDq/vepvntxIQyyon/emc2fXCPYZhpCFkQ/cWmVJ+hS6eGEBl5sEoyXZicPmZNxcdGyhGCprtcoMGwqfR31B0MSD5O0GVWrS+NNN5imH+Fqvyf2KcG+ByJSOLmeyn9UzrByS41hw2A8AfzwQg50sQjPHY27LmJNZsXizLTGt0="
-  matrix:
-    - ARCH_TRAVIS_MIRROR=http://mirrors.kernel.org/archlinux
+    # BINTRAY_USER
+    - secure: "W/I03o7Xj2lgQD7SiYG0V2dg6RcHT/Y/9FE3pb72hngmlvedmVkUxNL0F+mGPBDOoYS3Jo0rddoolGS0g4Mikx7KfsqDeTJhQYJoqS/9K1ww7kOR+Nq45uyFaZ0J8lCTRqTWzyCywVagOIG2U97sxvecGtGx2ZHsT8/8d+1MccU="
+    # BINTRAY_API_KEY
+    - secure: "W66TzlyTFcs7asZgSvJZUfDXBDuzbXOXgRc3Fx+bE4B2ov2XHi7yen6PfcpFIJFrAKI5roEfju9m8c+s5l1MrHV72oRT/JiPA//rET966xLDgNN4l/PQoxL0w8JOv+ZLbiqKgkt9VSGyH9SbfUZt2XNZYBUbQHYku0gpbcFW5Dc="
+    # BINTRAY_REPO_OWNER
+    - secure: "FnG6SR89DCH9V+zf6RqVqvRFpAbhcH92CwQRW+Jjo+/WHTFUzQc0ndp7jHeaj7M0LNxJeEn66GprmmE1Fqa4Is6k1T97XNB8IQu1rttHbo4xxwmP2Jewzv2q3PbDdnYsySPfH1rzizbohu7b1M9NNcIt3/2zsyOKfa8lfHvBQEo="
 
 addons:
   coverity_scan:
@@ -29,7 +32,6 @@ arch:
     - qt5-tools
     - qt5-declarative
     - extra-cmake-modules
-    - git
     - clang
     - clazy-git
   script:
@@ -50,9 +52,9 @@ deploy:
     condition: "$CC = gcc"
   file: cibuild/bintray.json
   user:
-    secure: G2c3nZZcWddSx5/KlQN0b8kc9CuKo6H75L6Q7p6uPjtViwMfkVRWZQplfuPzHWdKhhmmEmOA8XvwtKOI3Q1lryBwx0I+/0gwwmktBbI4h0dSK0iPuBJw8iObm0MJXs6aiTKX2wuOnYnRXR0TFEgYBP93APoxI4NNji2HnpOpVxU=
+    secure: "G2c3nZZcWddSx5/KlQN0b8kc9CuKo6H75L6Q7p6uPjtViwMfkVRWZQplfuPzHWdKhhmmEmOA8XvwtKOI3Q1lryBwx0I+/0gwwmktBbI4h0dSK0iPuBJw8iObm0MJXs6aiTKX2wuOnYnRXR0TFEgYBP93APoxI4NNji2HnpOpVxU="
   key:
-    secure: Okf6QOVZssbKDETn/kqwyPX7bFZJcaEG0ybATOoo7p7JQNA8BEld7jdA7YoGegzzK7qPIp2dP0wiLRi7p6XQCSOCZCkK9zcnUoNWHJ2Tc3hYz2PIu3T9cBSQDVQtzh1ZNn5c5ao/yvT5pnCLnMl4foJyai4cL3I3tBaUKJ1iMQc=
+    secure: "Okf6QOVZssbKDETn/kqwyPX7bFZJcaEG0ybATOoo7p7JQNA8BEld7jdA7YoGegzzK7qPIp2dP0wiLRi7p6XQCSOCZCkK9zcnUoNWHJ2Tc3hYz2PIu3T9cBSQDVQtzh1ZNn5c5ao/yvT5pnCLnMl4foJyai4cL3I3tBaUKJ1iMQc="
 
 notifications:
   email: false
@@ -64,6 +66,6 @@ notifications:
     on_success: always
     on_failure: change
   slack:
-    secure: EGWF118PTfBj/Oktmr20fc17JTM5gt7/j24k6HkiOI1J8S+sJyxhhtSjV54cgmsaEURJ7zUD/xi2wSSigi82k2F29wpELInfty/+j95vuY+7QO7nyVIINHjKranLUogKai9evHU2cvlNTq6e27pjkDbRO2HNKyzTb+Lb6D3VEOk=
+    secure: "EGWF118PTfBj/Oktmr20fc17JTM5gt7/j24k6HkiOI1J8S+sJyxhhtSjV54cgmsaEURJ7zUD/xi2wSSigi82k2F29wpELInfty/+j95vuY+7QO7nyVIINHjKranLUogKai9evHU2cvlNTq6e27pjkDbRO2HNKyzTb+Lb6D3VEOk="
     on_success: always
     on_failure: change
