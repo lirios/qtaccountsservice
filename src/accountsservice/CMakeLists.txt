@@ -9,8 +9,8 @@ ecm_setup_version(${PROJECT_VERSION} VARIABLE_PREFIX QTACCOUNTSSERVICE
                   SOVERSION ${PROJECT_SOVERSION})
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/headers
-    ${CMAKE_BINARY_DIR}/headers
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../headers"
+    "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
 )
 
 set(SOURCES

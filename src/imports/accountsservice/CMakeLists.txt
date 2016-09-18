@@ -1,7 +1,7 @@
 include_directories(
-    ${CMAKE_SOURCE_DIR}/headers
-    ${CMAKE_BINARY_DIR}/headers
-    ${CMAKE_SOURCE_DIR}/src/accountsservice
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../headers"
+    "${CMAKE_CURRENT_BINARY_DIR}/../../../headers"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/accountsservice"
 )
 
 add_library(declarative_accountsservice SHARED main.cpp)
