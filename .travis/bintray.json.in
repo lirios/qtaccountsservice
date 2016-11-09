@@ -1,0 +1,29 @@
+{
+  "package": {
+    "name": "qtaccountsservice",
+    "repo": "archlinux-@GITBRANCH@",
+    "subject": "liri",
+    "desc": "Qt-style API for freedesktop.org's AccountsService DBus service",
+    "website_url": "https://liri.io",
+    "issue_tracker_url": "https://github.com/lirios/qtaccountsservice",
+    "vcs_url": "https://github.com/lirios/qtaccountsservice",
+    "licenses": ["LGPL-3"],
+    "labels": ["qt", "dbus", "accounts"]
+  },
+  "version": {
+    "name": "@PKGVER@",
+    "desc": "Arch Linux build from CI",
+    "released": "@TODAY@",
+    "vcs_tag": "@GITREV@",
+    "attributes": [
+      {"name": "gitrevision", "values": ["@GITREV@"], "type": "string"},
+      {"name": "gitdate", "values": ["@GITDATE@"], "type": "date"}
+    ],
+    "gpgSign": false
+  },
+  "files": [
+    {"includePattern": "cibuild/(qtaccountsservice-git-.*.pkg.tar.xz)", "uploadPattern": "@ARCH@/$1", "matrixParams": {"override": 1}},
+    {"includePattern": "cibuild/(qtaccountsservice.db.tar.gz)", "uploadPattern": "@ARCH@/qtaccountsservice.db", "matrixParams": {"override": 1}}
+  ],
+  "publish": true
+}

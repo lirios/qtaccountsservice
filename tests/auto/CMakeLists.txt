@@ -1,8 +1,8 @@
 include(ECMMarkAsTest)
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/src/accountsservice
-    ${CMAKE_BINARY_DIR}/src/accountsservice
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../src/accountsservice"
+    "${CMAKE_CURRENT_BINARY_DIR}/../../src/accountsservice"
 )
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Test)
@@ -14,11 +14,11 @@ set(SOURCES
 )
 
 qt5_add_dbus_adaptor(SOURCES
-                     ${CMAKE_SOURCE_DIR}/src/accountsservice/org.freedesktop.Accounts.xml
+                     "${CMAKE_CURRENT_SOURCE_DIR}/../../src/accountsservice/org.freedesktop.Accounts.xml"
                      fakeaccounts.h FakeAccounts
                      fakeaccountsadaptor FakeAccountsAdaptor)
 qt5_add_dbus_adaptor(SOURCES
-                     ${CMAKE_SOURCE_DIR}/src/accountsservice/org.freedesktop.Accounts.User.xml
+                     "${CMAKE_CURRENT_SOURCE_DIR}/../../src/accountsservice/org.freedesktop.Accounts.User.xml"
                      fakeuser.h FakeUser
                      fakeuseradaptor FakeUserAdaptor)
 

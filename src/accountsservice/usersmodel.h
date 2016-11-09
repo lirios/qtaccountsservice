@@ -39,7 +39,6 @@ class UsersModelPrivate;
 class QTACCOUNTSSERVICE_EXPORT UsersModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_ENUMS(Roles)
 public:
     enum Roles {
         UserIdRole = Qt::UserRole + 1,
@@ -49,6 +48,7 @@ public:
         AccountTypeRole,
         LanguageRole
     };
+    Q_ENUM(Roles)
 
     explicit UsersModel(QObject *parent = 0);
 
