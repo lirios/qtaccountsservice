@@ -11,16 +11,16 @@ env:
     # COVERITY_SCAN_TOKEN
     - secure: "ACWDq/vepvntxIQyyon/emc2fXCPYZhpCFkQ/cWmVJ+hS6eGEBl5sEoyXZicPmZNxcdGyhGCprtcoMGwqfR31B0MSD5O0GVWrS+NNN5imH+Fqvyf2KcG+ByJSOLmeyn9UzrByS41hw2A8AfzwQg50sQjPHY27LmJNZsXizLTGt0="
     # BINTRAY_USER
-    - secure: "W/I03o7Xj2lgQD7SiYG0V2dg6RcHT/Y/9FE3pb72hngmlvedmVkUxNL0F+mGPBDOoYS3Jo0rddoolGS0g4Mikx7KfsqDeTJhQYJoqS/9K1ww7kOR+Nq45uyFaZ0J8lCTRqTWzyCywVagOIG2U97sxvecGtGx2ZHsT8/8d+1MccU="
+    - secure: "n8X1UB89HJlRqAd3qrUfVhULz/JBRkdq/SnmmMjTF7ELbKWY7v8JQq4lze2jJQlor/2A//qQOcIrpUiuyWxYY3+nvXSzxBY2TtCIjRdVwzRoQiFYDoR7Fnay7T060RnZJ5ti5iarlQfPtVCh0s0dFocT6+mTZYdxUY5glWR5fgy3TNlZFXmXs/qZUdqOPCCg01NZObz9ZGdpnc+9NLi3liBcG4Sh2Fdj/1yY8qIGWEQiOKQiTCGozKFXDw0Dg8uFEC84aW873Cm1g+IxeIs967UK/IjeTxVXYE+R0WwfIIIgfONIzvWwpIIuc+a7XXCZkHqFGqvU9Hx6M2b5z5W7r2i18YmXVRyIoyVmabDCxWzIVDleYN0EsOr57gMV4c5z4mLTtmLb9mIPjpLbitzilzNCckVhwSIm56PwXrHR+19D+9WpgO81oP2eIIA+G6uCZfEyj5uTZCc19G2t18GWwJ+bwYKMly9tdwLcC2JaKmC2pxUgouiwxDKQBly/1OGxeGNXPVoX4ZuShPtUYO0huSQXEwyghpUDuYERBqtiavwZO7uTLO7RT45JhRWCZKUN9njQISQiQJbusyswElHTwGwEBypB58S34C2hmvW9Eh0exQOkLAe6bizwu5HyARw0C87zJ+NH/CQaT630MKKRqpZtzgvrTnMBSqRN1k1sU7E="
     # BINTRAY_API_KEY
-    - secure: "W66TzlyTFcs7asZgSvJZUfDXBDuzbXOXgRc3Fx+bE4B2ov2XHi7yen6PfcpFIJFrAKI5roEfju9m8c+s5l1MrHV72oRT/JiPA//rET966xLDgNN4l/PQoxL0w8JOv+ZLbiqKgkt9VSGyH9SbfUZt2XNZYBUbQHYku0gpbcFW5Dc="
+    - secure: "Q1axFjBkrtLgLW/9x+hTYWH3RsoWJ5xFPiO5v4Cdzf73nEsnPjl6YsawWRqk9KGp6uINbtOguic+Mt9+4jGxk5O/64DcKh5FWqNf1FX7K6Qzd6mCvo0hxffmBzOyP53n8799AcVLmcEaOXhbtg7zBgXTn3cvbVUeR9m4HGgOE/6Zvb6ubp+1itBQTI6l9oHeggA0L4ebxdaBG1KSJI4ZQzBO+3Bn1kDHPa1HUkaeE9htCa175Z/8kXTzVUhLiWmRiDRh96KgS0Ccj0KldHFASDSsKztV2GKgxShZYvpy8akXvMuW6Y0V1Jii4rrBFa0/FXSmk0i4S6RlAkPCYOFndYUth8Dm6O18W41iHb+q1UZB0hZ4+w8PHs3maVajaSl2iiVOGUm8g1hSNodIFPlPsy7F2ZpAeDVpT8KEKQ0lWoOyqdUl7EZK/ojX15UTRnQBx0fqi3hgWLAhstpJOC5fXQELG4BSl87AkXCcyP7WsyEiMUvTbU5GD2fWy2mzUQRH5u3ReDVsShtp+Pl2Rt7hxwBRayTWS7qt54f76A+GIkBSYBRJyGNdvq4c/e0O6oDhqBvstfDt6MEYF1FGYPRLdP4PRGnyLIOzZPbPl2h4D2UYkPJ9TlVCAf24IDN7mHubJJPc6GwFWRju17oyJSwX8Gi5+JViM0qO9Xxvj1fWVPI="
     # BINTRAY_REPO_OWNER
     - secure: "FnG6SR89DCH9V+zf6RqVqvRFpAbhcH92CwQRW+Jjo+/WHTFUzQc0ndp7jHeaj7M0LNxJeEn66GprmmE1Fqa4Is6k1T97XNB8IQu1rttHbo4xxwmP2Jewzv2q3PbDdnYsySPfH1rzizbohu7b1M9NNcIt3/2zsyOKfa8lfHvBQEo="
 
 addons:
   coverity_scan:
     project:
-      name: "hawaii-desktop/qtaccountsservice"
+      name: "lirios/qtaccountsservice"
       description: "Build submitted via Travis CI"
     notification_email: pierluigi.fiorini@gmail.com
     build_command_prepend: "rm -fr build && mkdir build && cd build && cmake .."
@@ -40,7 +40,7 @@ arch:
     - make
     - sudo make install
     #- make test
-    - if [ "$CC" = "gcc" -a "$TRAVIS_BRANCH" = "develop" ]; then ./.travis/bintray.sh; fi
+    - ./.travis/bintray-wrapper.sh
 
 script:
   - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
@@ -57,15 +57,4 @@ deploy:
     secure: "Okf6QOVZssbKDETn/kqwyPX7bFZJcaEG0ybATOoo7p7JQNA8BEld7jdA7YoGegzzK7qPIp2dP0wiLRi7p6XQCSOCZCkK9zcnUoNWHJ2Tc3hYz2PIu3T9cBSQDVQtzh1ZNn5c5ao/yvT5pnCLnMl4foJyai4cL3I3tBaUKJ1iMQc="
 
 notifications:
-  email: false
-  irc:
-    channels:
-    - chat.freenode.net#hawaii-desktop
-    use_notice: true
-    skip_join: true
-    on_success: always
-    on_failure: change
-  slack:
-    secure: "EGWF118PTfBj/Oktmr20fc17JTM5gt7/j24k6HkiOI1J8S+sJyxhhtSjV54cgmsaEURJ7zUD/xi2wSSigi82k2F29wpELInfty/+j95vuY+7QO7nyVIINHjKranLUogKai9evHU2cvlNTq6e27pjkDbRO2HNKyzTb+Lb6D3VEOk="
-    on_success: always
-    on_failure: change
+  slack: lirios:fdUqVmPzqPskEL1UBhqapZ0w

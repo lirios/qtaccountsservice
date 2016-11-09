@@ -2,12 +2,12 @@
   "package": {
     "name": "qtaccountsservice",
     "repo": "archlinux-@GITBRANCH@",
-    "subject": "hawaii",
+    "subject": "liri",
     "desc": "Qt-style API for freedesktop.org's AccountsService DBus service",
-    "website_url": "http://hawaiios.org",
-    "issue_tracker_url": "https://github.com/hawaii-desktop/qtaccountsservice",
-    "vcs_url": "https://github.com/hawaii-desktop/qtaccountsservice",
-    "licenses": ["GPL-2.0", "LGPL-2.1"],
+    "website_url": "https://liri.io",
+    "issue_tracker_url": "https://github.com/lirios/qtaccountsservice",
+    "vcs_url": "https://github.com/lirios/qtaccountsservice",
+    "licenses": ["LGPL-3"],
     "labels": ["qt", "dbus", "accounts"]
   },
   "version": {
