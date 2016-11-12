@@ -127,7 +127,7 @@ gid_t UserAccount::groupId() const
         bufsize = 16384;
     char *buf = (char *)::malloc(bufsize);
     if (!buf)
-        qFatal("Cannot allocate %lu bytes: %s", bufsize, strerror(errno));
+        qFatal("Cannot allocate %lu bytes: %s", (long)bufsize, strerror(errno));
 
     struct passwd pwd;
     struct passwd *result;
