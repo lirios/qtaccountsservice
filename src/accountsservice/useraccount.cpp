@@ -1,16 +1,13 @@
 /****************************************************************************
  * This file is part of Qt AccountsService Addon.
  *
- * Copyright (C) 2012-2016 Pier Luigi Fiorini
+ * Copyright (C) 2012-2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
- * Author(s):
- *    Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
- *
- * $BEGIN_LICENSE:LGPL2.1+$
+ * $BEGIN_LICENSE:LGPLv3+$
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 2.1 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -127,7 +124,7 @@ gid_t UserAccount::groupId() const
         bufsize = 16384;
     char *buf = (char *)::malloc(bufsize);
     if (!buf)
-        qFatal("Cannot allocate %lu bytes: %s", bufsize, strerror(errno));
+        qFatal("Cannot allocate %lu bytes: %s", (long)bufsize, strerror(errno));
 
     struct passwd pwd;
     struct passwd *result;
