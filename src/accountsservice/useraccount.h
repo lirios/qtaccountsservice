@@ -28,7 +28,7 @@
 #include <QtCore/QString>
 #include <QtDBus/QDBusConnection>
 
-#include <qtaccountsservice/qtaccountsservice_export.h>
+#include <QtAccountsService/qtaccountsserviceglobal.h>
 
 namespace QtAccountsService {
 
@@ -36,7 +36,7 @@ class AccountsManager;
 class AccountsManagerPrivate;
 class UserAccountPrivate;
 
-class QTACCOUNTSSERVICE_EXPORT UserAccount : public QObject
+class Q_ACCOUNTS_SERVICE_EXPORT UserAccount : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int uid READ userId CONSTANT)

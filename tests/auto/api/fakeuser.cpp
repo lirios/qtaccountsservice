@@ -224,5 +224,3 @@ void FakeUser::SetXSession(const QString &x_session)
 {
     Q_UNUSED(x_session);
 }
-
-#include "moc_fakeuser.cpp"

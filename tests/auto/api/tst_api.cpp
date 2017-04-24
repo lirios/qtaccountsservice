@@ -24,7 +24,7 @@
 #include <QtTest/QtTest>
 
 #include "fakeaccounts.h"
-#include "fakeaccountsadaptor.h"
+#include "accounts_adaptor.h"
 #include "accountsmanager.h"
 #include "useraccount.h"
 
@@ -45,7 +45,7 @@ private Q_SLOTS:
     void initTestCase()
     {
         accounts = new FakeAccounts(this);
-        new FakeAccountsAdaptor(accounts);
+        new AccountsAdaptor(accounts);
         manager = new AccountsManager(QDBusConnection::sessionBus());
     }
 

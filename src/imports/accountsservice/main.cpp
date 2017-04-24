@@ -35,7 +35,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class AccountsServiceDeclarativeModule : public QQmlExtensionPlugin
+class QtAccountsServicePlugin : public QQmlExtensionPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface/1.0")

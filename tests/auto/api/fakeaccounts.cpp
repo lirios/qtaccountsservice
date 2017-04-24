@@ -25,7 +25,7 @@
 #include <QtDBus/QDBusError>
 
 #include "fakeaccounts.h"
-#include "fakeuseradaptor.h"
+#include "user_adaptor.h"
 
 FakeAccounts::FakeAccounts(QObject *parent)
     : QObject(parent)
@@ -89,7 +89,7 @@ QDBusObjectPath FakeAccounts::CreateUser(const QString &name,
 {
     const QString path = QStringLiteral("/org/freedesktop/Accounts/User%1").arg(m_lastUid);
     FakeUser *entry = new FakeUser(path, m_lastUid, name, fullName, accountType, this);
-    new FakeUserAdaptor(entry);
+    new UserAdaptor(entry);
     m_users.append(entry);
     m_lastUid++;
     return entry->path();
@@ -127,5 +127,3 @@ QDBusObjectPath FakeAccounts::FindUserByName(const QString &name)
 
     return QDBusObjectPath();
 }
-
-#include "moc_fakeaccounts.cpp"

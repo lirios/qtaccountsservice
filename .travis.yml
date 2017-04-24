@@ -31,15 +31,15 @@ arch:
   packages:
     - qt5-tools
     - qt5-declarative
-    - extra-cmake-modules
     - clang
     - clazy-git
   script:
-    - if [ "$CC" = "gcc" ]; then cmake . -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DCMAKE_INSTALL_PREFIX=/usr; fi
-    - if [ "$CC" = "clang" ]; then env CLAZY_CHECKS="level1" cmake . -DCMAKE_CXX_COMPILER=clazy -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DCMAKE_INSTALL_PREFIX=/usr; fi
-    - make
-    - sudo make install
-    #- make test
+    - mkdir build && cd build
+    - if [ "$CC" = "gcc" ]; then qmake -spec linux-g++ CONFIG+=use_qt_paths ..; fi
+    - if [ "$CC" = "clang" ]; then qmake -spec linux-clang CONFIG+=use_qt_paths QMAKE_CXX="clazy" ..; fi
+    - make -j$(nproc)
+    - make check
+    - cd ..
     - ./.travis/bintray-wrapper.sh
 
 script:

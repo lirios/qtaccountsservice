@@ -8,7 +8,7 @@ arch=('i686' 'x86_64' 'armv6h' 'armv7h')
 url="https://liri.io"
 license=('LGPL3')
 depends=('qt5-base' 'qt5-declarative')
-makedepends=('git' 'cmake')
+makedepends=('git')
 conflicts=('qt-accountsservice-addon-git')
 replaces=('qt-accountsservice-addon-git')
 
@@ -29,13 +29,10 @@ prepare() {
 
 build() {
 	cd build
-	cmake ../${_gitname} \
-		-DCMAKE_INSTALL_LIBDIR=lib \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_BUILD_TYPE=RelWithDebInfo
+	qmake CONFIG+=use_qt_paths ..
 }
 
 package() {
 	cd build
-	make DESTDIR="${pkgdir}" install
+	make INSTALL_ROOT="${pkgdir}" install
 }
