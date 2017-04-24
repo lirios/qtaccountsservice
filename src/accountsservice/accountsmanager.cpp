@@ -84,8 +84,9 @@ void AccountsManagerPrivate::_q_userDeleted(const QDBusObjectPath &path)
 /*!
     Constructs a AccountsManager object.
 */
-AccountsManager::AccountsManager(const QDBusConnection &bus)
-    : d_ptr(new AccountsManagerPrivate(bus))
+AccountsManager::AccountsManager(const QDBusConnection &bus, QObject *parent)
+    : QObject(parent)
+    , d_ptr(new AccountsManagerPrivate(bus))
 {
     d_ptr->q_ptr = this;
 
@@ -165,7 +166,7 @@ void AccountsManager::uncacheUser(const QString &userName)
 */
 void AccountsManager::uncacheUser(UserAccount *account)
 {
-    return uncacheUser(account->userName());
+    uncacheUser(account->userName());
 }
 
 /*!

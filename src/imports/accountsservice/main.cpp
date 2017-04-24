@@ -41,17 +41,18 @@ class QtAccountsServicePlugin : public QQmlExtensionPlugin
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface/1.0")
 
 public:
-    virtual void registerTypes(const char *uri) {
+    QtAccountsServicePlugin(QObject *parent = nullptr)
+        : QQmlExtensionPlugin(parent)
+    {
+    }
+
+    void registerTypes(const char *uri) override
+    {
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtAccountsService"));
 
         qmlRegisterType<QtAccountsService::AccountsManager>(uri, 1, 0, "AccountsManager");
         qmlRegisterType<QtAccountsService::UserAccount>(uri, 1, 0, "UserAccount");
         qmlRegisterType<QtAccountsService::UsersModel>(uri, 1, 0, "UsersModel");
-    }
-
-    void initializeEngine(QQmlEngine *engine, const char *uri) {
-        Q_UNUSED(engine);
-        Q_UNUSED(uri);
     }
 };
 

@@ -39,7 +39,8 @@ class Q_ACCOUNTS_SERVICE_EXPORT AccountsManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit AccountsManager(const QDBusConnection &bus = QDBusConnection::systemBus());
+    explicit AccountsManager(const QDBusConnection &bus = QDBusConnection::systemBus(),
+                             QObject *parent = nullptr);
     ~AccountsManager();
 
     void cacheUser(const QString &userName);

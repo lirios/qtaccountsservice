@@ -53,8 +53,9 @@ UserAccountPrivate::UserAccountPrivate()
 /*!
     Constructs a UserAccount object for the currently logged in user.
 */
-UserAccount::UserAccount(const QDBusConnection &bus)
-    : d_ptr(new UserAccountPrivate)
+UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
+    : QObject(parent)
+    , d_ptr(new UserAccountPrivate)
 {
     QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(getuid());
 
@@ -69,8 +70,9 @@ UserAccount::UserAccount(const QDBusConnection &bus)
 
     \param uid User identifier.
 */
-UserAccount::UserAccount(uid_t uid, const QDBusConnection &bus)
-    : d_ptr(new UserAccountPrivate)
+UserAccount::UserAccount(uid_t uid, const QDBusConnection &bus, QObject *parent)
+    : QObject(parent)
+    , d_ptr(new UserAccountPrivate)
 {
     QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(uid);
 

@@ -74,9 +74,11 @@ public:
     };
     Q_ENUM(PasswordMode)
 
-    UserAccount(const QDBusConnection &bus = QDBusConnection::systemBus());
+    UserAccount(const QDBusConnection &bus = QDBusConnection::systemBus(),
+                QObject *parent = nullptr);
     explicit UserAccount(uid_t uid,
-                         const QDBusConnection &bus = QDBusConnection::systemBus());
+                         const QDBusConnection &bus = QDBusConnection::systemBus(),
+                         QObject *parent = nullptr);
     ~UserAccount();
 
     uid_t userId() const;
