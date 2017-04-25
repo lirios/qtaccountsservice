@@ -136,6 +136,7 @@ public:
     void setXSession(const QString &session);
 
     void setPassword(const QString &password, const QString &hint = QString());
+    Q_INVOKABLE void setPasswordHint(const QString &hint);
 
 Q_SIGNALS:
     void accountChanged();

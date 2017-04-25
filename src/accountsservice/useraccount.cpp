@@ -565,6 +565,17 @@ void UserAccount::setPassword(const QString &password, const QString &hint)
     d->user->SetPassword(password, hint);
 }
 
+/*!
+    Sets the password hint for the user account.
+
+    \param hint Password hint.
+ */
+void UserAccount::setPasswordHint(const QString &hint)
+{
+    Q_D(UserAccount);
+    d->user->SetPasswordHint(hint);
+}
+
 }
 
 #include "moc_useraccount.cpp"
