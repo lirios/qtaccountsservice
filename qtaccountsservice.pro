@@ -24,10 +24,16 @@ defineTest(minQtVersion) {
 !minQtVersion(5, 8, 0): \
     error("QtAccountsService requires at least Qt 5.8.0, but $${QT_VERSION} was detected.")
 
+!exists(features/liri_deployment.prf): \
+    error("Git submodule missing. Run \'git submodule update --init\' in $${PWD}.")
+
 TEMPLATE = subdirs
 
 SUBDIRS += src examples tests
 CONFIG += ordered
 
-!exists(features/liri_deployment.prf): \
-    error("Git submodule missing. Run \'git submodule update --init\' in $${PWD}.")
+OTHER_FILES += \
+    $$PWD/AUTHORS.md \
+    $$PWD/LICENSE.FDL \
+    $$PWD/LICENSE.LGPLv3 \
+    $$PWD/README.md
