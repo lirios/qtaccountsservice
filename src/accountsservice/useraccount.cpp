@@ -148,7 +148,7 @@ gid_t UserAccount::groupId() const
 UserAccount::AccountType UserAccount::accountType() const
 {
     Q_D(const UserAccount);
-    return (UserAccount::AccountType)d->user->accountType();
+    return static_cast<UserAccount::AccountType>(d->user->accountType());
 }
 
 /*!
@@ -159,7 +159,7 @@ UserAccount::AccountType UserAccount::accountType() const
 void UserAccount::setAccountType(AccountType type)
 {
     Q_D(UserAccount);
-    d->user->SetAccountType((int)type);
+    d->user->SetAccountType(static_cast<int>(type));
     Q_EMIT accountTypeChanged();
 }
 
@@ -232,7 +232,7 @@ qlonglong UserAccount::loginTime() const
 UserAccount::PasswordMode UserAccount::passwordMode() const
 {
     Q_D(const UserAccount);
-    return (UserAccount::PasswordMode)d->user->passwordMode();
+    return static_cast<UserAccount::PasswordMode>(d->user->passwordMode());
 }
 
 /*!
@@ -243,7 +243,7 @@ UserAccount::PasswordMode UserAccount::passwordMode() const
 void UserAccount::setPasswordMode(UserAccount::PasswordMode mode)
 {
     Q_D(UserAccount);
-    d->user->SetPasswordMode((int)mode);
+    d->user->SetPasswordMode(static_cast<int>(mode));
     Q_EMIT passwordModeChanged();
 }
 
