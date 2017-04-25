@@ -24,6 +24,8 @@
 #ifndef QTACCOUNTSSERVICE_USERACCOUNT_P_H
 #define QTACCOUNTSSERVICE_USERACCOUNT_P_H
 
+#include <QtCore/private/qobject_p.h>
+
 #include "user_interface.h"
 
 //
@@ -39,8 +41,12 @@
 
 namespace QtAccountsService {
 
-class UserAccountPrivate
+class UserAccount;
+
+class UserAccountPrivate : public QObjectPrivate
 {
+    Q_DECLARE_PUBLIC(UserAccount)
+    Q_DISABLE_COPY(UserAccountPrivate)
 public:
     explicit UserAccountPrivate();
 

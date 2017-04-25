@@ -60,6 +60,7 @@ class Q_ACCOUNTS_SERVICE_EXPORT UserAccount : public QObject
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString location READ location WRITE setLocation NOTIFY locationChanged)
     Q_PROPERTY(QString xsession READ xsession WRITE setXSession NOTIFY xsessionChanged)
+    Q_DECLARE_PRIVATE(UserAccount)
 public:
     enum AccountType {
         StandardAccountType = 0,
@@ -79,7 +80,6 @@ public:
     explicit UserAccount(uid_t uid,
                          const QDBusConnection &bus = QDBusConnection::systemBus(),
                          QObject *parent = nullptr);
-    ~UserAccount();
 
     uid_t userId() const;
     gid_t groupId() const;
@@ -154,17 +154,13 @@ Q_SIGNALS:
     void locationChanged();
     void xsessionChanged();
 
-protected:
-    UserAccountPrivate *d_ptr;
-
 private:
     friend class AccountsManager;
     friend class AccountsManagerPrivate;
 
-    Q_DECLARE_PRIVATE(UserAccount)
-
     UserAccount(const QString &objectPath,
-                const QDBusConnection &bus = QDBusConnection::systemBus());
+                const QDBusConnection &bus = QDBusConnection::systemBus(),
+                QObject *parent = nullptr);
 };
 
 typedef QList<UserAccount *> UserAccountList;

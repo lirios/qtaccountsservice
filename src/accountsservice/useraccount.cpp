@@ -35,7 +35,8 @@ namespace QtAccountsService {
  */
 
 UserAccountPrivate::UserAccountPrivate()
-    : user(0)
+    : QObjectPrivate()
+    , user(nullptr)
 {
 }
 
@@ -54,15 +55,17 @@ UserAccountPrivate::UserAccountPrivate()
     Constructs a UserAccount object for the currently logged in user.
 */
 UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
-    : QObject(parent)
-    , d_ptr(new UserAccountPrivate)
+    : QObject(*new UserAccountPrivate(), parent)
 {
+    Q_D(UserAccount);
+
     QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(getuid());
 
-    d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
-                                                objectPath, bus, this);
-    connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
+    d->user =
+            new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
+                                                    objectPath, bus, this);
+    connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
+            this, &UserAccount::accountChanged);
 }
 
 /*!
@@ -71,15 +74,17 @@ UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
     \param uid User identifier.
 */
 UserAccount::UserAccount(uid_t uid, const QDBusConnection &bus, QObject *parent)
-    : QObject(parent)
-    , d_ptr(new UserAccountPrivate)
+    : QObject(*new UserAccountPrivate(), parent)
 {
+    Q_D(UserAccount);
+
     QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(uid);
 
-    d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
-                                                objectPath, bus, this);
-    connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
+    d->user =
+            new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
+                                                    objectPath, bus, this);
+    connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
+            this, &UserAccount::accountChanged);
 }
 
 /*!
@@ -88,21 +93,16 @@ UserAccount::UserAccount(uid_t uid, const QDBusConnection &bus, QObject *parent)
 
     \param objectPath Accounts Service object path for the user account.
 */
-UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus)
-    : d_ptr(new UserAccountPrivate)
+UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus, QObject *parent)
+    : QObject(*new UserAccountPrivate(), parent)
 {
-    d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
-                                                objectPath, bus, this);
-    connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
-}
+    Q_D(UserAccount);
 
-/*!
-    Destructor.
-*/
-UserAccount::~UserAccount()
-{
-    delete d_ptr;
+    d->user =
+            new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
+                                                    objectPath, bus, this);
+    connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
+            this, &UserAccount::accountChanged);
 }
 
 /*!
