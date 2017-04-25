@@ -3,6 +3,9 @@ MODULE = QtAccountsService
 
 QT += core dbus
 QT_PRIVATE += core-private
+
+CMAKE_MODULE_NAME = Qt5AccountsService
+CMAKE_MODULE_NAMESPACE = Qt5AccountsService
 CONFIG += liri_create_cmake
 
 DBUS_INTERFACES += \
@@ -21,9 +24,6 @@ SOURCES += \
 
 QMAKE_PKGCONFIG_NAME = QtAccountsService
 QMAKE_PKGCONFIG_DESCRIPTION = Qt wrapper to Accounts Service
-QMAKE_PKGCONFIG_PREFIX = $$LIRI_INSTALL_PREFIX
-QMAKE_PKGCONFIG_LIBDIR = $$target.path
-QMAKE_PKGCONFIG_INCDIR = $$headers.path
 QMAKE_PKGCONFIG_VERSION = $$QTACCOUNTSSERVICE_VERSION
 QMAKE_PKGCONFIG_DESTDIR = pkgconfig
 
