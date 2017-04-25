@@ -40,7 +40,7 @@ class Q_ACCOUNTS_SERVICE_EXPORT UserAccount : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int uid READ userId CONSTANT)
-    Q_PROPERTY(int gid READ groupId CONSTANT)
+    Q_PROPERTY(int gid READ groupId NOTIFY groupIdChanged)
     Q_PROPERTY(AccountType accountType READ accountType WRITE setAccountType NOTIFY accountTypeChanged)
     Q_PROPERTY(bool locked READ isLocked WRITE setLocked NOTIFY lockedChanged)
     Q_PROPERTY(bool automaticLogin READ automaticLogin WRITE setAutomaticLogin NOTIFY automaticLoginChanged)
@@ -140,6 +140,7 @@ public:
 
 Q_SIGNALS:
     void accountChanged();
+    void groupIdChanged();
     void accountTypeChanged();
     void lockedChanged();
     void automaticLoginChanged();

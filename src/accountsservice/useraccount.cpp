@@ -44,6 +44,7 @@ void UserAccountPrivate::emitSignals()
 {
     Q_Q(UserAccount);
 
+    Q_EMIT q->groupIdChanged();
     Q_EMIT q->accountTypeChanged();
     Q_EMIT q->lockedChanged();
     Q_EMIT q->automaticLoginChanged();
