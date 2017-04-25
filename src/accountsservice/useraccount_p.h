@@ -1,7 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2012-2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -32,7 +32,7 @@
 //  W A R N I N G
 //  -------------
 //
-// This file is not part of the Qt AccountsService Addon API.  It exists
+// This file is not part of the Qt AccountsService API.  It exists
 // purely as an implementation detail.  This header file may change from
 // version to version without notice, or even be removed.
 //

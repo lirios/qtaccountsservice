@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
  * Copyright (C) 2015-2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
  *
