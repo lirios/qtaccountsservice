@@ -39,8 +39,8 @@ class UserAccountPrivate;
 class Q_ACCOUNTS_SERVICE_EXPORT UserAccount : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int userId READ userId CONSTANT)
-    Q_PROPERTY(int groupId READ groupId NOTIFY groupIdChanged)
+    Q_PROPERTY(uid_t userId READ userId CONSTANT)
+    Q_PROPERTY(gid_t groupId READ groupId NOTIFY groupIdChanged)
     Q_PROPERTY(AccountType accountType READ accountType WRITE setAccountType NOTIFY accountTypeChanged)
     Q_PROPERTY(bool locked READ isLocked WRITE setLocked NOTIFY lockedChanged)
     Q_PROPERTY(bool automaticLogin READ automaticLogin WRITE setAutomaticLogin NOTIFY automaticLoginChanged)
