@@ -30,9 +30,7 @@ prepare() {
 
 build() {
 	cd build
-	qmake \
-		CONFIG+=use_qt_paths \
-		../${_gitname}/qtaccountsservice.pro
+	qmake LIRI_INSTALL_PREFIX=/usr CONFIG+=use_qt_paths ../${_gitname}/qtaccountsservice.pro
 	make
 }
 
