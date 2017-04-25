@@ -32,7 +32,6 @@ build() {
 	cd build
 	qmake \
 		CONFIG+=use_qt_paths \
-		CONFIG-=create_prl \
 		../${_gitname}/qtaccountsservice.pro
 	make
 }
