@@ -497,6 +497,41 @@
     </doc:doc>
   </method>
 
+  <method name="SetPasswordHint">
+    <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
+    <arg name="hint" direction="in" type="s">
+      <doc:doc>
+        <doc:summary>
+          The password hint.
+        </doc:summary>
+      </doc:doc>
+    </arg>
+    <doc:doc>
+      <doc:description>
+        <doc:para>
+          Sets the users password hint.
+        </doc:para>
+      </doc:description>
+      <doc:permission>
+        The caller needs one of the following PolicyKit authorizations:
+        <doc:list>
+          <doc:item>
+            <doc:term>org.freedesktop.accounts.change-own-user-data</doc:term>
+            <doc:definition>To change his own language</doc:definition>
+          </doc:item>
+          <doc:item>
+            <doc:term>org.freedesktop.accounts.user-administration</doc:term>
+            <doc:definition>To change the language of another user</doc:definition>
+          </doc:item>
+        </doc:list>
+      </doc:permission>
+      <doc:errors>
+        <doc:error name="org.freedesktop.Accounts.Error.PermissionDenied">if the caller lacks the appropriate PolicyKit authorization</doc:error>
+        <doc:error name="org.freedesktop.Accounts.Error.Failed">if the operation failed</doc:error>
+      </doc:errors>
+    </doc:doc>
+  </method>
+
   <method name="SetAutomaticLogin">
     <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
     <arg name="enabled" direction="in" type="b">
