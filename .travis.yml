@@ -32,14 +32,16 @@ arch:
     - qt5-tools
     - qt5-declarative
     - clang
-    - clazy-git
+    #- clazy-git
+    - xorg-server-xvfb
   script:
-    - mkdir build && cd build
-    - if [ "$CC" = "gcc" ]; then qmake -spec linux-g++ CONFIG+=use_qt_paths ../qtaccountsservice.pro; fi
-    - if [ "$CC" = "clang" ]; then qmake -spec linux-clang CONFIG+=use_qt_paths QMAKE_CXX="clazy" ../qtaccountsservice.pro; fi
-    - make -j$(nproc)
-    - make check
-    - cd ..
+    - export CLAZY_CHECKS="level1"
+    - mkdir build
+    - if [ "$CC" = "gcc" ]; then cd build && qmake -spec linux-g++ CONFIG+=use_qt_paths ../qtaccountsservice.pro; fi
+    #- if [ "$CC" = "clang" ]; then cd build && qmake -spec linux-clang CONFIG+=use_qt_paths QMAKE_CXX="clazy" ../qtaccountsservice.pro; fi
+    - if [ "$CC" = "clang" ]; then cd build && qmake -spec linux-clang CONFIG+=use_qt_paths ../qtaccountsservice.pro; fi
+    - cd build && make -j$(nproc)
+    - cd build && xvfb-run -a -s "-screen 0 800x600x24" make check
     - ./.travis/bintray-wrapper.sh
 
 script:
