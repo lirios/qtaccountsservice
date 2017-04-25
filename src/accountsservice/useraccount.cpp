@@ -159,6 +159,10 @@ UserAccount::AccountType UserAccount::accountType() const
 void UserAccount::setAccountType(AccountType type)
 {
     Q_D(UserAccount);
+
+    if (type == accountType())
+        return;
+
     d->user->SetAccountType(static_cast<int>(type));
     Q_EMIT accountTypeChanged();
 }
@@ -181,6 +185,10 @@ bool UserAccount::isLocked() const
 void UserAccount::setLocked(bool locked)
 {
     Q_D(UserAccount);
+
+    if (isLocked() == locked)
+        return;
+
     d->user->SetLocked(locked);
     Q_EMIT lockedChanged();
 }
@@ -204,6 +212,10 @@ bool UserAccount::automaticLogin() const
 void UserAccount::setAutomaticLogin(bool automaticLogin)
 {
     Q_D(UserAccount);
+
+    if (this->automaticLogin() == automaticLogin)
+        return;
+
     d->user->SetAutomaticLogin(automaticLogin);
     Q_EMIT automaticLoginChanged();
 }
@@ -243,6 +255,10 @@ UserAccount::PasswordMode UserAccount::passwordMode() const
 void UserAccount::setPasswordMode(UserAccount::PasswordMode mode)
 {
     Q_D(UserAccount);
+
+    if (passwordMode() == mode)
+        return;
+
     d->user->SetPasswordMode(static_cast<int>(mode));
     Q_EMIT passwordModeChanged();
 }
@@ -291,6 +307,10 @@ QString UserAccount::userName() const
 void UserAccount::setUserName(const QString &userName)
 {
     Q_D(UserAccount);
+
+    if (this->userName() == userName)
+        return;
+
     d->user->SetUserName(userName);
     Q_EMIT userNameChanged();
     Q_EMIT displayNameChanged();
@@ -313,6 +333,10 @@ QString UserAccount::realName() const
 void UserAccount::setRealName(const QString &realName)
 {
     Q_D(UserAccount);
+
+    if (this->realName() == realName)
+        return;
+
     d->user->SetRealName(realName);
     Q_EMIT realNameChanged();
     Q_EMIT displayNameChanged();
@@ -345,6 +369,10 @@ QString UserAccount::homeDirectory() const
 void UserAccount::setHomeDirectory(const QString &homeDirectory)
 {
     Q_D(UserAccount);
+
+    if (this->homeDirectory() == homeDirectory)
+        return;
+
     d->user->SetHomeDirectory(homeDirectory);
     Q_EMIT homeDirectoryChanged();
 }
@@ -366,6 +394,10 @@ QString UserAccount::shell() const
 void UserAccount::setShell(const QString &shell)
 {
     Q_D(UserAccount);
+
+    if (this->shell() == shell)
+        return;
+
     d->user->SetShell(shell);
     Q_EMIT shellChanged();
 }
@@ -387,6 +419,10 @@ QString UserAccount::iconFileName() const
 void UserAccount::setIconFileName(const QString &fileName)
 {
     Q_D(UserAccount);
+
+    if (iconFileName() == fileName)
+        return;
+
     d->user->SetIconFile(fileName);
     Q_EMIT iconFileNameChanged();
 }
@@ -408,6 +444,10 @@ QString UserAccount::email() const
 void UserAccount::setEmail(const QString &email)
 {
     Q_D(UserAccount);
+
+    if (this->email() == email)
+        return;
+
     d->user->SetEmail(email);
     Q_EMIT emailChanged();
 }
@@ -429,6 +469,10 @@ QString UserAccount::language() const
 void UserAccount::setLanguage(const QString &language)
 {
     Q_D(UserAccount);
+
+    if (this->language() == language)
+        return;
+
     d->user->SetLanguage(language);
     Q_EMIT languageChanged();
 }
@@ -450,6 +494,10 @@ QString UserAccount::location() const
 void UserAccount::setLocation(const QString &location)
 {
     Q_D(UserAccount);
+
+    if (this->location() == location)
+        return;
+
     d->user->SetLocation(location);
     Q_EMIT locationChanged();
 }
@@ -471,6 +519,10 @@ QString UserAccount::xsession() const
 void UserAccount::setXSession(const QString &session)
 {
     Q_D(UserAccount);
+
+    if (xsession() == session)
+        return;
+
     d->user->SetXSession(session);
     Q_EMIT xsessionChanged();
 }
