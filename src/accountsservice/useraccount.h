@@ -39,7 +39,7 @@ class UserAccountPrivate;
 class Q_ACCOUNTS_SERVICE_EXPORT UserAccount : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(uid_t userId READ userId CONSTANT)
+    Q_PROPERTY(uid_t userId READ userId WRITE setUserId NOTIFY userIdChanged)
     Q_PROPERTY(gid_t groupId READ groupId NOTIFY groupIdChanged)
     Q_PROPERTY(AccountType accountType READ accountType WRITE setAccountType NOTIFY accountTypeChanged)
     Q_PROPERTY(bool locked READ isLocked WRITE setLocked NOTIFY lockedChanged)
@@ -77,11 +77,10 @@ public:
 
     UserAccount(const QDBusConnection &bus = QDBusConnection::systemBus(),
                 QObject *parent = nullptr);
-    explicit UserAccount(uid_t uid,
-                         const QDBusConnection &bus = QDBusConnection::systemBus(),
-                         QObject *parent = nullptr);
 
     uid_t userId() const;
+    void setUserId(uid_t uid);
+
     gid_t groupId() const;
 
     AccountType accountType() const;
@@ -140,6 +139,7 @@ public:
 
 Q_SIGNALS:
     void accountChanged();
+    void userIdChanged();
     void groupIdChanged();
     void accountTypeChanged();
     void lockedChanged();

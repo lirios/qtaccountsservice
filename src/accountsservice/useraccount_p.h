@@ -52,6 +52,7 @@ public:
 
     void emitSignals();
 
+    QDBusConnection bus;
     OrgFreedesktopAccountsUserInterface *user;
 };
 

@@ -36,6 +36,7 @@ namespace QtAccountsService {
 
 UserAccountPrivate::UserAccountPrivate()
     : QObjectPrivate()
+    , bus(QDBusConnection::systemBus())
     , user(nullptr)
 {
 }
@@ -44,6 +45,7 @@ void UserAccountPrivate::emitSignals()
 {
     Q_Q(UserAccount);
 
+    Q_EMIT q->userIdChanged();
     Q_EMIT q->groupIdChanged();
     Q_EMIT q->accountTypeChanged();
     Q_EMIT q->lockedChanged();
@@ -82,6 +84,7 @@ UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
 
     QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(getuid());
 
+    d->bus = bus;
     d->user =
             new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
                                                     objectPath, bus, this);
@@ -92,27 +95,8 @@ UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
 }
 
 /*!
-    Constructs a UserAccount object for the specified \a uid.
+    \internal
 
-    \param uid User identifier.
-*/
-UserAccount::UserAccount(uid_t uid, const QDBusConnection &bus, QObject *parent)
-    : QObject(*new UserAccountPrivate(), parent)
-{
-    Q_D(UserAccount);
-
-    QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(uid);
-
-    d->user =
-            new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
-                                                    objectPath, bus, this);
-    connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
-            this, &UserAccount::accountChanged);
-
-    d->emitSignals();
-}
-
-/*!
     Constructs a UserAccount object from a specific objectPath in the form of
     /org/freedesktop/Accounts/UserUID where UID is user's uid.
 
@@ -123,6 +107,7 @@ UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus, 
 {
     Q_D(UserAccount);
 
+    d->bus = bus;
     d->user =
             new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
                                                     objectPath, bus, this);
@@ -139,6 +124,31 @@ uid_t UserAccount::userId() const
 {
     Q_D(const UserAccount);
     return d->user->uid();
+}
+
+/*!
+    Change the user identifier to \c uid.
+    The object will hold information for the requested user identifier.
+*/
+void UserAccount::setUserId(uid_t uid)
+{
+    Q_D(UserAccount);
+
+    QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(uid);
+
+    if (d->user) {
+        disconnect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
+                   this, &UserAccount::accountChanged);
+        d->user = nullptr;
+    }
+
+    d->user =
+            new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
+                                                    objectPath, d->bus, this);
+    connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
+            this, &UserAccount::accountChanged);
+
+    d->emitSignals();
 }
 
 /*!
