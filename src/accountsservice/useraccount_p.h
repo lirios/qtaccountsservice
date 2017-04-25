@@ -50,6 +50,8 @@ class UserAccountPrivate : public QObjectPrivate
 public:
     explicit UserAccountPrivate();
 
+    void emitSignals();
+
     OrgFreedesktopAccountsUserInterface *user;
 };
 

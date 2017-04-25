@@ -40,6 +40,26 @@ UserAccountPrivate::UserAccountPrivate()
 {
 }
 
+void UserAccountPrivate::emitSignals()
+{
+    Q_Q(UserAccount);
+
+    Q_EMIT q->accountTypeChanged();
+    Q_EMIT q->lockedChanged();
+    Q_EMIT q->automaticLoginChanged();
+    Q_EMIT q->passwordModeChanged();
+    Q_EMIT q->userNameChanged();
+    Q_EMIT q->realNameChanged();
+    Q_EMIT q->displayNameChanged();
+    Q_EMIT q->homeDirectoryChanged();
+    Q_EMIT q->shellChanged();
+    Q_EMIT q->iconFileNameChanged();
+    Q_EMIT q->emailChanged();
+    Q_EMIT q->languageChanged();
+    Q_EMIT q->locationChanged();
+    Q_EMIT q->xsessionChanged();
+}
+
 /*!
     \class UserAcccount
     \brief The UserAccount class describes user accounts.
@@ -66,6 +86,8 @@ UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
                                                     objectPath, bus, this);
     connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
             this, &UserAccount::accountChanged);
+
+    d->emitSignals();
 }
 
 /*!
@@ -85,6 +107,8 @@ UserAccount::UserAccount(uid_t uid, const QDBusConnection &bus, QObject *parent)
                                                     objectPath, bus, this);
     connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
             this, &UserAccount::accountChanged);
+
+    d->emitSignals();
 }
 
 /*!
@@ -103,6 +127,8 @@ UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus, 
                                                     objectPath, bus, this);
     connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
             this, &UserAccount::accountChanged);
+
+    d->emitSignals();
 }
 
 /*!
