@@ -35,8 +35,8 @@ arch:
     - clazy-git
   script:
     - mkdir build && cd build
-    - if [ "$CC" = "gcc" ]; then qmake -spec linux-g++ CONFIG+=use_qt_paths ..; fi
-    - if [ "$CC" = "clang" ]; then qmake -spec linux-clang CONFIG+=use_qt_paths QMAKE_CXX="clazy" ..; fi
+    - if [ "$CC" = "gcc" ]; then qmake -spec linux-g++ CONFIG+=use_qt_paths ../qtaccountsservice.pro; fi
+    - if [ "$CC" = "clang" ]; then qmake -spec linux-clang CONFIG+=use_qt_paths QMAKE_CXX="clazy" ../qtaccountsservice.pro; fi
     - make -j$(nproc)
     - make check
     - cd ..
