@@ -16,7 +16,7 @@ For more information [read here](http://www.freedesktop.org/wiki/Software/Accoun
 
 ## Dependencies
 
-Qt >= 5.0.0 with at least the following modules is required:
+Qt >= 5.8.0 with at least the following modules is required:
 
  * [qtbase](http://code.qt.io/cgit/qt/qtbase.git)
  * [qtdeclarative](http://code.qt.io/cgit/qt/qtdeclarative.git)
