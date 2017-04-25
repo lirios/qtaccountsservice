@@ -27,7 +27,7 @@ From the root of the repository, run:
 
 ```sh
 mkdir build; cd build
-qmake ..
+qmake ../qtaccountsservice.pro
 make
 make install # use sudo if necessary
 ```
