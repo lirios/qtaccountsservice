@@ -21,23 +21,15 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-import QtQuick 2.0
-import QtAccountsService 1.0
+#include <QtGui/QGuiApplication>
+#include <QtQml/QQmlApplicationEngine>
 
-ListView {
-    model: UsersModel {}
-    spacing: 8
-    delegate: Row {
-        spacing: 8
+int main(int argc, char *argv[])
+{
+    QGuiApplication app(argc, argv);
 
-        Image {
-            width: 96
-            height: width
-            source: iconFileName
-        }
+    QQmlApplicationEngine engine(QUrl(QLatin1String("qrc:/loggedinuser.qml")));
+    Q_UNUSED(engine);
 
-        Text {
-            text: userName
-        }
-    }
+    return app.exec();
 }

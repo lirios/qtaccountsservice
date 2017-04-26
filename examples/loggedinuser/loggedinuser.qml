@@ -2,6 +2,7 @@
  * This file is part of Qt AccountsService.
  *
  * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2015-2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -21,22 +22,35 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDebug>
+import QtQuick 2.2
+import QtQuick.Window 2.1
+import QtAccountsService 1.0
 
-#include <QtAccountsService/AccountsManager>
-#include <QtAccountsService/UserAccount>
+Window {
+    width: 300
+    height: 200
+    title: "QtAccountsService"
+    visible: true
 
-using namespace QtAccountsService;
+    UserAccount {
+        id: userAccount
+    }
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication app(argc, argv);
+    Image {
+        id: faceIcon
+        source: userAccount.iconFileName ? "file://" + userAccount.iconFileName : ""
+    }
 
-    AccountsManager *manager = new AccountsManager();
-    UserAccountList list = manager->listCachedUsers();
-    Q_FOREACH (UserAccount *account, list)
-        qInfo() << account->realName() << account->userName();
+    Text {
+        id: loginName
+        anchors.left: faceIcon.right
+        text: userAccount.userName
+    }
 
-    return app.exec();
+    Text {
+        id: displayName
+        anchors.top: loginName.bottom
+        anchors.left: loginName.left
+        text: userAccount.displayName
+    }
 }

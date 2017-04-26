@@ -1,7 +1,7 @@
 /****************************************************************************
  * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2015-2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -21,35 +21,33 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-import QtQuick 2.2
-import QtQuick.Window 2.1
+import QtQuick 2.0
+import QtQuick.Window 2.0
 import QtAccountsService 1.0
 
 Window {
-    width: 300; height: 200
-    title: "AccountsService Qt binding"
+    width: 600
+    height: 400
+    title: "QtAccountsService"
+    visible: true
 
-    UserAccount {
-        id: userAccount
-        Component.onCompleted: {
-            faceIcon.source = iconFileName;
-            loginName.text = userName;
-            displayName.text = userAccount.displayName;
+    ListView {
+        anchors.fill: parent
+
+        model: UsersModel {}
+        spacing: 8
+        delegate: Row {
+            spacing: 8
+
+            Image {
+                width: 96
+                height: width
+                source: iconFileName ? "file://" + iconFileName : ""
+            }
+
+            Text {
+                text: "User name: " + userName + "\n" + "Real name: " + realName
+            }
         }
-    }
-
-    Image {
-        id: faceIcon
-    }
-
-    Text {
-        id: loginName
-        anchors.left: faceIcon.right
-    }
-
-    Text {
-        id: displayName
-        anchors.top: loginName.bottom
-        anchors.left: loginName.left
     }
 }

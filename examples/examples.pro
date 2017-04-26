@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS += listusers
+SUBDIRS += listusers userslistview loggedinuser

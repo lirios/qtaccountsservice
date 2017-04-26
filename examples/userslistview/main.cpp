@@ -21,22 +21,15 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDebug>
-
-#include <QtAccountsService/AccountsManager>
-#include <QtAccountsService/UserAccount>
-
-using namespace QtAccountsService;
+#include <QtGui/QGuiApplication>
+#include <QtQml/QQmlApplicationEngine>
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
-    AccountsManager *manager = new AccountsManager();
-    UserAccountList list = manager->listCachedUsers();
-    Q_FOREACH (UserAccount *account, list)
-        qInfo() << account->realName() << account->userName();
+    QQmlApplicationEngine engine(QUrl(QLatin1String("qrc:/userslistview.qml")));
+    Q_UNUSED(engine);
 
     return app.exec();
 }
