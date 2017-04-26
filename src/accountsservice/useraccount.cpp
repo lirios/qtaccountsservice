@@ -120,7 +120,7 @@ UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus, 
 /*!
     Returns the user identifier.
 */
-uid_t UserAccount::userId() const
+quint32 UserAccount::userId() const
 {
     Q_D(const UserAccount);
     return d->user->uid();
@@ -130,7 +130,7 @@ uid_t UserAccount::userId() const
     Change the user identifier to \c uid.
     The object will hold information for the requested user identifier.
 */
-void UserAccount::setUserId(uid_t uid)
+void UserAccount::setUserId(quint32 uid)
 {
     Q_D(UserAccount);
 
@@ -154,7 +154,7 @@ void UserAccount::setUserId(uid_t uid)
 /*!
     Returns group identifier.
 */
-gid_t UserAccount::groupId() const
+quint32 UserAccount::groupId() const
 {
     Q_D(const UserAccount);
 
@@ -173,7 +173,7 @@ gid_t UserAccount::groupId() const
             qCritical("User with uid %ld not found", (long)d->user->uid());
         else
             qCritical("Failed to get group information: %s", strerror(s));
-        return -1;
+        return 0;
     }
 
     return pwd.pw_gid;
