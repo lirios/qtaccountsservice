@@ -28,7 +28,7 @@
 #include <QtCore/QString>
 #include <QtDBus/QDBusConnection>
 
-#include <QtAccountsService/qtaccountsserviceglobal.h>
+#include <Qt5AccountsService/qtaccountsserviceglobal.h>
 
 namespace QtAccountsService {
 

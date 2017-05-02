@@ -26,7 +26,7 @@
 
 #include <QtCore/QAbstractListModel>
 
-#include <QtAccountsService/qtaccountsserviceglobal.h>
+#include <Qt5AccountsService/qtaccountsserviceglobal.h>
 
 namespace QtAccountsService {
 

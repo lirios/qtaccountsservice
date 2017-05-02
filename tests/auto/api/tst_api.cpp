@@ -23,10 +23,11 @@
 
 #include <QtTest/QtTest>
 
+#include <Qt5AccountsService/AccountsManager>
+#include <Qt5AccountsService/UserAccount>
+
 #include "fakeaccounts.h"
 #include "accounts_adaptor.h"
-#include "accountsmanager.h"
-#include "useraccount.h"
 
 using namespace QtAccountsService;
 

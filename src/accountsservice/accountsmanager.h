@@ -27,7 +27,7 @@
 #include <QtCore/QObject>
 #include <QtDBus/QDBusConnection>
 
-#include <QtAccountsService/UserAccount>
+#include <Qt5AccountsService/UserAccount>
 
 QT_FORWARD_DECLARE_CLASS(QDBusObjectPath)
 

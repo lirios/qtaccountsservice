@@ -1,5 +1,5 @@
 %modules = ( # path to module name map
-    "QtAccountsService" => "$basedir/src/accountsservice",
+    "Qt5AccountsService" => "$basedir/src/accountsservice",
 );
 %moduleheaders = ( # restrict the module headers to those found in relative path
     "qtaccountsserviceglobal.h"

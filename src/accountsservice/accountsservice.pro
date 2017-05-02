@@ -1,5 +1,6 @@
 TARGET = QtAccountsService
 MODULE = QtAccountsService
+MODULE_INCNAME = Qt5AccountsService
 
 QT += core dbus
 QT_PRIVATE += core-private
