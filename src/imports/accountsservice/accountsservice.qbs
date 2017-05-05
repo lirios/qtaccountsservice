@@ -4,6 +4,7 @@ LiriDynamicLibrary {
     name: "qtaccountsserviceplugin"
     targetName: "qtaccountsserviceplugin"
 
+    Depends { name: "lirideployment" }
     Depends { name: "Qt"; submodules: ["qml", "quick"] }
     Depends { name: "libQtAccountsService" }
 
@@ -20,7 +21,7 @@ LiriDynamicLibrary {
 
     Group {
         qbs.install: true
-        qbs.installDir: "qml/QtAccountsService"
+        qbs.installDir: lirideployment.qmlDir + "/QtAccountsService"
         fileTagsFilter: ["dynamiclibrary", "qml"]
     }
 }
