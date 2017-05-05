@@ -23,8 +23,8 @@ SOURCES += \
     $$PWD/useraccount.cpp \
     $$PWD/usersmodel.cpp
 
-QMAKE_PKGCONFIG_NAME = QtAccountsService
-QMAKE_PKGCONFIG_DESCRIPTION = Qt wrapper to Accounts Service
+QMAKE_PKGCONFIG_NAME = Qt Accounts Service
+QMAKE_PKGCONFIG_DESCRIPTION = Qt-style wrapper for Accounts Service
 QMAKE_PKGCONFIG_VERSION = $$QTACCOUNTSSERVICE_VERSION
 QMAKE_PKGCONFIG_DESTDIR = pkgconfig
 
