@@ -30,9 +30,4 @@ Project {
         arguments: project.autotestArguments
         wrapper: project.autotestWrapper
     }
-
-    Product {
-        name: "qmake project files for qtaccountsservice"
-        files: ["**/*.pr[io]"]
-    }
 }
