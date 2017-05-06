@@ -27,6 +27,7 @@ Project {
     }
 
     AutotestRunner {
+        name: "qtaccountsservice-autotest"
         arguments: project.autotestArguments
         wrapper: project.autotestWrapper
     }
