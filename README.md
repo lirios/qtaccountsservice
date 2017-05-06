@@ -23,6 +23,38 @@ Qt >= 5.8.0 with at least the following modules is required:
 
 ## Installation
 
+### Build with Qbs
+
+Qbs is a new build system that is much easier to use compared to qmake or CMake.
+It is the default build system for this project and soon will become the only one.
+
+If you want to learn more, please read the [Qbs manual](http://doc.qt.io/qbs/index.html),
+especially the [setup guide](http://doc.qt.io/qbs/configuring.html) and how to install artifacts
+from the [installation guide](http://doc.qt.io/qbs/installing-files.html).
+
+From the root of the repository, run:
+
+```sh
+qbs setup-toolchains --type gcc /usr/bin/g++ gcc
+qbs setup-qt /usr/bin/qmake-qt5 qt5
+qbs config profiles.qt5.baseProfile gcc
+qbs -d build -j $(nproc) profile:qt5 # use sudo if necessary
+```
+
+On the last `qbs` line, you can specify additional configuration parameters at the end:
+
+ * `qbs.installRoot:/path/to/install` (for example `/opt/liri` or `/usr`)
+ * `lirideployment:qmlDir=/relative/path/to/qml` indicate where QML plugins will be installed
+   under `qbs.installRoot`, this is only needed if `qbs.installRoot` is a system-wide path
+   such as `/usr`.
+
+If you specify `qbs.installRoot` you might need to prefix the entire line with `sudo`,
+depending on whether you have permissions to write there or not.
+
+### Build with qmake
+
+qmake, the old Qt build system is still supported but will be removed at some point.
+
 From the root of the repository, run:
 
 ```sh
