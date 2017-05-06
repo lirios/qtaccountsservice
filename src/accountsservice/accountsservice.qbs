@@ -22,6 +22,12 @@ LiriModule {
     create_pkgconfig.dependencies: ["Qt5Core", "Qt5DBus", "Qt5Gui"]
 
     create_cmake.version: project.version
+    create_cmake.dependencies: ({
+        "Qt5Core": "5.8",
+        "Qt5DBus": "5.8",
+        "Qt5Gui": "5.8"
+    })
+    create_cmake.linkLibraries: ["Qt5::Core", "Qt5::DBus", "Qt5::Gui"]
 
     files: ["*.cpp"]
 
