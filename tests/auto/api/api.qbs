@@ -5,7 +5,7 @@ QtApplication {
     type: base.concat(["autotest"])
 
     Depends { name: "Qt"; submodules: ["core", "dbus", "testlib"] }
-    Depends { name: "libQtAccountsService" }
+    Depends { name: "Qt5AccountsService" }
 
     files: [
         "fakeaccounts.cpp",

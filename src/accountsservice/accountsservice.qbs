@@ -1,7 +1,7 @@
 import qbs 1.0
 
 LiriModule {
-    name: "libQtAccountsService"
+    name: "Qt5AccountsService"
 
     targetName: "Qt5AccountsService"
     version: "0.0.0"
