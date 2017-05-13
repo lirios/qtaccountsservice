@@ -1,7 +1,7 @@
 import qbs 1.0
 
 LiriDynamicLibrary {
-    name: "qtaccountsserviceplugin"
+    name: "QtAccountsService"
     targetName: "qtaccountsserviceplugin"
 
     Depends { name: "lirideployment" }
