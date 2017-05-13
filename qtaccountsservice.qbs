@@ -6,6 +6,8 @@ Project {
     readonly property string version: "0.7.0"
 
     property bool withExamples: false
+
+    property bool autotestEnabled: false
     property stringList autotestArguments: []
     property stringList autotestWrapper: []
 
@@ -27,6 +29,7 @@ Project {
     }
 
     AutotestRunner {
+        builtByDefault: autotestEnabled
         name: "qtaccountsservice-autotest"
         arguments: project.autotestArguments
         wrapper: project.autotestWrapper
