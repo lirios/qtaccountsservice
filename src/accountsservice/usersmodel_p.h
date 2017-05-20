@@ -57,7 +57,7 @@ public:
 
 public Q_SLOTS:
     void _q_userAdded(UserAccount *account);
-    void _q_userDeleted(UserAccount *account);
+    void _q_userDeleted(uid_t uid);
 };
 
 }

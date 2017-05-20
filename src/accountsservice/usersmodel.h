@@ -64,7 +64,7 @@ protected:
 private:
     Q_DECLARE_PRIVATE(UsersModel)
     Q_PRIVATE_SLOT(d_func(), void _q_userAdded(UserAccount *account))
-    Q_PRIVATE_SLOT(d_func(), void _q_userDeleted(UserAccount *account))
+    Q_PRIVATE_SLOT(d_func(), void _q_userDeleted(uid_t uid))
 };
 
 }

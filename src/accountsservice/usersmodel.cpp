@@ -50,12 +50,12 @@ void UsersModelPrivate::_q_userAdded(UserAccount *account)
     q_ptr->endInsertRows();
 }
 
-void UsersModelPrivate::_q_userDeleted(UserAccount *account)
+void UsersModelPrivate::_q_userDeleted(uid_t uid)
 {
     for (int i = 0; i < list.size(); i++) {
         UserAccount *curAccount = list.at(i);
 
-        if (curAccount->userId() == account->userId()) {
+        if (curAccount->userId() == uid) {
             q_ptr->beginRemoveRows(QModelIndex(), i, i);
             list.removeOne(curAccount);
             q_ptr->endRemoveRows();
@@ -75,8 +75,8 @@ UsersModel::UsersModel(QObject *parent)
     d_ptr->q_ptr = this;
     connect(d_ptr->manager, SIGNAL(userAdded(UserAccount*)),
             this, SLOT(_q_userAdded(UserAccount*)));
-    connect(d_ptr->manager, SIGNAL(userDeleted(UserAccount*)),
-            this, SLOT(_q_userDeleted(UserAccount*)));
+    connect(d_ptr->manager, SIGNAL(userDeleted(uid_t)),
+            this, SLOT(_q_userDeleted(uid_t)));
 }
 
 QHash<int, QByteArray> UsersModel::roleNames() const
