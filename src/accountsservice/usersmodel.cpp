@@ -21,6 +21,7 @@
  * $END_LICENSE$
  ***************************************************************************/
 
+#include <QtConcurrent/QtConcurrentRun>
 #include <QtGui/QPixmap>
 
 #include "usersmodel.h"
@@ -35,7 +36,12 @@ namespace QtAccountsService {
 UsersModelPrivate::UsersModelPrivate()
 {
     manager = new AccountsManager();
-    list = manager->listCachedUsers();
+
+    auto func = [](UsersModelPrivate *d) {
+        d->list = d->manager->listCachedUsers();
+    };
+
+    QtConcurrent::run(func, this);
 }
 
 UsersModelPrivate::~UsersModelPrivate()
