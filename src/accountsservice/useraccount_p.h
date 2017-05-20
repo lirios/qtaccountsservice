@@ -26,6 +26,7 @@
 
 #include <QtCore/private/qobject_p.h>
 
+#include "useraccount.h"
 #include "user_interface.h"
 
 //
@@ -41,8 +42,6 @@
 
 namespace QtAccountsService {
 
-class UserAccount;
-
 class UserAccountPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(UserAccount)
@@ -54,6 +53,20 @@ public:
 
     QDBusConnection bus;
     OrgFreedesktopAccountsUserInterface *user;
+
+    UserAccount::AccountType accountType;
+    bool locked;
+    bool automaticLogin;
+    UserAccount::PasswordMode passwordMode;
+    QString userName;
+    QString realName;
+    QString homeDirectory;
+    QString shell;
+    QString iconFileName;
+    QString email;
+    QString language;
+    QString location;
+    QString xsession;
 };
 
 }

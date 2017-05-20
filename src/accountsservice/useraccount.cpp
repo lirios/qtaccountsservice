@@ -38,6 +38,10 @@ UserAccountPrivate::UserAccountPrivate()
     : QObjectPrivate()
     , bus(QDBusConnection::systemBus())
     , user(nullptr)
+    , accountType(UserAccount::StandardAccountType)
+    , locked(false)
+    , automaticLogin(false)
+    , passwordMode(UserAccount::NonePasswordMode)
 {
 }
 
@@ -89,7 +93,7 @@ UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
             new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
                                                     objectPath, bus, this);
     connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
-            this, &UserAccount::accountChanged);
+            this, &UserAccount::handleAccountChanged);
 
     d->emitSignals();
 }
@@ -112,7 +116,7 @@ UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus, 
             new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
                                                     objectPath, bus, this);
     connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
-            this, &UserAccount::accountChanged);
+            this, &UserAccount::handleAccountChanged);
 
     d->emitSignals();
 }
@@ -138,7 +142,7 @@ void UserAccount::setUserId(quint32 uid)
 
     if (d->user) {
         disconnect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
-                   this, &UserAccount::accountChanged);
+                   this, &UserAccount::handleAccountChanged);
         d->user = nullptr;
     }
 
@@ -146,7 +150,7 @@ void UserAccount::setUserId(quint32 uid)
             new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
                                                     objectPath, d->bus, this);
     connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
-            this, &UserAccount::accountChanged);
+            this, &UserAccount::handleAccountChanged);
 
     d->emitSignals();
 }
@@ -200,6 +204,7 @@ void UserAccount::setAccountType(AccountType type)
     if (type == accountType())
         return;
 
+    d->accountType = type;
     d->user->SetAccountType(static_cast<int>(type));
     Q_EMIT accountTypeChanged();
 }
@@ -226,6 +231,7 @@ void UserAccount::setLocked(bool locked)
     if (isLocked() == locked)
         return;
 
+    d->locked = locked;
     d->user->SetLocked(locked);
     Q_EMIT lockedChanged();
 }
@@ -253,6 +259,7 @@ void UserAccount::setAutomaticLogin(bool automaticLogin)
     if (this->automaticLogin() == automaticLogin)
         return;
 
+    d->automaticLogin = automaticLogin;
     d->user->SetAutomaticLogin(automaticLogin);
     Q_EMIT automaticLoginChanged();
 }
@@ -296,6 +303,7 @@ void UserAccount::setPasswordMode(UserAccount::PasswordMode mode)
     if (passwordMode() == mode)
         return;
 
+    d->passwordMode = mode;
     d->user->SetPasswordMode(static_cast<int>(mode));
     Q_EMIT passwordModeChanged();
 }
@@ -348,6 +356,7 @@ void UserAccount::setUserName(const QString &userName)
     if (this->userName() == userName)
         return;
 
+    d->userName = userName;
     d->user->SetUserName(userName);
     Q_EMIT userNameChanged();
     Q_EMIT displayNameChanged();
@@ -374,6 +383,7 @@ void UserAccount::setRealName(const QString &realName)
     if (this->realName() == realName)
         return;
 
+    d->realName = realName;
     d->user->SetRealName(realName);
     Q_EMIT realNameChanged();
     Q_EMIT displayNameChanged();
@@ -435,6 +445,7 @@ void UserAccount::setShell(const QString &shell)
     if (this->shell() == shell)
         return;
 
+    d->shell = shell;
     d->user->SetShell(shell);
     Q_EMIT shellChanged();
 }
@@ -460,6 +471,7 @@ void UserAccount::setIconFileName(const QString &fileName)
     if (iconFileName() == fileName)
         return;
 
+    d->iconFileName = fileName;
     d->user->SetIconFile(fileName);
     Q_EMIT iconFileNameChanged();
 }
@@ -485,6 +497,7 @@ void UserAccount::setEmail(const QString &email)
     if (this->email() == email)
         return;
 
+    d->email = email;
     d->user->SetEmail(email);
     Q_EMIT emailChanged();
 }
@@ -510,6 +523,7 @@ void UserAccount::setLanguage(const QString &language)
     if (this->language() == language)
         return;
 
+    d->language = language;
     d->user->SetLanguage(language);
     Q_EMIT languageChanged();
 }
@@ -535,6 +549,7 @@ void UserAccount::setLocation(const QString &location)
     if (this->location() == location)
         return;
 
+    d->location = location;
     d->user->SetLocation(location);
     Q_EMIT locationChanged();
 }
@@ -560,6 +575,7 @@ void UserAccount::setXSession(const QString &session)
     if (xsession() == session)
         return;
 
+    d->xsession = session;
     d->user->SetXSession(session);
     Q_EMIT xsessionChanged();
 }
@@ -585,6 +601,83 @@ void UserAccount::setPasswordHint(const QString &hint)
 {
     Q_D(UserAccount);
     d->user->SetPasswordHint(hint);
+}
+
+/*!
+    \internal
+ */
+void UserAccount::handleAccountChanged()
+{
+    // Catch changes outside of this API
+
+    Q_D(UserAccount);
+
+    if (d->accountType != accountType()) {
+        d->accountType = accountType();
+        Q_EMIT accountTypeChanged();
+    }
+
+    if (d->locked != isLocked()) {
+        d->locked = isLocked();
+        Q_EMIT lockedChanged();
+    }
+
+    if (d->automaticLogin != automaticLogin()) {
+        d->automaticLogin = automaticLogin();
+        Q_EMIT automaticLoginChanged();
+    }
+
+    if (d->passwordMode != passwordMode()) {
+        d->passwordMode = passwordMode();
+        Q_EMIT passwordModeChanged();
+    }
+
+    if (d->userName != userName()) {
+        d->userName = userName();
+        Q_EMIT userNameChanged();
+        Q_EMIT displayNameChanged();
+    }
+
+    if (d->realName != realName()) {
+        d->realName = realName();
+        Q_EMIT realNameChanged();
+        Q_EMIT displayNameChanged();
+    }
+
+    if (d->homeDirectory != homeDirectory()) {
+        d->homeDirectory = homeDirectory();
+        Q_EMIT homeDirectoryChanged();
+    }
+
+    if (d->shell != shell()) {
+        d->shell = shell();
+        Q_EMIT shellChanged();
+    }
+
+    if (d->iconFileName != iconFileName()) {
+        d->iconFileName = iconFileName();
+        Q_EMIT iconFileNameChanged();
+    }
+
+    if (d->email != email()) {
+        d->email = email();
+        Q_EMIT emailChanged();
+    }
+
+    if (d->language != language()) {
+        d->language = language();
+        Q_EMIT languageChanged();
+    }
+
+    if (d->location != location()) {
+        d->location = location();
+        Q_EMIT locationChanged();
+    }
+
+    if (d->xsession != xsession()) {
+        d->xsession = xsession();
+        Q_EMIT xsessionChanged();
+    }
 }
 
 }

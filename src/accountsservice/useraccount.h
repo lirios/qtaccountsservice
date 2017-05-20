@@ -163,6 +163,9 @@ private:
     UserAccount(const QString &objectPath,
                 const QDBusConnection &bus = QDBusConnection::systemBus(),
                 QObject *parent = nullptr);
+
+private Q_SLOTS:
+    void handleAccountChanged();
 };
 
 typedef QList<UserAccount *> UserAccountList;
