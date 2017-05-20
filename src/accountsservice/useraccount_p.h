@@ -49,6 +49,7 @@ class UserAccountPrivate : public QObjectPrivate
 public:
     explicit UserAccountPrivate();
 
+    void initialize(const QDBusConnection &connection, const QString &objectPath);
     void emitSignals();
 
     QDBusConnection bus;

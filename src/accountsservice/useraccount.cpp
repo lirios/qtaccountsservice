@@ -45,6 +45,27 @@ UserAccountPrivate::UserAccountPrivate()
 {
 }
 
+void UserAccountPrivate::initialize(const QDBusConnection &connection, const QString &objectPath)
+{
+    Q_Q(UserAccount);
+
+    bus = connection;
+
+    if (user) {
+        q->disconnect(user, &OrgFreedesktopAccountsUserInterface::Changed,
+                      q, &UserAccount::handleAccountChanged);
+        user = nullptr;
+    }
+
+    user = new OrgFreedesktopAccountsUserInterface(
+                QStringLiteral("org.freedesktop.Accounts"),
+                objectPath, bus, q);
+    q->connect(user, &OrgFreedesktopAccountsUserInterface::Changed,
+               q, &UserAccount::handleAccountChanged);
+
+    emitSignals();
+}
+
 void UserAccountPrivate::emitSignals()
 {
     Q_Q(UserAccount);
@@ -87,15 +108,7 @@ UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
     Q_D(UserAccount);
 
     QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(getuid());
-
-    d->bus = bus;
-    d->user =
-            new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
-                                                    objectPath, bus, this);
-    connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
-            this, &UserAccount::handleAccountChanged);
-
-    d->emitSignals();
+    d->initialize(bus, objectPath);
 }
 
 /*!
@@ -110,15 +123,7 @@ UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus, 
     : QObject(*new UserAccountPrivate(), parent)
 {
     Q_D(UserAccount);
-
-    d->bus = bus;
-    d->user =
-            new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
-                                                    objectPath, bus, this);
-    connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
-            this, &UserAccount::handleAccountChanged);
-
-    d->emitSignals();
+    d->initialize(bus, objectPath);
 }
 
 /*!
@@ -139,20 +144,7 @@ void UserAccount::setUserId(quint32 uid)
     Q_D(UserAccount);
 
     QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(uid);
-
-    if (d->user) {
-        disconnect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
-                   this, &UserAccount::handleAccountChanged);
-        d->user = nullptr;
-    }
-
-    d->user =
-            new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
-                                                    objectPath, d->bus, this);
-    connect(d->user, &OrgFreedesktopAccountsUserInterface::Changed,
-            this, &UserAccount::handleAccountChanged);
-
-    d->emitSignals();
+    d->initialize(d->bus, objectPath);
 }
 
 /*!
