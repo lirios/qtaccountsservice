@@ -34,14 +34,9 @@ namespace QtAccountsService {
  */
 
 UsersModelPrivate::UsersModelPrivate()
+    : QAbstractItemModelPrivate()
 {
     manager = new AccountsManager();
-
-    auto func = [](UsersModelPrivate *d) {
-        d->list = d->manager->listCachedUsers();
-    };
-
-    QtConcurrent::run(func, this);
 }
 
 UsersModelPrivate::~UsersModelPrivate()
@@ -51,20 +46,24 @@ UsersModelPrivate::~UsersModelPrivate()
 
 void UsersModelPrivate::_q_userAdded(UserAccount *account)
 {
-    q_ptr->beginInsertRows(QModelIndex(), list.size(), list.size());
+    Q_Q(UsersModel);
+
+    q->beginInsertRows(QModelIndex(), list.size(), list.size());
     list.append(account);
-    q_ptr->endInsertRows();
+    q->endInsertRows();
 }
 
 void UsersModelPrivate::_q_userDeleted(uid_t uid)
 {
+    Q_Q(UsersModel);
+
     for (int i = 0; i < list.size(); i++) {
         UserAccount *curAccount = list.at(i);
 
         if (curAccount->userId() == uid) {
-            q_ptr->beginRemoveRows(QModelIndex(), i, i);
+            q->beginRemoveRows(QModelIndex(), i, i);
             list.removeOne(curAccount);
-            q_ptr->endRemoveRows();
+            q->endRemoveRows();
             break;
         }
     }
@@ -75,14 +74,19 @@ void UsersModelPrivate::_q_userDeleted(uid_t uid)
  */
 
 UsersModel::UsersModel(QObject *parent)
-    : QAbstractListModel(parent)
-    , d_ptr(new UsersModelPrivate)
+    : QAbstractListModel(*new UsersModelPrivate(), parent)
 {
-    d_ptr->q_ptr = this;
-    connect(d_ptr->manager, SIGNAL(userAdded(UserAccount*)),
+    Q_D(UsersModel);
+
+    connect(d->manager, SIGNAL(userAdded(UserAccount*)),
             this, SLOT(_q_userAdded(UserAccount*)));
-    connect(d_ptr->manager, SIGNAL(userDeleted(uid_t)),
+    connect(d->manager, SIGNAL(userDeleted(uid_t)),
             this, SLOT(_q_userDeleted(uid_t)));
+
+    auto func = [](UsersModelPrivate *d) {
+        d->list = d->manager->listCachedUsers();
+    };
+    QtConcurrent::run(func, d);
 }
 
 QHash<int, QByteArray> UsersModel::roleNames() const

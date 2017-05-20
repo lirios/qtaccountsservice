@@ -58,9 +58,6 @@ public:
 
     UserAccount *userAccount(const QModelIndex &index) const;
 
-protected:
-    UsersModelPrivate *d_ptr;
-
 private:
     Q_DECLARE_PRIVATE(UsersModel)
     Q_PRIVATE_SLOT(d_func(), void _q_userAdded(UserAccount *account))
