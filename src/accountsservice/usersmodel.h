@@ -38,12 +38,27 @@ class Q_ACCOUNTS_SERVICE_EXPORT UsersModel : public QAbstractListModel
     Q_OBJECT
 public:
     enum Roles {
-        UserIdRole = Qt::UserRole + 1,
+        UserAccountRole = Qt::UserRole + 1,
+        UserIdRole,
+        AccountTypeRole,
+        LockedRole,
+        AutomaticLoginRole,
+        LoginFrequencyRole,
+        LoginTimeRole,
+        PasswordModeRole,
+        PasswordHintRole,
+        LocalAccount,
+        SystemAccount,
         UserNameRole,
         RealNameRole,
+        DisplayNameRole,
+        HomeDirectoryRole,
+        ShellRole,
         IconFileNameRole,
-        AccountTypeRole,
-        LanguageRole
+        EmailRole,
+        LanguageRole,
+        LocationRole,
+        XSessionRole
     };
     Q_ENUM(Roles)
 

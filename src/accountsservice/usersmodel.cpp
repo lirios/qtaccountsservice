@@ -100,12 +100,27 @@ UsersModel::UsersModel(QObject *parent)
 QHash<int, QByteArray> UsersModel::roleNames() const
 {
     QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
+    roles[UserAccountRole] = "userAccount";
     roles[UserIdRole] = "userId";
+    roles[AccountTypeRole] = "accountType";
+    roles[LockedRole] = "locked";
+    roles[AutomaticLoginRole] = "automaticLogin";
+    roles[LoginFrequencyRole] = "loginFrequency";
+    roles[LoginTimeRole] = "loginTime";
+    roles[PasswordModeRole] = "passwordMode";
+    roles[PasswordHintRole] = "passwordHint";
+    roles[LocalAccount] = "localAccount";
+    roles[SystemAccount] = "systemAccount";
     roles[UserNameRole] = "userName";
     roles[RealNameRole] = "realName";
+    roles[DisplayNameRole] = "displayNameRole";
+    roles[HomeDirectoryRole] = "homeDirectory";
+    roles[ShellRole] = "shell";
     roles[IconFileNameRole] = "iconFileName";
-    roles[AccountTypeRole] = "accountType";
     roles[LanguageRole] = "language";
+    roles[EmailRole] = "email";
+    roles[LocationRole] = "location";
+    roles[XSessionRole] = "xsession";
     return roles;
 }
 
@@ -127,21 +142,50 @@ QVariant UsersModel::data(const QModelIndex &index, int role) const
 
     switch (role) {
     case Qt::DisplayRole:
+    case DisplayNameRole:
         return user->displayName();
     case Qt::DecorationRole:
         return QPixmap(user->iconFileName());
-    case UsersModel::UserIdRole:
+    case UserAccountRole:
+        return QVariant::fromValue(user);
+    case UserIdRole:
         return user->userId();
-    case UsersModel::UserNameRole:
-        return user->userName();
-    case UsersModel::RealNameRole:
-        return user->realName();
-    case UsersModel::IconFileNameRole:
-        return user->iconFileName();
-    case UsersModel::AccountTypeRole:
+    case AccountTypeRole:
         return user->accountType();
-    case UsersModel::LanguageRole:
+    case LockedRole:
+        return user->isLocked();
+    case AutomaticLoginRole:
+        return user->automaticLogin();
+    case LoginFrequencyRole:
+        return user->loginFrequency();
+    case LoginTimeRole:
+        return user->loginTime();
+    case PasswordModeRole:
+        return user->passwordMode();
+    case PasswordHintRole:
+        return user->passwordHint();
+    case LocalAccount:
+        return user->isLocalAccount();
+    case SystemAccount:
+        return user->isSystemAccount();
+    case UserNameRole:
+        return user->userName();
+    case RealNameRole:
+        return user->realName();
+    case HomeDirectoryRole:
+        return user->homeDirectory();
+    case ShellRole:
+        return user->shell();
+    case IconFileNameRole:
+        return user->iconFileName();
+    case EmailRole:
+        return user->email();
+    case LanguageRole:
         return user->language();
+    case LocationRole:
+        return user->location();
+    case XSessionRole:
+        return user->xsession();
     default:
         break;
     }
