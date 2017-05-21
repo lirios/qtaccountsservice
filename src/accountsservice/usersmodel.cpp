@@ -48,6 +48,12 @@ void UsersModelPrivate::_q_userAdded(UserAccount *account)
 {
     Q_Q(UsersModel);
 
+    q->connect(account, &UserAccount::accountChanged, [account, q, this]() {
+        auto index = q->index(list.indexOf(account));
+        if (index.isValid())
+            q->dataChanged(index, index);
+    });
+
     q->beginInsertRows(QModelIndex(), list.size(), list.size());
     list.append(account);
     q->endInsertRows();
@@ -84,7 +90,9 @@ UsersModel::UsersModel(QObject *parent)
             this, SLOT(_q_userDeleted(uid_t)));
 
     auto func = [](UsersModelPrivate *d) {
-        d->list = d->manager->listCachedUsers();
+        auto list = d->manager->listCachedUsers();
+        for (UserAccount *account : qAsConst(list))
+            d->_q_userAdded(account);
     };
     QtConcurrent::run(func, d);
 }
