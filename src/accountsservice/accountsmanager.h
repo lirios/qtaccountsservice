@@ -51,19 +51,19 @@ public:
 
     Q_INVOKABLE UserAccount *cachedUser(const QString &userName) const;
 
-    Q_INVOKABLE UserAccount *findUserById(uid_t uid);
+    Q_INVOKABLE UserAccount *findUserById(qlonglong uid);
     Q_INVOKABLE UserAccount *findUserByName(const QString &userName);
 
     Q_INVOKABLE bool createUser(const QString &userName,
                                 const QString &fullName,
                                 UserAccount::AccountType accountType);
 
-    Q_INVOKABLE bool deleteUser(uid_t uid, bool removeFiles);
+    Q_INVOKABLE bool deleteUser(qlonglong uid, bool removeFiles);
     bool deleteUser(UserAccount *account, bool removeFiles);
 
 Q_SIGNALS:
     void userAdded(UserAccount *);
-    void userDeleted(quint32 uid);
+    void userDeleted(qlonglong uid);
     void userCached(const QString &userName);
     void userUncached(const QString &userName);
     void listCachedUsersFinished(const UserAccountList &userList);

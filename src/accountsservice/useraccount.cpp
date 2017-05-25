@@ -129,7 +129,7 @@ UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus, 
 /*!
     Returns the user identifier.
 */
-quint32 UserAccount::userId() const
+qlonglong UserAccount::userId() const
 {
     Q_D(const UserAccount);
     return d->user->uid();
@@ -139,7 +139,7 @@ quint32 UserAccount::userId() const
     Change the user identifier to \c uid.
     The object will hold information for the requested user identifier.
 */
-void UserAccount::setUserId(quint32 uid)
+void UserAccount::setUserId(qlonglong uid)
 {
     Q_D(UserAccount);
 
@@ -150,7 +150,7 @@ void UserAccount::setUserId(quint32 uid)
 /*!
     Returns group identifier.
 */
-quint32 UserAccount::groupId() const
+qlonglong UserAccount::groupId() const
 {
     Q_D(const UserAccount);
 

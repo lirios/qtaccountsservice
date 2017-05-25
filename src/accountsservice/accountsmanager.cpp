@@ -286,7 +286,7 @@ UserAccount *AccountsManager::cachedUser(const QString &userName) const
     \param uid The uid to look up.
     \return the corresponding UserAccount object.
 */
-UserAccount *AccountsManager::findUserById(uid_t uid)
+UserAccount *AccountsManager::findUserById(qlonglong uid)
 {
     Q_D(AccountsManager);
 
@@ -295,7 +295,7 @@ UserAccount *AccountsManager::findUserById(uid_t uid)
 
     if (reply.isError()) {
         QDBusError error = reply.error();
-        qWarning("Couldn't find user by uid %d: %s", uid,
+        qWarning("Couldn't find user by uid %lld: %s", uid,
                  error.errorString(error.type()).toUtf8().constData());
         return nullptr;
     }
@@ -384,14 +384,14 @@ bool AccountsManager::createUser(const QString &userName,
     \param removeFiles If true all files owned by the user will be removed.
     \return whether the user was deleted successfully.
 */
-bool AccountsManager::deleteUser(uid_t uid, bool removeFiles)
+bool AccountsManager::deleteUser(qlonglong uid, bool removeFiles)
 {
     Q_D(AccountsManager);
 
     QDBusPendingReply<> reply = d->interface->DeleteUser(uid, removeFiles);
     if (reply.isError()) {
         QDBusError error = reply.error();
-        qWarning("Couldn't delete user %d: %s", uid,
+        qWarning("Couldn't delete user %lld: %s", uid,
                  error.errorString(error.type()).toUtf8().constData());
         return false;
     }

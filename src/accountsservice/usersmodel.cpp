@@ -58,7 +58,7 @@ void UsersModelPrivate::_q_userAdded(UserAccount *account)
     q->endInsertRows();
 }
 
-void UsersModelPrivate::_q_userDeleted(quint32 uid)
+void UsersModelPrivate::_q_userDeleted(qlonglong uid)
 {
     Q_Q(UsersModel);
 
@@ -85,8 +85,8 @@ UsersModel::UsersModel(QObject *parent)
 
     connect(d->manager, SIGNAL(userAdded(UserAccount*)),
             this, SLOT(_q_userAdded(UserAccount*)));
-    connect(d->manager, SIGNAL(userDeleted(quint32)),
-            this, SLOT(_q_userDeleted(quint32)));
+    connect(d->manager, SIGNAL(userDeleted(qlonglong)),
+            this, SLOT(_q_userDeleted(qlonglong)));
 
     connect(d->manager, &AccountsManager::listCachedUsersFinished, [this, d](const UserAccountList &list) {
         for (auto account : list)
