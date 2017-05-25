@@ -34,4 +34,17 @@ Project {
         arguments: project.autotestArguments
         wrapper: project.autotestWrapper
     }
+
+    InstallPackage {
+        name: "qtaccountsservice-artifacts"
+        targetName: name
+        builtByDefault: false
+
+        archiver.type: "tar"
+        archiver.outputDirectory: project.buildDirectory
+
+        Depends {
+            productTypes: ["installable"]
+        }
+    }
 }
