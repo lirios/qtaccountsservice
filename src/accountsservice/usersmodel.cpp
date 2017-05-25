@@ -21,7 +21,6 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtConcurrent/QtConcurrentRun>
 #include <QtGui/QPixmap>
 
 #include "usersmodel.h"
@@ -59,7 +58,7 @@ void UsersModelPrivate::_q_userAdded(UserAccount *account)
     q->endInsertRows();
 }
 
-void UsersModelPrivate::_q_userDeleted(uid_t uid)
+void UsersModelPrivate::_q_userDeleted(quint32 uid)
 {
     Q_Q(UsersModel);
 
@@ -86,15 +85,14 @@ UsersModel::UsersModel(QObject *parent)
 
     connect(d->manager, SIGNAL(userAdded(UserAccount*)),
             this, SLOT(_q_userAdded(UserAccount*)));
-    connect(d->manager, SIGNAL(userDeleted(uid_t)),
-            this, SLOT(_q_userDeleted(uid_t)));
+    connect(d->manager, SIGNAL(userDeleted(quint32)),
+            this, SLOT(_q_userDeleted(quint32)));
 
-    auto func = [](UsersModelPrivate *d) {
-        auto list = d->manager->listCachedUsers();
-        for (UserAccount *account : qAsConst(list))
+    connect(d->manager, &AccountsManager::userCached, [this, d](const QString &userName) {
+        auto account = d->manager->cachedUser(userName);
+        if (account)
             d->_q_userAdded(account);
-    };
-    QtConcurrent::run(func, d);
+    });
 }
 
 QHash<int, QByteArray> UsersModel::roleNames() const

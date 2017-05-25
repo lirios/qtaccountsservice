@@ -45,10 +45,11 @@ public:
 
     void cacheUser(const QString &userName);
     void uncacheUser(const QString &userName);
-    void uncacheUser(UserAccount *account);
 
-    UserAccountList listCachedUsers();
-    void listCachedUsersAsync();
+    void listCachedUsers();
+    UserAccountList listCachedUsersSync();
+
+    UserAccount *cachedUser(const QString &userName) const;
 
     UserAccount *findUserById(uid_t uid);
     UserAccount *findUserByName(const QString &userName);
@@ -62,8 +63,9 @@ public:
 
 Q_SIGNALS:
     void userAdded(UserAccount *);
-    void userDeleted(uid_t uid);
-    void userCached(UserAccount *);
+    void userDeleted(quint32 uid);
+    void userCached(const QString &userName);
+    void userUncached(const QString &userName);
     void listCachedUsersFinished(const UserAccountList &userList);
 
 protected:

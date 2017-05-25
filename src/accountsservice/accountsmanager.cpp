@@ -138,7 +138,7 @@ void AccountsManager::cacheUser(const QString &userName)
                 account = new UserAccount(path.path(), d->interface->connection());
                 d->usersCache[path.path()] = account;
             }
-            Q_EMIT userCached(account);
+            Q_EMIT userCached(userName);
         }
     });
 }
@@ -148,69 +148,45 @@ void AccountsManager::cacheUser(const QString &userName)
     If the user account is from a remote server and the user has never logged in
     before, then that account will no longer show up in listCachedUsers() output.
 
+    Emits userUncached() when done.
+
     \param userName The user name for the user.
 */
 void AccountsManager::uncacheUser(const QString &userName)
 {
     Q_D(AccountsManager);
 
-    d->interface->UncacheUser(userName);
-}
-
-/*!
-    Releases all metadata about a user account, including icon, language and session.
-    If the user account is from a remote server and the user has never logged in
-    before, then that account will no longer show up in listCachedUsers() output.
-
-    \param account The account for the user.
-*/
-void AccountsManager::uncacheUser(UserAccount *account)
-{
-    uncacheUser(account->userName());
-}
-
-/*!
-    Returns a list of user accounts.
-
-    \param systemUsers If true, returns also system users.
-*/
-UserAccountList AccountsManager::listCachedUsers()
-{
-    Q_D(AccountsManager);
-
-    UserAccountList list;
-
-    QDBusPendingReply< QList<QDBusObjectPath> > reply = d->interface->ListCachedUsers();
-    reply.waitForFinished();
-
-    if (reply.isError()) {
-        QDBusError error = reply.error();
-        qWarning("Couldn't list cached users: %s",
-                 error.errorString(error.type()).toUtf8().constData());
-        return list;
-    }
-
-    QList<QDBusObjectPath> value = reply.argumentAt<0>();
-    list.reserve(value.size());
-
-    for (int i = 0; i < value.size(); i++) {
-        const QString path = value.at(i).path();
-        UserAccount *account = d->usersCache.value(path, Q_NULLPTR);
-        if (!account) {
-            account = new UserAccount(path, d->interface->connection());
-            d->usersCache[path] = account;
+    QDBusPendingCall call = d->interface->UncacheUser(userName);
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
+        QDBusPendingReply<QDBusObjectPath> reply = *w;
+        w->deleteLater();
+        if (reply.isError()) {
+            QDBusError error = reply.error();
+            qWarning("Couldn't uncache user %s: %s",
+                     userName.toUtf8().constData(),
+                     error.errorString(error.type()).toUtf8().constData());
+        } else {
+            QMap<QString, UserAccount *>::iterator it = d->usersCache.begin();
+            while (it != d->usersCache.end()) {
+                auto account = it.value();
+                if (account->userName() == userName) {
+                    d->usersCache.erase(++it);
+                    account->deleteLater();
+                } else {
+                    ++it;
+                }
+            }
+            Q_EMIT userUncached(userName);
         }
-        list.append(account);
-    }
-
-    return list;
+    });
 }
 
 /*!
-    Cached a list of user accounts.
-    Async unblocking API.
+    List cache users asynchronously.
+    When the list is ready, \c listCachedUsersFinished will be emitted.
 */
-void AccountsManager::listCachedUsersAsync()
+void AccountsManager::listCachedUsers()
 {
     Q_D(AccountsManager);
 
@@ -243,7 +219,69 @@ void AccountsManager::listCachedUsersAsync()
 }
 
 /*!
+    Returns a list of user accounts.
+
+    This method is synchronous and may take some time.
+
+    \param systemUsers If true, returns also system users.
+*/
+UserAccountList AccountsManager::listCachedUsersSync()
+{
+    Q_D(AccountsManager);
+
+    UserAccountList list;
+
+    QDBusPendingReply< QList<QDBusObjectPath> > reply = d->interface->ListCachedUsers();
+    reply.waitForFinished();
+
+    if (reply.isError()) {
+        QDBusError error = reply.error();
+        qWarning("Couldn't list cached users: %s",
+                 error.errorString(error.type()).toUtf8().constData());
+        return list;
+    }
+
+    QList<QDBusObjectPath> value = reply.argumentAt<0>();
+    list.reserve(value.size());
+
+    for (int i = 0; i < value.size(); i++) {
+        const QString path = value.at(i).path();
+        UserAccount *account = d->usersCache.value(path, Q_NULLPTR);
+        if (!account) {
+            account = new UserAccount(path, d->interface->connection());
+            d->usersCache[path] = account;
+        }
+        list.append(account);
+    }
+
+    return list;
+}
+
+/*!
+    Returns user with name \a userName from the list of cached users
+    created by \l listCachedUsers().
+
+    \param userName The user name to look up.
+    \return the corresponding UserAccount object.
+*/
+UserAccount *AccountsManager::cachedUser(const QString &userName) const
+{
+    Q_D(const AccountsManager);
+
+    QMap<QString, UserAccount *>::const_iterator it = d->usersCache.constBegin();
+    while (it != d->usersCache.constEnd()) {
+        auto account = it.value();
+        if (account->userName() == userName)
+            return account;
+    }
+
+    return nullptr;
+}
+
+/*!
     Finds a user by \a uid.
+
+    This method is synchronous and may take some time.
 
     \param uid The uid to look up.
     \return the corresponding UserAccount object.
@@ -275,7 +313,9 @@ UserAccount *AccountsManager::findUserById(uid_t uid)
 }
 
 /*!
-    Finds a user by user \a userName
+    Finds a user by user \a userName.
+
+    This method is synchronous and may take some time.
 
     \param uid The user name to look up.
     \return the corresponding UserAccount object.
@@ -311,6 +351,8 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
     Creates a new \a accountType type user account whose name is \a userName,
     real name is \a fullName.
 
+    This method is synchronous and may take some time.
+
     \param userName The name of the new user to be created.
     \param fullName First name and last name.
     \param accountType The account type.
@@ -336,6 +378,8 @@ bool AccountsManager::createUser(const QString &userName,
 /*!
     Deletes the user designated by \a uid.
 
+    This method is synchronous and may take some time.
+
     \param uid The user identifier.
     \param removeFiles If true all files owned by the user will be removed.
     \return whether the user was deleted successfully.
@@ -357,6 +401,8 @@ bool AccountsManager::deleteUser(uid_t uid, bool removeFiles)
 
 /*!
     Deletes the specified \a account.
+
+    This method is synchronous and may take some time.
 
     \param account The account to remove.
     \param removeFiles If true all files owned by the user will be removed.

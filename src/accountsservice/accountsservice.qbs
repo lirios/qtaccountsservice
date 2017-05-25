@@ -8,7 +8,10 @@ LiriModule {
 
     Depends { name: "Qt"; submodules: ["core", "core-private", "dbus", "gui"] }
 
-    cpp.defines: base.concat(["QTACCOUNTSSERVICE_VERSION=" + project.version])
+    cpp.defines: base.concat([
+        "QTACCOUNTSSERVICE_VERSION=" + project.version,
+        "QT_BUILD_QTACCOUNTSSERVICE_LIB"
+    ])
 
     create_headers.headersMap: ({
         "accountsmanager.h": "AccountsManager",

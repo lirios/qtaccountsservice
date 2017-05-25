@@ -82,11 +82,11 @@ private Q_SLOTS:
         UserAccountList cachedUsers;
 
         // We start with no cached users
-        cachedUsers = manager->listCachedUsers();
+        cachedUsers = manager->listCachedUsersSync();
         QCOMPARE(cachedUsers.size(), 0);
 
         // Cache one user
-        QSignalSpy spyCacheUser(manager, SIGNAL(userCached(UserAccount*)));
+        QSignalSpy spyCacheUser(manager, SIGNAL(userCached(QString)));
         manager->cacheUser(QStringLiteral("testuser"));
         QVERIFY(spyCacheUser.wait(1000));
         QCOMPARE(spyCacheUser.count(), 1);
@@ -96,14 +96,14 @@ private Q_SLOTS:
             QCOMPARE(account->userName(), QStringLiteral("testuser"));
 
         // Verify we have 1 cached user
-        cachedUsers = manager->listCachedUsers();
+        cachedUsers = manager->listCachedUsersSync();
         QCOMPARE(cachedUsers.size(), 1);
 
         // Uncache the user
         manager->uncacheUser(QStringLiteral("testuser"));
 
         // No cached users
-        cachedUsers = manager->listCachedUsers();
+        cachedUsers = manager->listCachedUsersSync();
         QCOMPARE(cachedUsers.size(), 0);
     }
 
