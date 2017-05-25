@@ -90,7 +90,9 @@ private Q_SLOTS:
         manager->cacheUser(QStringLiteral("testuser"));
         QVERIFY(spyCacheUser.wait(1000));
         QCOMPARE(spyCacheUser.count(), 1);
-        UserAccount *account = qvariant_cast<UserAccount *>(spyCacheUser.at(0).at(0));
+        QList<QVariant> arguments = spyCacheUser.takeFirst();
+        QCOMPARE(arguments.at(0).toString(), QStringLiteral("testuser"));
+        UserAccount *account = manager->cachedUser(arguments.at(0).toString());
         QVERIFY(account != nullptr);
         if (account)
             QCOMPARE(account->userName(), QStringLiteral("testuser"));
