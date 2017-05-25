@@ -17,14 +17,17 @@ env:
     # BINTRAY_REPO_OWNER
     - secure: "FnG6SR89DCH9V+zf6RqVqvRFpAbhcH92CwQRW+Jjo+/WHTFUzQc0ndp7jHeaj7M0LNxJeEn66GprmmE1Fqa4Is6k1T97XNB8IQu1rttHbo4xxwmP2Jewzv2q3PbDdnYsySPfH1rzizbohu7b1M9NNcIt3/2zsyOKfa8lfHvBQEo="
 
+before_install:
+  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
 addons:
   coverity_scan:
     project:
       name: "lirios/qtaccountsservice"
-      description: "Build submitted via Travis CI"
+      description: "Qt-style wrapper to Accounts Service"
     notification_email: pierluigi.fiorini@gmail.com
-    build_command_prepend: "rm -fr build && mkdir build && cd build && cmake .."
-    build_command: "make -j 4"
+    build_command_prepend: "qbs-setup-toolchains --detect; qbs-setup-qt /usr/bin/qmake-qt5 qt5; qbs config profiles.qt5.baseProfile ${CC}"
+    build_command: "qbs build --no-install -d coveralls-build profile:qt5"
     branch_pattern: coverity_scan
 
 arch:
