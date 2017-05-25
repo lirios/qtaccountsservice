@@ -133,7 +133,7 @@ void AccountsManager::cacheUser(const QString &userName)
             if (path.path().isEmpty())
                 return;
 
-            UserAccount *account = d->usersCache.value(path.path(), Q_NULLPTR);
+            UserAccount *account = d->usersCache.value(path.path(), nullptr);
             if (!account) {
                 account = new UserAccount(path.path(), d->interface->connection());
                 d->usersCache[path.path()] = account;
@@ -206,7 +206,7 @@ void AccountsManager::listCachedUsers()
             userList.reserve(value.size());
             for (int i = 0; i < value.size(); i++) {
                 const QString path = value.at(i).path();
-                UserAccount *account = d->usersCache.value(path, Q_NULLPTR);
+                UserAccount *account = d->usersCache.value(path, nullptr);
                 if (!account) {
                     account = new UserAccount(path, d->interface->connection());
                     d->usersCache[path] = account;
@@ -246,7 +246,7 @@ UserAccountList AccountsManager::listCachedUsersSync()
 
     for (int i = 0; i < value.size(); i++) {
         const QString path = value.at(i).path();
-        UserAccount *account = d->usersCache.value(path, Q_NULLPTR);
+        UserAccount *account = d->usersCache.value(path, nullptr);
         if (!account) {
             account = new UserAccount(path, d->interface->connection());
             d->usersCache[path] = account;
@@ -304,7 +304,7 @@ UserAccount *AccountsManager::findUserById(uid_t uid)
     if (path.path().isEmpty())
         return nullptr;
 
-    UserAccount *account = d->usersCache.value(path.path(), Q_NULLPTR);
+    UserAccount *account = d->usersCache.value(path.path(), nullptr);
     if (!account) {
         account = new UserAccount(path.path(), d->interface->connection());
         d->usersCache[path.path()] = account;
@@ -332,14 +332,14 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
         qWarning("Couldn't find user by user name %s: %s",
                  userName.toUtf8().constData(),
                  error.errorString(error.type()).toUtf8().constData());
-        return 0;
+        return nullptr;
     }
 
     QDBusObjectPath path = reply.argumentAt<0>();
     if (path.path().isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
-    UserAccount *account = d->usersCache.value(path.path(), Q_NULLPTR);
+    UserAccount *account = d->usersCache.value(path.path(), nullptr);
     if (!account) {
         account = new UserAccount(path.path(), d->interface->connection());
         d->usersCache[path.path()] = account;

@@ -35,10 +35,10 @@ class TestApi : public QObject
 {
     Q_OBJECT
 public:
-    TestApi(QObject *parent = 0)
+    TestApi(QObject *parent = nullptr)
         : QObject(parent)
-        , accounts(Q_NULLPTR)
-        , manager(Q_NULLPTR)
+        , accounts(nullptr)
+        , manager(nullptr)
     {
     }
 
@@ -53,16 +53,16 @@ private Q_SLOTS:
     void cleanupTestCase()
     {
         delete manager;
-        manager = Q_NULLPTR;
+        manager = nullptr;
 
         delete accounts;
-        accounts = Q_NULLPTR;
+        accounts = nullptr;
     }
 
     void createAccounts()
     {
         // Find a user that doesn't exist
-        QVERIFY(manager->findUserById(1000) == Q_NULLPTR);
+        QVERIFY(manager->findUserById(1000) == nullptr);
 
         // Create user
         bool ret = manager->createUser(QStringLiteral("testuser"),
@@ -72,7 +72,7 @@ private Q_SLOTS:
 
         // Find the same user
         UserAccount *account = manager->findUserById(1000);
-        QVERIFY(account != Q_NULLPTR);
+        QVERIFY(account != nullptr);
         if (account)
             QCOMPARE(account->userName(), QStringLiteral("testuser"));
     }
@@ -91,7 +91,7 @@ private Q_SLOTS:
         QVERIFY(spyCacheUser.wait(1000));
         QCOMPARE(spyCacheUser.count(), 1);
         UserAccount *account = qvariant_cast<UserAccount *>(spyCacheUser.at(0).at(0));
-        QVERIFY(account != Q_NULLPTR);
+        QVERIFY(account != nullptr);
         if (account)
             QCOMPARE(account->userName(), QStringLiteral("testuser"));
 
