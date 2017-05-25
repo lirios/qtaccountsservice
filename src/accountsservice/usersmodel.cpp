@@ -88,11 +88,11 @@ UsersModel::UsersModel(QObject *parent)
     connect(d->manager, SIGNAL(userDeleted(quint32)),
             this, SLOT(_q_userDeleted(quint32)));
 
-    connect(d->manager, &AccountsManager::userCached, [this, d](const QString &userName) {
-        auto account = d->manager->cachedUser(userName);
-        if (account)
+    connect(d->manager, &AccountsManager::listCachedUsersFinished, [this, d](const UserAccountList &list) {
+        for (auto account : list)
             d->_q_userAdded(account);
     });
+    d->manager->listCachedUsers();
 }
 
 QHash<int, QByteArray> UsersModel::roleNames() const
