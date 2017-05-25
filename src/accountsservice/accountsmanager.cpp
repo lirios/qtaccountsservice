@@ -65,7 +65,7 @@ void AccountsManagerPrivate::_q_userDeleted(const QDBusObjectPath &path)
 {
     Q_Q(AccountsManager);
 
-    UserAccount *account = usersCache.value(path.path(), Q_NULLPTR);
+    UserAccount *account = usersCache.value(path.path(), nullptr);
     usersCache.remove(path.path());
     Q_EMIT q->userDeleted(account->userId());
     account->deleteLater();
@@ -259,12 +259,12 @@ UserAccount *AccountsManager::findUserById(uid_t uid)
         QDBusError error = reply.error();
         qWarning("Couldn't find user by uid %d: %s", uid,
                  error.errorString(error.type()).toUtf8().constData());
-        return 0;
+        return nullptr;
     }
 
     QDBusObjectPath path = reply.argumentAt<0>();
     if (path.path().isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
     UserAccount *account = d->usersCache.value(path.path(), Q_NULLPTR);
     if (!account) {

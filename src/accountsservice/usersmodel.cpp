@@ -227,9 +227,9 @@ UserAccount *UsersModel::userAccount(const QModelIndex &index) const
     Q_D(const UsersModel);
 
     if (!index.isValid())
-        return Q_NULLPTR;
+        return nullptr;
     if (index.row() >= d->list.size())
-        return Q_NULLPTR;
+        return nullptr;
 
     return d->list[index.row()];
 }

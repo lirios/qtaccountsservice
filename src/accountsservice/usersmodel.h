@@ -62,7 +62,7 @@ public:
     };
     Q_ENUM(Roles)
 
-    explicit UsersModel(QObject *parent = 0);
+    explicit UsersModel(QObject *parent = nullptr);
 
     QHash<int, QByteArray> roleNames() const;
 
