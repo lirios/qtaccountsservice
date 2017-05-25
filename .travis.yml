@@ -6,6 +6,9 @@ compiler:
 
 sudo: required
 
+services:
+  - docker
+
 env:
   global:
     # COVERITY_SCAN_TOKEN
@@ -18,7 +21,8 @@ env:
     - secure: "WaHqVaAOSvZdt4NV55FmKzFApl0KGB/Cq5Si52SLstzu4656jiH809SY5mc9Va5X0HylsBTkZuI0noJiL5kqn1hF9hpJ3/65VbqjsqrbYVd/Foet9l0iFP18kZgrT4nDfYwOwCyIVhHIM6mkmIK5YqsNDq6IWmM7onlIGigg3IDcstmS1+PI33TatY4ZS+CmYtVsGEa7UrG19JAMo5joIzKdszqHovJWfWXAiRCr1RDdrT0M0TZkla6PjxTR4gkHoqtwc62YbPQ7zVRdubaM2UfOYvp5TxO+4wS+bcD85+UjQhFNCwZLZIW1VHU2XaZMyM11O1uE2t8JojsFZ59Z1DgU64SPOM4qSa2K2LOZH4qun9byoOClBe4GuquRlJbViPJuDA/ZzVmBkcAjcD/1qcXLsADh+8PaJ9zXoXFUbf+4c2180lRqbqO8aVps3NuukfqbyfkYYyj3yz29dwlQ6Xf3jdkHoIfWFLbRdgmzxaoS8ySerYgy5gIMzzG6ZMNOTFjPlU5BgcYgHAwEcqauPAEFGfxtAbkrxAM1u2QttxhUNCQtimjZAGmTgUIJIl6rnHIZ3kjmCRJTP6lFP0koY7zFwoeMx0v02xhP18xm9jweLM+5OCWrRCWGC1I2itYhnaUVEtZEiO8HUyrXVhY/Zrh3eIpKTVDY8Prh/fC+wyA="
 
 before_install:
-  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+  # Download Coverity certificate
+  - if [ "$TRAVIS_BRANCH" = "coverity_scan" ]; then echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-; fi
 
 addons:
   coverity_scan:
@@ -35,7 +39,6 @@ arch:
     - qbs
     - qt5-tools
     - qt5-declarative
-    - clang
     #- clazy-git
     - dbus
     - xorg-server-xvfb
@@ -44,19 +47,21 @@ arch:
     - qbs-setup-toolchains --detect
     - qbs-setup-qt /usr/bin/qmake-qt5 qt5
     - qbs config profiles.qt5.baseProfile ${CC}
-    - eval `dbus-launch --sh-syntax` && xvfb-run -a -s "-screen 0 800x600x24" qbs build -d build -j $(nproc) --all-products profile:qt5
+    - eval `dbus-launch --sh-syntax` && xvfb-run -a -s "-screen 0 800x600x24" qbs build -d build -j $(nproc) --all-products profile:qt5 qbs.installRoot:/ qbs.installPrefix:usr
 
 script:
-  - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
+  - "curl -s https://raw.githubusercontent.com/lirios/repotools/develop/travis/docker-travis.sh | bash"
 
 deploy:
   - provider: script
-    script: curl --ftp-create-dirs -T build/qtaccountsservice-artifacts.tar.gz -u $FTP_USER:$FTP_PASSWORD $FTP_URL/artifacts/master/qtaccountsservice-artifacts.tar.gz
+    script: curl --ftp-create-dirs -T build/default/qtaccountsservice-artifacts.tar.gz -u $FTP_USER:$FTP_PASSWORD $FTP_URL/artifacts/master/qtaccountsservice-artifacts.tar.gz
+    skip_cleanup: true
     on:
-      branch: x
+      branch: master
       condition: "$CC = gcc"
   - provider: script
-    script: curl --ftp-create-dirs -T build/qtaccountsservice-artifacts.tar.gz -u $FTP_USER:$FTP_PASSWORD $FTP_URL/artifacts/develop/qtaccountsservice-artifacts.tar.gz
+    script: curl --ftp-create-dirs -T build/default/qtaccountsservice-artifacts.tar.gz -u $FTP_USER:$FTP_PASSWORD $FTP_URL/artifacts/develop/qtaccountsservice-artifacts.tar.gz
+    skip_cleanup: true
     on:
       branch: develop
       condition: "$CC = gcc"
