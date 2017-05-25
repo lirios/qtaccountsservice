@@ -43,22 +43,22 @@ public:
                              QObject *parent = nullptr);
     ~AccountsManager();
 
-    void cacheUser(const QString &userName);
-    void uncacheUser(const QString &userName);
+    Q_INVOKABLE void cacheUser(const QString &userName);
+    Q_INVOKABLE void uncacheUser(const QString &userName);
 
-    void listCachedUsers();
+    Q_INVOKABLE void listCachedUsers();
     UserAccountList listCachedUsersSync();
 
-    UserAccount *cachedUser(const QString &userName) const;
+    Q_INVOKABLE UserAccount *cachedUser(const QString &userName) const;
 
-    UserAccount *findUserById(uid_t uid);
-    UserAccount *findUserByName(const QString &userName);
+    Q_INVOKABLE UserAccount *findUserById(uid_t uid);
+    Q_INVOKABLE UserAccount *findUserByName(const QString &userName);
 
-    bool createUser(const QString &userName,
-                    const QString &fullName,
-                    UserAccount::AccountType accountType);
+    Q_INVOKABLE bool createUser(const QString &userName,
+                                const QString &fullName,
+                                UserAccount::AccountType accountType);
 
-    bool deleteUser(uid_t uid, bool removeFiles);
+    Q_INVOKABLE bool deleteUser(uid_t uid, bool removeFiles);
     bool deleteUser(UserAccount *account, bool removeFiles);
 
 Q_SIGNALS:
