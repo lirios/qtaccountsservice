@@ -66,6 +66,8 @@ void AccountsManagerPrivate::_q_userDeleted(const QDBusObjectPath &path)
     Q_Q(AccountsManager);
 
     UserAccount *account = usersCache.value(path.path(), nullptr);
+    if (!account)
+        account = new UserAccount(path.path());
     usersCache.remove(path.path());
     Q_EMIT q->userDeleted(account->userId());
     account->deleteLater();
