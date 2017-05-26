@@ -43,8 +43,8 @@ Project {
         archiver.type: "tar"
         archiver.outputDirectory: project.buildDirectory
 
-        Depends {
-            productTypes: ["installable"]
-        }
+        Depends { name: "Qt5AccountsService" }
+        Depends { name: "QtAccountsService" }
+        Depends { productTypes: ["installable"] }
     }
 }
