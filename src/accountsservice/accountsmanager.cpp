@@ -90,6 +90,9 @@ AccountsManager::AccountsManager(const QDBusConnection &bus, QObject *parent)
     : QObject(parent)
     , d_ptr(new AccountsManagerPrivate(bus))
 {
+    qRegisterMetaType<UserAccount::AccountType>("UserAccount::AccountType");
+    qRegisterMetaType<UserAccount*>("UserAccount*");
+
     d_ptr->q_ptr = this;
 
     connect(d_ptr->interface, SIGNAL(UserAdded(QDBusObjectPath)),
