@@ -62,7 +62,7 @@ public:
     bool deleteUser(UserAccount *account, bool removeFiles);
 
 Q_SIGNALS:
-    void userAdded(UserAccount *);
+    void userAdded(UserAccount *account);
     void userDeleted(qlonglong uid);
     void userCached(const QString &userName);
     void userUncached(const QString &userName);
