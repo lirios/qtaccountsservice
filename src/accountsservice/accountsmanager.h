@@ -1,7 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2012-2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -27,7 +27,7 @@
 #include <QtCore/QObject>
 #include <QtDBus/QDBusConnection>
 
-#include <QtAccountsService/UserAccount>
+#include <Qt5AccountsService/UserAccount>
 
 QT_FORWARD_DECLARE_CLASS(QDBusObjectPath)
 
@@ -35,34 +35,37 @@ namespace QtAccountsService {
 
 class AccountsManagerPrivate;
 
-class QTACCOUNTSSERVICE_EXPORT AccountsManager : public QObject
+class Q_ACCOUNTS_SERVICE_EXPORT AccountsManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit AccountsManager(const QDBusConnection &bus = QDBusConnection::systemBus());
+    explicit AccountsManager(const QDBusConnection &bus = QDBusConnection::systemBus(),
+                             QObject *parent = nullptr);
     ~AccountsManager();
 
-    void cacheUser(const QString &userName);
-    void uncacheUser(const QString &userName);
-    void uncacheUser(UserAccount *account);
+    Q_INVOKABLE void cacheUser(const QString &userName);
+    Q_INVOKABLE void uncacheUser(const QString &userName);
 
-    UserAccountList listCachedUsers();
-    void listCachedUsersAsync();
+    Q_INVOKABLE void listCachedUsers();
+    UserAccountList listCachedUsersSync();
 
-    UserAccount *findUserById(uid_t uid);
-    UserAccount *findUserByName(const QString &userName);
+    Q_INVOKABLE UserAccount *cachedUser(const QString &userName) const;
 
-    bool createUser(const QString &userName,
-                    const QString &fullName,
-                    UserAccount::AccountType accountType);
+    Q_INVOKABLE UserAccount *findUserById(qlonglong uid);
+    Q_INVOKABLE UserAccount *findUserByName(const QString &userName);
 
-    bool deleteUser(uid_t uid, bool removeFiles);
+    Q_INVOKABLE bool createUser(const QString &userName,
+                                const QString &fullName,
+                                UserAccount::AccountType accountType);
+
+    Q_INVOKABLE bool deleteUser(qlonglong uid, bool removeFiles);
     bool deleteUser(UserAccount *account, bool removeFiles);
 
 Q_SIGNALS:
-    void userAdded(UserAccount *);
-    void userDeleted(uid_t uid);
-    void userCached(UserAccount *);
+    void userAdded(UserAccount *account);
+    void userDeleted(qlonglong uid);
+    void userCached(const QString &userName);
+    void userUncached(const QString &userName);
     void listCachedUsersFinished(const UserAccountList &userList);
 
 protected:

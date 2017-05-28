@@ -1,7 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2012-2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -34,9 +34,58 @@ namespace QtAccountsService {
  * UserAccountPrivate
  */
 
-UserAccountPrivate::UserAccountPrivate()
-    : user(0)
+UserAccountPrivate::UserAccountPrivate(UserAccount *q)
+    : bus(QDBusConnection::systemBus())
+    , user(nullptr)
+    , accountType(UserAccount::StandardAccountType)
+    , locked(false)
+    , automaticLogin(false)
+    , passwordMode(UserAccount::NonePasswordMode)
+    , q_ptr(q)
 {
+}
+
+void UserAccountPrivate::initialize(const QDBusConnection &connection, const QString &objectPath)
+{
+    Q_Q(UserAccount);
+
+    bus = connection;
+
+    if (user) {
+        q->disconnect(user, &OrgFreedesktopAccountsUserInterface::Changed,
+                      q, &UserAccount::handleAccountChanged);
+        user = nullptr;
+    }
+
+    user = new OrgFreedesktopAccountsUserInterface(
+                QStringLiteral("org.freedesktop.Accounts"),
+                objectPath, bus, q);
+    q->connect(user, &OrgFreedesktopAccountsUserInterface::Changed,
+               q, &UserAccount::handleAccountChanged);
+
+    emitSignals();
+}
+
+void UserAccountPrivate::emitSignals()
+{
+    Q_Q(UserAccount);
+
+    Q_EMIT q->userIdChanged();
+    Q_EMIT q->groupIdChanged();
+    Q_EMIT q->accountTypeChanged();
+    Q_EMIT q->lockedChanged();
+    Q_EMIT q->automaticLoginChanged();
+    Q_EMIT q->passwordModeChanged();
+    Q_EMIT q->userNameChanged();
+    Q_EMIT q->realNameChanged();
+    Q_EMIT q->displayNameChanged();
+    Q_EMIT q->homeDirectoryChanged();
+    Q_EMIT q->shellChanged();
+    Q_EMIT q->iconFileNameChanged();
+    Q_EMIT q->emailChanged();
+    Q_EMIT q->languageChanged();
+    Q_EMIT q->locationChanged();
+    Q_EMIT q->xsessionChanged();
 }
 
 /*!
@@ -53,69 +102,57 @@ UserAccountPrivate::UserAccountPrivate()
 /*!
     Constructs a UserAccount object for the currently logged in user.
 */
-UserAccount::UserAccount(const QDBusConnection &bus)
-    : d_ptr(new UserAccountPrivate)
+UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
+    : QObject(parent)
+    , d_ptr(new UserAccountPrivate(this))
 {
+    Q_D(UserAccount);
+
     QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(getuid());
-
-    d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
-                                                objectPath, bus, this);
-    connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
+    d->initialize(bus, objectPath);
 }
 
 /*!
-    Constructs a UserAccount object for the specified \a uid.
+    \internal
 
-    \param uid User identifier.
-*/
-UserAccount::UserAccount(uid_t uid, const QDBusConnection &bus)
-    : d_ptr(new UserAccountPrivate)
-{
-    QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(uid);
-
-    d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
-                                                objectPath, bus, this);
-    connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
-}
-
-/*!
     Constructs a UserAccount object from a specific objectPath in the form of
     /org/freedesktop/Accounts/UserUID where UID is user's uid.
 
     \param objectPath Accounts Service object path for the user account.
 */
-UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus)
-    : d_ptr(new UserAccountPrivate)
+UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus, QObject *parent)
+    : QObject(parent)
+    , d_ptr(new UserAccountPrivate(this))
 {
-    d_ptr->user =
-        new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
-                                                objectPath, bus, this);
-    connect(d_ptr->user, SIGNAL(Changed()), this, SIGNAL(accountChanged()));
-}
-
-/*!
-    Destructor.
-*/
-UserAccount::~UserAccount()
-{
-    delete d_ptr;
+    Q_D(UserAccount);
+    d->initialize(bus, objectPath);
 }
 
 /*!
     Returns the user identifier.
 */
-uid_t UserAccount::userId() const
+qlonglong UserAccount::userId() const
 {
     Q_D(const UserAccount);
     return d->user->uid();
 }
 
 /*!
+    Change the user identifier to \c uid.
+    The object will hold information for the requested user identifier.
+*/
+void UserAccount::setUserId(qlonglong uid)
+{
+    Q_D(UserAccount);
+
+    QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(uid);
+    d->initialize(d->bus, objectPath);
+}
+
+/*!
     Returns group identifier.
 */
-gid_t UserAccount::groupId() const
+qlonglong UserAccount::groupId() const
 {
     Q_D(const UserAccount);
 
@@ -134,7 +171,7 @@ gid_t UserAccount::groupId() const
             qCritical("User with uid %ld not found", (long)d->user->uid());
         else
             qCritical("Failed to get group information: %s", strerror(s));
-        return -1;
+        return 0;
     }
 
     return pwd.pw_gid;
@@ -146,7 +183,7 @@ gid_t UserAccount::groupId() const
 UserAccount::AccountType UserAccount::accountType() const
 {
     Q_D(const UserAccount);
-    return (UserAccount::AccountType)d->user->accountType();
+    return static_cast<UserAccount::AccountType>(d->user->accountType());
 }
 
 /*!
@@ -157,7 +194,12 @@ UserAccount::AccountType UserAccount::accountType() const
 void UserAccount::setAccountType(AccountType type)
 {
     Q_D(UserAccount);
-    d->user->SetAccountType((int)type);
+
+    if (type == accountType())
+        return;
+
+    d->accountType = type;
+    d->user->SetAccountType(static_cast<int>(type));
     Q_EMIT accountTypeChanged();
 }
 
@@ -179,6 +221,11 @@ bool UserAccount::isLocked() const
 void UserAccount::setLocked(bool locked)
 {
     Q_D(UserAccount);
+
+    if (isLocked() == locked)
+        return;
+
+    d->locked = locked;
     d->user->SetLocked(locked);
     Q_EMIT lockedChanged();
 }
@@ -202,6 +249,11 @@ bool UserAccount::automaticLogin() const
 void UserAccount::setAutomaticLogin(bool automaticLogin)
 {
     Q_D(UserAccount);
+
+    if (this->automaticLogin() == automaticLogin)
+        return;
+
+    d->automaticLogin = automaticLogin;
     d->user->SetAutomaticLogin(automaticLogin);
     Q_EMIT automaticLoginChanged();
 }
@@ -230,7 +282,7 @@ qlonglong UserAccount::loginTime() const
 UserAccount::PasswordMode UserAccount::passwordMode() const
 {
     Q_D(const UserAccount);
-    return (UserAccount::PasswordMode)d->user->passwordMode();
+    return static_cast<UserAccount::PasswordMode>(d->user->passwordMode());
 }
 
 /*!
@@ -241,7 +293,12 @@ UserAccount::PasswordMode UserAccount::passwordMode() const
 void UserAccount::setPasswordMode(UserAccount::PasswordMode mode)
 {
     Q_D(UserAccount);
-    d->user->SetPasswordMode((int)mode);
+
+    if (passwordMode() == mode)
+        return;
+
+    d->passwordMode = mode;
+    d->user->SetPasswordMode(static_cast<int>(mode));
     Q_EMIT passwordModeChanged();
 }
 
@@ -289,6 +346,11 @@ QString UserAccount::userName() const
 void UserAccount::setUserName(const QString &userName)
 {
     Q_D(UserAccount);
+
+    if (this->userName() == userName)
+        return;
+
+    d->userName = userName;
     d->user->SetUserName(userName);
     Q_EMIT userNameChanged();
     Q_EMIT displayNameChanged();
@@ -311,6 +373,11 @@ QString UserAccount::realName() const
 void UserAccount::setRealName(const QString &realName)
 {
     Q_D(UserAccount);
+
+    if (this->realName() == realName)
+        return;
+
+    d->realName = realName;
     d->user->SetRealName(realName);
     Q_EMIT realNameChanged();
     Q_EMIT displayNameChanged();
@@ -343,6 +410,10 @@ QString UserAccount::homeDirectory() const
 void UserAccount::setHomeDirectory(const QString &homeDirectory)
 {
     Q_D(UserAccount);
+
+    if (this->homeDirectory() == homeDirectory)
+        return;
+
     d->user->SetHomeDirectory(homeDirectory);
     Q_EMIT homeDirectoryChanged();
 }
@@ -364,6 +435,11 @@ QString UserAccount::shell() const
 void UserAccount::setShell(const QString &shell)
 {
     Q_D(UserAccount);
+
+    if (this->shell() == shell)
+        return;
+
+    d->shell = shell;
     d->user->SetShell(shell);
     Q_EMIT shellChanged();
 }
@@ -385,6 +461,11 @@ QString UserAccount::iconFileName() const
 void UserAccount::setIconFileName(const QString &fileName)
 {
     Q_D(UserAccount);
+
+    if (iconFileName() == fileName)
+        return;
+
+    d->iconFileName = fileName;
     d->user->SetIconFile(fileName);
     Q_EMIT iconFileNameChanged();
 }
@@ -406,6 +487,11 @@ QString UserAccount::email() const
 void UserAccount::setEmail(const QString &email)
 {
     Q_D(UserAccount);
+
+    if (this->email() == email)
+        return;
+
+    d->email = email;
     d->user->SetEmail(email);
     Q_EMIT emailChanged();
 }
@@ -427,6 +513,11 @@ QString UserAccount::language() const
 void UserAccount::setLanguage(const QString &language)
 {
     Q_D(UserAccount);
+
+    if (this->language() == language)
+        return;
+
+    d->language = language;
     d->user->SetLanguage(language);
     Q_EMIT languageChanged();
 }
@@ -448,6 +539,11 @@ QString UserAccount::location() const
 void UserAccount::setLocation(const QString &location)
 {
     Q_D(UserAccount);
+
+    if (this->location() == location)
+        return;
+
+    d->location = location;
     d->user->SetLocation(location);
     Q_EMIT locationChanged();
 }
@@ -469,6 +565,11 @@ QString UserAccount::xsession() const
 void UserAccount::setXSession(const QString &session)
 {
     Q_D(UserAccount);
+
+    if (xsession() == session)
+        return;
+
+    d->xsession = session;
     d->user->SetXSession(session);
     Q_EMIT xsessionChanged();
 }
@@ -483,6 +584,94 @@ void UserAccount::setPassword(const QString &password, const QString &hint)
 {
     Q_D(UserAccount);
     d->user->SetPassword(password, hint);
+}
+
+/*!
+    Sets the password hint for the user account.
+
+    \param hint Password hint.
+ */
+void UserAccount::setPasswordHint(const QString &hint)
+{
+    Q_D(UserAccount);
+    d->user->SetPasswordHint(hint);
+}
+
+/*!
+    \internal
+ */
+void UserAccount::handleAccountChanged()
+{
+    // Catch changes outside of this API
+
+    Q_D(UserAccount);
+
+    if (d->accountType != accountType()) {
+        d->accountType = accountType();
+        Q_EMIT accountTypeChanged();
+    }
+
+    if (d->locked != isLocked()) {
+        d->locked = isLocked();
+        Q_EMIT lockedChanged();
+    }
+
+    if (d->automaticLogin != automaticLogin()) {
+        d->automaticLogin = automaticLogin();
+        Q_EMIT automaticLoginChanged();
+    }
+
+    if (d->passwordMode != passwordMode()) {
+        d->passwordMode = passwordMode();
+        Q_EMIT passwordModeChanged();
+    }
+
+    if (d->userName != userName()) {
+        d->userName = userName();
+        Q_EMIT userNameChanged();
+        Q_EMIT displayNameChanged();
+    }
+
+    if (d->realName != realName()) {
+        d->realName = realName();
+        Q_EMIT realNameChanged();
+        Q_EMIT displayNameChanged();
+    }
+
+    if (d->homeDirectory != homeDirectory()) {
+        d->homeDirectory = homeDirectory();
+        Q_EMIT homeDirectoryChanged();
+    }
+
+    if (d->shell != shell()) {
+        d->shell = shell();
+        Q_EMIT shellChanged();
+    }
+
+    if (d->iconFileName != iconFileName()) {
+        d->iconFileName = iconFileName();
+        Q_EMIT iconFileNameChanged();
+    }
+
+    if (d->email != email()) {
+        d->email = email();
+        Q_EMIT emailChanged();
+    }
+
+    if (d->language != language()) {
+        d->language = language();
+        Q_EMIT languageChanged();
+    }
+
+    if (d->location != location()) {
+        d->location = location();
+        Q_EMIT locationChanged();
+    }
+
+    if (d->xsession != xsession()) {
+        d->xsession = xsession();
+        Q_EMIT xsessionChanged();
+    }
 }
 
 }

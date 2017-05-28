@@ -1,7 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2015-2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -21,23 +21,15 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-import QtQuick 2.0
-import QtAccountsService 1.0
+#include <QtGui/QGuiApplication>
+#include <QtQml/QQmlApplicationEngine>
 
-ListView {
-    model: UsersModel {}
-    spacing: 8
-    delegate: Row {
-        spacing: 8
+int main(int argc, char *argv[])
+{
+    QGuiApplication app(argc, argv);
 
-        Image {
-            width: 96
-            height: width
-            source: iconFileName
-        }
+    QQmlApplicationEngine engine(QUrl(QLatin1String("qrc:/useraccount.qml")));
+    Q_UNUSED(engine);
 
-        Text {
-            text: userName
-        }
-    }
+    return app.exec();
 }

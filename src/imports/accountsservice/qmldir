@@ -1,3 +1,4 @@
 module QtAccountsService
-plugin declarative_accountsservice
+plugin qtaccountsserviceplugin
+class QtAccountsServicePlugin
 typeinfo plugins.qmltypes

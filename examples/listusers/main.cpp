@@ -1,10 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2015-2016 Pier Luigi Fiorini
- *
- * Author(s):
- *    Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -27,8 +24,8 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
 
-#include <QtAccountsService/AccountsManager>
-#include <QtAccountsService/UserAccount>
+#include <Qt5AccountsService/AccountsManager>
+#include <Qt5AccountsService/UserAccount>
 
 using namespace QtAccountsService;
 
@@ -39,7 +36,7 @@ int main(int argc, char *argv[])
     AccountsManager *manager = new AccountsManager();
     UserAccountList list = manager->listCachedUsers();
     Q_FOREACH (UserAccount *account, list)
-        qDebug() << account->realName() << account->userName();
+        qInfo() << account->realName() << account->userName();
 
     return app.exec();
 }

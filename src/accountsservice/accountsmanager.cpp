@@ -1,7 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2012-2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -65,7 +65,9 @@ void AccountsManagerPrivate::_q_userDeleted(const QDBusObjectPath &path)
 {
     Q_Q(AccountsManager);
 
-    UserAccount *account = usersCache.value(path.path(), Q_NULLPTR);
+    UserAccount *account = usersCache.value(path.path(), nullptr);
+    if (!account)
+        account = new UserAccount(path.path());
     usersCache.remove(path.path());
     Q_EMIT q->userDeleted(account->userId());
     account->deleteLater();
@@ -84,9 +86,13 @@ void AccountsManagerPrivate::_q_userDeleted(const QDBusObjectPath &path)
 /*!
     Constructs a AccountsManager object.
 */
-AccountsManager::AccountsManager(const QDBusConnection &bus)
-    : d_ptr(new AccountsManagerPrivate(bus))
+AccountsManager::AccountsManager(const QDBusConnection &bus, QObject *parent)
+    : QObject(parent)
+    , d_ptr(new AccountsManagerPrivate(bus))
 {
+    qRegisterMetaType<UserAccount::AccountType>("UserAccount::AccountType");
+    qRegisterMetaType<UserAccount*>("UserAccount*");
+
     d_ptr->q_ptr = this;
 
     connect(d_ptr->interface, SIGNAL(UserAdded(QDBusObjectPath)),
@@ -132,12 +138,12 @@ void AccountsManager::cacheUser(const QString &userName)
             if (path.path().isEmpty())
                 return;
 
-            UserAccount *account = d->usersCache.value(path.path(), Q_NULLPTR);
+            UserAccount *account = d->usersCache.value(path.path(), nullptr);
             if (!account) {
                 account = new UserAccount(path.path(), d->interface->connection());
                 d->usersCache[path.path()] = account;
             }
-            Q_EMIT userCached(account);
+            Q_EMIT userCached(userName);
         }
     });
 }
@@ -147,33 +153,84 @@ void AccountsManager::cacheUser(const QString &userName)
     If the user account is from a remote server and the user has never logged in
     before, then that account will no longer show up in listCachedUsers() output.
 
+    Emits userUncached() when done.
+
     \param userName The user name for the user.
 */
 void AccountsManager::uncacheUser(const QString &userName)
 {
     Q_D(AccountsManager);
 
-    d->interface->UncacheUser(userName);
+    QDBusPendingCall call = d->interface->UncacheUser(userName);
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
+        QDBusPendingReply<QDBusObjectPath> reply = *w;
+        w->deleteLater();
+        if (reply.isError()) {
+            QDBusError error = reply.error();
+            qWarning("Couldn't uncache user %s: %s",
+                     userName.toUtf8().constData(),
+                     error.errorString(error.type()).toUtf8().constData());
+        } else {
+            QMap<QString, UserAccount *>::iterator it = d->usersCache.begin();
+            while (it != d->usersCache.end()) {
+                auto account = it.value();
+                if (account->userName() == userName) {
+                    d->usersCache.erase(++it);
+                    account->deleteLater();
+                } else {
+                    ++it;
+                }
+            }
+            Q_EMIT userUncached(userName);
+        }
+    });
 }
 
 /*!
-    Releases all metadata about a user account, including icon, language and session.
-    If the user account is from a remote server and the user has never logged in
-    before, then that account will no longer show up in listCachedUsers() output.
-
-    \param account The account for the user.
+    List cache users asynchronously.
+    When the list is ready, \c listCachedUsersFinished will be emitted.
 */
-void AccountsManager::uncacheUser(UserAccount *account)
+void AccountsManager::listCachedUsers()
 {
-    return uncacheUser(account->userName());
+    Q_D(AccountsManager);
+
+    QDBusPendingCall call = d->interface->ListCachedUsers();
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
+        QDBusPendingReply< QList<QDBusObjectPath> > reply = *w;
+        w->deleteLater();
+        if (reply.isError()) {
+            QDBusError error = reply.error();
+            qWarning("Couldn't list cached users: %s",
+                     error.errorString(error.type()).toUtf8().constData());
+        } else {
+            UserAccountList userList;
+
+            QList<QDBusObjectPath> value = reply.argumentAt<0>();
+            userList.reserve(value.size());
+            for (int i = 0; i < value.size(); i++) {
+                const QString path = value.at(i).path();
+                UserAccount *account = d->usersCache.value(path, nullptr);
+                if (!account) {
+                    account = new UserAccount(path, d->interface->connection());
+                    d->usersCache[path] = account;
+                }
+                userList.append(account);
+            }
+            Q_EMIT listCachedUsersFinished(userList);
+        }
+    });
 }
 
 /*!
     Returns a list of user accounts.
 
+    This method is synchronous and may take some time.
+
     \param systemUsers If true, returns also system users.
 */
-UserAccountList AccountsManager::listCachedUsers()
+UserAccountList AccountsManager::listCachedUsersSync()
 {
     Q_D(AccountsManager);
 
@@ -194,7 +251,7 @@ UserAccountList AccountsManager::listCachedUsers()
 
     for (int i = 0; i < value.size(); i++) {
         const QString path = value.at(i).path();
-        UserAccount *account = d->usersCache.value(path, Q_NULLPTR);
+        UserAccount *account = d->usersCache.value(path, nullptr);
         if (!account) {
             account = new UserAccount(path, d->interface->connection());
             d->usersCache[path] = account;
@@ -206,48 +263,35 @@ UserAccountList AccountsManager::listCachedUsers()
 }
 
 /*!
-    Cached a list of user accounts.
-    Async unblocking API.
+    Returns user with name \a userName from the list of cached users
+    created by \l listCachedUsers().
+
+    \param userName The user name to look up.
+    \return the corresponding UserAccount object.
 */
-void AccountsManager::listCachedUsersAsync()
+UserAccount *AccountsManager::cachedUser(const QString &userName) const
 {
-    Q_D(AccountsManager);
+    Q_D(const AccountsManager);
 
-    QDBusPendingCall call = d->interface->ListCachedUsers();
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
-        QDBusPendingReply< QList<QDBusObjectPath> > reply = *w;
-        w->deleteLater();
-        if (reply.isError()) {
-            QDBusError error = reply.error();
-            qWarning("Couldn't list cached users: %s",
-                     error.errorString(error.type()).toUtf8().constData());
-        } else {
-            UserAccountList userList;
+    QMap<QString, UserAccount *>::const_iterator it = d->usersCache.constBegin();
+    while (it != d->usersCache.constEnd()) {
+        auto account = it.value();
+        if (account->userName() == userName)
+            return account;
+    }
 
-            QList<QDBusObjectPath> value = reply.argumentAt<0>();
-            userList.reserve(value.size());
-            for (int i = 0; i < value.size(); i++) {
-                const QString path = value.at(i).path();
-                UserAccount *account = d->usersCache.value(path, Q_NULLPTR);
-                if (!account) {
-                    account = new UserAccount(path, d->interface->connection());
-                    d->usersCache[path] = account;
-                }
-                userList.append(account);
-            }
-            Q_EMIT listCachedUsersFinished(userList);
-        }
-    });
+    return nullptr;
 }
 
 /*!
     Finds a user by \a uid.
 
+    This method is synchronous and may take some time.
+
     \param uid The uid to look up.
     \return the corresponding UserAccount object.
 */
-UserAccount *AccountsManager::findUserById(uid_t uid)
+UserAccount *AccountsManager::findUserById(qlonglong uid)
 {
     Q_D(AccountsManager);
 
@@ -256,16 +300,16 @@ UserAccount *AccountsManager::findUserById(uid_t uid)
 
     if (reply.isError()) {
         QDBusError error = reply.error();
-        qWarning("Couldn't find user by uid %d: %s", uid,
+        qWarning("Couldn't find user by uid %lld: %s", uid,
                  error.errorString(error.type()).toUtf8().constData());
-        return 0;
+        return nullptr;
     }
 
     QDBusObjectPath path = reply.argumentAt<0>();
     if (path.path().isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
-    UserAccount *account = d->usersCache.value(path.path(), Q_NULLPTR);
+    UserAccount *account = d->usersCache.value(path.path(), nullptr);
     if (!account) {
         account = new UserAccount(path.path(), d->interface->connection());
         d->usersCache[path.path()] = account;
@@ -274,7 +318,9 @@ UserAccount *AccountsManager::findUserById(uid_t uid)
 }
 
 /*!
-    Finds a user by user \a userName
+    Finds a user by user \a userName.
+
+    This method is synchronous and may take some time.
 
     \param uid The user name to look up.
     \return the corresponding UserAccount object.
@@ -291,14 +337,14 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
         qWarning("Couldn't find user by user name %s: %s",
                  userName.toUtf8().constData(),
                  error.errorString(error.type()).toUtf8().constData());
-        return 0;
+        return nullptr;
     }
 
     QDBusObjectPath path = reply.argumentAt<0>();
     if (path.path().isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
-    UserAccount *account = d->usersCache.value(path.path(), Q_NULLPTR);
+    UserAccount *account = d->usersCache.value(path.path(), nullptr);
     if (!account) {
         account = new UserAccount(path.path(), d->interface->connection());
         d->usersCache[path.path()] = account;
@@ -309,6 +355,8 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
 /*!
     Creates a new \a accountType type user account whose name is \a userName,
     real name is \a fullName.
+
+    This method is synchronous and may take some time.
 
     \param userName The name of the new user to be created.
     \param fullName First name and last name.
@@ -335,18 +383,20 @@ bool AccountsManager::createUser(const QString &userName,
 /*!
     Deletes the user designated by \a uid.
 
+    This method is synchronous and may take some time.
+
     \param uid The user identifier.
     \param removeFiles If true all files owned by the user will be removed.
     \return whether the user was deleted successfully.
 */
-bool AccountsManager::deleteUser(uid_t uid, bool removeFiles)
+bool AccountsManager::deleteUser(qlonglong uid, bool removeFiles)
 {
     Q_D(AccountsManager);
 
     QDBusPendingReply<> reply = d->interface->DeleteUser(uid, removeFiles);
     if (reply.isError()) {
         QDBusError error = reply.error();
-        qWarning("Couldn't delete user %d: %s", uid,
+        qWarning("Couldn't delete user %lld: %s", uid,
                  error.errorString(error.type()).toUtf8().constData());
         return false;
     }
@@ -356,6 +406,8 @@ bool AccountsManager::deleteUser(uid_t uid, bool removeFiles)
 
 /*!
     Deletes the specified \a account.
+
+    This method is synchronous and may take some time.
 
     \param account The account to remove.
     \param removeFiles If true all files owned by the user will be removed.

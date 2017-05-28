@@ -1,2 +1,0 @@
-add_subdirectory(accountsservice)
-add_subdirectory(imports)

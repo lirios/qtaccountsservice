@@ -1,10 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2012-2016 Pier Luigi Fiorini
- *
- * Author(s):
- *    Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -29,29 +26,30 @@
 #include <QtQml/qqmlengine.h>
 #include <QtQml/qqmlcomponent.h>
 
-#include <QtAccountsService/AccountsManager>
-#include <QtAccountsService/UserAccount>
-#include <QtAccountsService/UsersModel>
+#include <Qt5AccountsService/AccountsManager>
+#include <Qt5AccountsService/UserAccount>
+#include <Qt5AccountsService/UsersModel>
 
 QT_BEGIN_NAMESPACE
 
-class AccountsServiceDeclarativeModule : public QQmlExtensionPlugin
+class QtAccountsServicePlugin : public QQmlExtensionPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface/1.0")
 
 public:
-    virtual void registerTypes(const char *uri) {
+    QtAccountsServicePlugin(QObject *parent = nullptr)
+        : QQmlExtensionPlugin(parent)
+    {
+    }
+
+    void registerTypes(const char *uri) override
+    {
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtAccountsService"));
 
         qmlRegisterType<QtAccountsService::AccountsManager>(uri, 1, 0, "AccountsManager");
         qmlRegisterType<QtAccountsService::UserAccount>(uri, 1, 0, "UserAccount");
         qmlRegisterType<QtAccountsService::UsersModel>(uri, 1, 0, "UsersModel");
-    }
-
-    void initializeEngine(QQmlEngine *engine, const char *uri) {
-        Q_UNUSED(engine);
-        Q_UNUSED(uri);
     }
 };
 

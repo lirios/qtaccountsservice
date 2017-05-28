@@ -1,7 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2012-2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -26,28 +26,44 @@
 
 #include <QtCore/QAbstractListModel>
 
-#include <qtaccountsservice/qtaccountsservice_export.h>
+#include <Qt5AccountsService/qtaccountsserviceglobal.h>
 
 namespace QtAccountsService {
 
 class UserAccount;
 class UsersModelPrivate;
 
-class QTACCOUNTSSERVICE_EXPORT UsersModel : public QAbstractListModel
+class Q_ACCOUNTS_SERVICE_EXPORT UsersModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_DECLARE_PRIVATE(UsersModel)
 public:
     enum Roles {
-        UserIdRole = Qt::UserRole + 1,
+        UserAccountRole = Qt::UserRole + 1,
+        UserIdRole,
+        AccountTypeRole,
+        LockedRole,
+        AutomaticLoginRole,
+        LoginFrequencyRole,
+        LoginTimeRole,
+        PasswordModeRole,
+        PasswordHintRole,
+        LocalAccount,
+        SystemAccount,
         UserNameRole,
         RealNameRole,
+        DisplayNameRole,
+        HomeDirectoryRole,
+        ShellRole,
         IconFileNameRole,
-        AccountTypeRole,
-        LanguageRole
+        EmailRole,
+        LanguageRole,
+        LocationRole,
+        XSessionRole
     };
     Q_ENUM(Roles)
 
-    explicit UsersModel(QObject *parent = 0);
+    explicit UsersModel(QObject *parent = nullptr);
 
     QHash<int, QByteArray> roleNames() const;
 
@@ -58,13 +74,11 @@ public:
 
     UserAccount *userAccount(const QModelIndex &index) const;
 
-protected:
-    UsersModelPrivate *d_ptr;
-
 private:
-    Q_DECLARE_PRIVATE(UsersModel)
+    UsersModelPrivate *const d_ptr;
+
     Q_PRIVATE_SLOT(d_func(), void _q_userAdded(UserAccount *account))
-    Q_PRIVATE_SLOT(d_func(), void _q_userDeleted(UserAccount *account))
+    Q_PRIVATE_SLOT(d_func(), void _q_userDeleted(qlonglong uid))
 };
 
 }

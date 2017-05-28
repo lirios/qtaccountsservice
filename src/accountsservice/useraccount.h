@@ -1,7 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2012-2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -28,7 +28,7 @@
 #include <QtCore/QString>
 #include <QtDBus/QDBusConnection>
 
-#include <qtaccountsservice/qtaccountsservice_export.h>
+#include <Qt5AccountsService/qtaccountsserviceglobal.h>
 
 namespace QtAccountsService {
 
@@ -36,11 +36,11 @@ class AccountsManager;
 class AccountsManagerPrivate;
 class UserAccountPrivate;
 
-class QTACCOUNTSSERVICE_EXPORT UserAccount : public QObject
+class Q_ACCOUNTS_SERVICE_EXPORT UserAccount : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int uid READ userId CONSTANT)
-    Q_PROPERTY(int gid READ groupId CONSTANT)
+    Q_PROPERTY(qlonglong userId READ userId WRITE setUserId NOTIFY userIdChanged)
+    Q_PROPERTY(qlonglong groupId READ groupId NOTIFY groupIdChanged)
     Q_PROPERTY(AccountType accountType READ accountType WRITE setAccountType NOTIFY accountTypeChanged)
     Q_PROPERTY(bool locked READ isLocked WRITE setLocked NOTIFY lockedChanged)
     Q_PROPERTY(bool automaticLogin READ automaticLogin WRITE setAutomaticLogin NOTIFY automaticLoginChanged)
@@ -60,6 +60,7 @@ class QTACCOUNTSSERVICE_EXPORT UserAccount : public QObject
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString location READ location WRITE setLocation NOTIFY locationChanged)
     Q_PROPERTY(QString xsession READ xsession WRITE setXSession NOTIFY xsessionChanged)
+    Q_DECLARE_PRIVATE(UserAccount)
 public:
     enum AccountType {
         StandardAccountType = 0,
@@ -74,13 +75,13 @@ public:
     };
     Q_ENUM(PasswordMode)
 
-    UserAccount(const QDBusConnection &bus = QDBusConnection::systemBus());
-    explicit UserAccount(uid_t uid,
-                         const QDBusConnection &bus = QDBusConnection::systemBus());
-    ~UserAccount();
+    UserAccount(const QDBusConnection &bus = QDBusConnection::systemBus(),
+                QObject *parent = nullptr);
 
-    uid_t userId() const;
-    gid_t groupId() const;
+    qlonglong userId() const;
+    void setUserId(qlonglong uid);
+
+    qlonglong groupId() const;
 
     AccountType accountType() const;
     void setAccountType(AccountType type);
@@ -133,10 +134,13 @@ public:
     QString xsession() const;
     void setXSession(const QString &session);
 
-    void setPassword(const QString &password, const QString &hint = QString());
+    Q_INVOKABLE void setPassword(const QString &password, const QString &hint = QString());
+    Q_INVOKABLE void setPasswordHint(const QString &hint);
 
 Q_SIGNALS:
     void accountChanged();
+    void userIdChanged();
+    void groupIdChanged();
     void accountTypeChanged();
     void lockedChanged();
     void automaticLoginChanged();
@@ -152,17 +156,18 @@ Q_SIGNALS:
     void locationChanged();
     void xsessionChanged();
 
-protected:
-    UserAccountPrivate *d_ptr;
-
 private:
     friend class AccountsManager;
     friend class AccountsManagerPrivate;
 
-    Q_DECLARE_PRIVATE(UserAccount)
+    UserAccountPrivate *const d_ptr;
 
     UserAccount(const QString &objectPath,
-                const QDBusConnection &bus = QDBusConnection::systemBus());
+                const QDBusConnection &bus = QDBusConnection::systemBus(),
+                QObject *parent = nullptr);
+
+private Q_SLOTS:
+    void handleAccountChanged();
 };
 
 typedef QList<UserAccount *> UserAccountList;

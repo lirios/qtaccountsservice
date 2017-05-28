@@ -1,7 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2015-2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -23,10 +23,11 @@
 
 #include <QtTest/QtTest>
 
+#include <Qt5AccountsService/AccountsManager>
+#include <Qt5AccountsService/UserAccount>
+
 #include "fakeaccounts.h"
-#include "fakeaccountsadaptor.h"
-#include "accountsmanager.h"
-#include "useraccount.h"
+#include "accounts_adaptor.h"
 
 using namespace QtAccountsService;
 
@@ -34,10 +35,10 @@ class TestApi : public QObject
 {
     Q_OBJECT
 public:
-    TestApi(QObject *parent = 0)
+    TestApi(QObject *parent = nullptr)
         : QObject(parent)
-        , accounts(Q_NULLPTR)
-        , manager(Q_NULLPTR)
+        , accounts(nullptr)
+        , manager(nullptr)
     {
     }
 
@@ -45,23 +46,23 @@ private Q_SLOTS:
     void initTestCase()
     {
         accounts = new FakeAccounts(this);
-        new FakeAccountsAdaptor(accounts);
+        new AccountsAdaptor(accounts);
         manager = new AccountsManager(QDBusConnection::sessionBus());
     }
 
     void cleanupTestCase()
     {
         delete manager;
-        manager = Q_NULLPTR;
+        manager = nullptr;
 
         delete accounts;
-        accounts = Q_NULLPTR;
+        accounts = nullptr;
     }
 
     void createAccounts()
     {
         // Find a user that doesn't exist
-        QVERIFY(manager->findUserById(1000) == Q_NULLPTR);
+        QVERIFY(manager->findUserById(1000) == nullptr);
 
         // Create user
         bool ret = manager->createUser(QStringLiteral("testuser"),
@@ -71,7 +72,7 @@ private Q_SLOTS:
 
         // Find the same user
         UserAccount *account = manager->findUserById(1000);
-        QVERIFY(account != Q_NULLPTR);
+        QVERIFY(account != nullptr);
         if (account)
             QCOMPARE(account->userName(), QStringLiteral("testuser"));
     }
@@ -81,28 +82,30 @@ private Q_SLOTS:
         UserAccountList cachedUsers;
 
         // We start with no cached users
-        cachedUsers = manager->listCachedUsers();
+        cachedUsers = manager->listCachedUsersSync();
         QCOMPARE(cachedUsers.size(), 0);
 
         // Cache one user
-        QSignalSpy spyCacheUser(manager, SIGNAL(userCached(UserAccount*)));
+        QSignalSpy spyCacheUser(manager, SIGNAL(userCached(QString)));
         manager->cacheUser(QStringLiteral("testuser"));
         QVERIFY(spyCacheUser.wait(1000));
         QCOMPARE(spyCacheUser.count(), 1);
-        UserAccount *account = qvariant_cast<UserAccount *>(spyCacheUser.at(0).at(0));
-        QVERIFY(account != Q_NULLPTR);
+        QList<QVariant> arguments = spyCacheUser.takeFirst();
+        QCOMPARE(arguments.at(0).toString(), QStringLiteral("testuser"));
+        UserAccount *account = manager->cachedUser(arguments.at(0).toString());
+        QVERIFY(account != nullptr);
         if (account)
             QCOMPARE(account->userName(), QStringLiteral("testuser"));
 
         // Verify we have 1 cached user
-        cachedUsers = manager->listCachedUsers();
+        cachedUsers = manager->listCachedUsersSync();
         QCOMPARE(cachedUsers.size(), 1);
 
         // Uncache the user
         manager->uncacheUser(QStringLiteral("testuser"));
 
         // No cached users
-        cachedUsers = manager->listCachedUsers();
+        cachedUsers = manager->listCachedUsersSync();
         QCOMPARE(cachedUsers.size(), 0);
     }
 

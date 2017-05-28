@@ -21,47 +21,15 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef QTACCOUNTSSERVICE_USERSMODEL_P_H
-#define QTACCOUNTSSERVICE_USERSMODEL_P_H
+#include <QtGui/QGuiApplication>
+#include <QtQml/QQmlApplicationEngine>
 
-#include <Qt5AccountsService/AccountsManager>
-#include <Qt5AccountsService/UserAccount>
-
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt AccountsService API.  It exists
-// purely as an implementation detail.  This header file may change from
-// version to version without notice, or even be removed.
-//
-// We mean it.
-//
-
-namespace QtAccountsService {
-
-class UsersModel;
-
-class UsersModelPrivate
+int main(int argc, char *argv[])
 {
-    Q_DECLARE_PUBLIC(UsersModel)
-public:
-    UsersModelPrivate(UsersModel *q);
-    ~UsersModelPrivate();
+    QGuiApplication app(argc, argv);
 
-    void populate();
+    QQmlApplicationEngine engine(QUrl(QLatin1String("qrc:/userslistview.qml")));
+    Q_UNUSED(engine);
 
-    AccountsManager *manager;
-    UserAccountList list;
-
-public Q_SLOTS:
-    void _q_userAdded(UserAccount *account);
-    void _q_userDeleted(qlonglong uid);
-
-protected:
-    UsersModel *q_ptr;
-};
-
+    return app.exec();
 }
-
-#endif // QTACCOUNTSSERVICE_USERSMODEL_P_H

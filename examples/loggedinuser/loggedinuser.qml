@@ -2,6 +2,7 @@
  * This file is part of Qt AccountsService.
  *
  * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2015-2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -21,47 +22,35 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef QTACCOUNTSSERVICE_USERSMODEL_P_H
-#define QTACCOUNTSSERVICE_USERSMODEL_P_H
+import QtQuick 2.2
+import QtQuick.Window 2.1
+import QtAccountsService 1.0
 
-#include <Qt5AccountsService/AccountsManager>
-#include <Qt5AccountsService/UserAccount>
+Window {
+    width: 300
+    height: 200
+    title: "QtAccountsService"
+    visible: true
 
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt AccountsService API.  It exists
-// purely as an implementation detail.  This header file may change from
-// version to version without notice, or even be removed.
-//
-// We mean it.
-//
+    UserAccount {
+        id: userAccount
+    }
 
-namespace QtAccountsService {
+    Image {
+        id: faceIcon
+        source: userAccount.iconFileName ? "file://" + userAccount.iconFileName : ""
+    }
 
-class UsersModel;
+    Text {
+        id: loginName
+        anchors.left: faceIcon.right
+        text: userAccount.userName
+    }
 
-class UsersModelPrivate
-{
-    Q_DECLARE_PUBLIC(UsersModel)
-public:
-    UsersModelPrivate(UsersModel *q);
-    ~UsersModelPrivate();
-
-    void populate();
-
-    AccountsManager *manager;
-    UserAccountList list;
-
-public Q_SLOTS:
-    void _q_userAdded(UserAccount *account);
-    void _q_userDeleted(qlonglong uid);
-
-protected:
-    UsersModel *q_ptr;
-};
-
+    Text {
+        id: displayName
+        anchors.top: loginName.bottom
+        anchors.left: loginName.left
+        text: userAccount.displayName
+    }
 }
-
-#endif // QTACCOUNTSSERVICE_USERSMODEL_P_H

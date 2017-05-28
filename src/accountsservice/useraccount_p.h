@@ -1,7 +1,7 @@
 /****************************************************************************
- * This file is part of Qt AccountsService Addon.
+ * This file is part of Qt AccountsService.
  *
- * Copyright (C) 2012-2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -24,13 +24,14 @@
 #ifndef QTACCOUNTSSERVICE_USERACCOUNT_P_H
 #define QTACCOUNTSSERVICE_USERACCOUNT_P_H
 
+#include "useraccount.h"
 #include "user_interface.h"
 
 //
 //  W A R N I N G
 //  -------------
 //
-// This file is not part of the Qt AccountsService Addon API.  It exists
+// This file is not part of the Qt AccountsService API.  It exists
 // purely as an implementation detail.  This header file may change from
 // version to version without notice, or even be removed.
 //
@@ -41,10 +42,33 @@ namespace QtAccountsService {
 
 class UserAccountPrivate
 {
+    Q_DECLARE_PUBLIC(UserAccount)
+    Q_DISABLE_COPY(UserAccountPrivate)
 public:
-    explicit UserAccountPrivate();
+    explicit UserAccountPrivate(UserAccount *q);
 
+    void initialize(const QDBusConnection &connection, const QString &objectPath);
+    void emitSignals();
+
+    QDBusConnection bus;
     OrgFreedesktopAccountsUserInterface *user;
+
+    UserAccount::AccountType accountType;
+    bool locked;
+    bool automaticLogin;
+    UserAccount::PasswordMode passwordMode;
+    QString userName;
+    QString realName;
+    QString homeDirectory;
+    QString shell;
+    QString iconFileName;
+    QString email;
+    QString language;
+    QString location;
+    QString xsession;
+
+protected:
+    UserAccount *q_ptr;
 };
 
 }
