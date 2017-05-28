@@ -6,7 +6,7 @@ LiriModule {
     targetName: "Qt5AccountsService"
     version: "0.0.0"
 
-    Depends { name: "Qt"; submodules: ["core", "core-private", "dbus", "gui"] }
+    Depends { name: "Qt"; submodules: ["core", "dbus", "gui"] }
 
     cpp.defines: base.concat([
         "QTACCOUNTSSERVICE_VERSION=" + project.version,
@@ -58,7 +58,7 @@ LiriModule {
 
     Export {
         Depends { name: "cpp" }
-        Depends { name: "Qt"; submodules: ["core", "core-private", "dbus", "gui"] }
+        Depends { name: "Qt"; submodules: ["core", "dbus", "gui"] }
 
         cpp.includePaths: product.generatedHeadersDir
     }

@@ -36,6 +36,7 @@ class UsersModelPrivate;
 class Q_ACCOUNTS_SERVICE_EXPORT UsersModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_DECLARE_PRIVATE(UsersModel)
 public:
     enum Roles {
         UserAccountRole = Qt::UserRole + 1,
@@ -74,7 +75,8 @@ public:
     UserAccount *userAccount(const QModelIndex &index) const;
 
 private:
-    Q_DECLARE_PRIVATE(UsersModel)
+    UsersModelPrivate *const d_ptr;
+
     Q_PRIVATE_SLOT(d_func(), void _q_userAdded(UserAccount *account))
     Q_PRIVATE_SLOT(d_func(), void _q_userDeleted(qlonglong uid))
 };

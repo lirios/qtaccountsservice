@@ -24,8 +24,6 @@
 #ifndef QTACCOUNTSSERVICE_USERACCOUNT_P_H
 #define QTACCOUNTSSERVICE_USERACCOUNT_P_H
 
-#include <QtCore/private/qobject_p.h>
-
 #include "useraccount.h"
 #include "user_interface.h"
 
@@ -42,12 +40,12 @@
 
 namespace QtAccountsService {
 
-class UserAccountPrivate : public QObjectPrivate
+class UserAccountPrivate
 {
     Q_DECLARE_PUBLIC(UserAccount)
     Q_DISABLE_COPY(UserAccountPrivate)
 public:
-    explicit UserAccountPrivate();
+    explicit UserAccountPrivate(UserAccount *q);
 
     void initialize(const QDBusConnection &connection, const QString &objectPath);
     void emitSignals();
@@ -68,6 +66,9 @@ public:
     QString language;
     QString location;
     QString xsession;
+
+protected:
+    UserAccount *q_ptr;
 };
 
 }

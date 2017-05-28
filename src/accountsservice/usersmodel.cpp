@@ -32,10 +32,10 @@ namespace QtAccountsService {
  * UsersModelPrivate
  */
 
-UsersModelPrivate::UsersModelPrivate()
-    : QAbstractItemModelPrivate()
+UsersModelPrivate::UsersModelPrivate(UsersModel *q)
+    : manager(new AccountsManager())
+    , q_ptr(q)
 {
-    manager = new AccountsManager();
 }
 
 UsersModelPrivate::~UsersModelPrivate()
@@ -79,7 +79,8 @@ void UsersModelPrivate::_q_userDeleted(qlonglong uid)
  */
 
 UsersModel::UsersModel(QObject *parent)
-    : QAbstractListModel(*new UsersModelPrivate(), parent)
+    : QAbstractListModel(parent)
+    , d_ptr(new UsersModelPrivate(this))
 {
     Q_D(UsersModel);
 

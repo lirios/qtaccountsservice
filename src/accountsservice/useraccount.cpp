@@ -34,14 +34,14 @@ namespace QtAccountsService {
  * UserAccountPrivate
  */
 
-UserAccountPrivate::UserAccountPrivate()
-    : QObjectPrivate()
-    , bus(QDBusConnection::systemBus())
+UserAccountPrivate::UserAccountPrivate(UserAccount *q)
+    : bus(QDBusConnection::systemBus())
     , user(nullptr)
     , accountType(UserAccount::StandardAccountType)
     , locked(false)
     , automaticLogin(false)
     , passwordMode(UserAccount::NonePasswordMode)
+    , q_ptr(q)
 {
 }
 
@@ -103,7 +103,8 @@ void UserAccountPrivate::emitSignals()
     Constructs a UserAccount object for the currently logged in user.
 */
 UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
-    : QObject(*new UserAccountPrivate(), parent)
+    : QObject(parent)
+    , d_ptr(new UserAccountPrivate(this))
 {
     Q_D(UserAccount);
 
@@ -120,7 +121,8 @@ UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
     \param objectPath Accounts Service object path for the user account.
 */
 UserAccount::UserAccount(const QString &objectPath, const QDBusConnection &bus, QObject *parent)
-    : QObject(*new UserAccountPrivate(), parent)
+    : QObject(parent)
+    , d_ptr(new UserAccountPrivate(this))
 {
     Q_D(UserAccount);
     d->initialize(bus, objectPath);

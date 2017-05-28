@@ -27,8 +27,6 @@
 #include <Qt5AccountsService/AccountsManager>
 #include <Qt5AccountsService/UserAccount>
 
-#include <QtCore/private/qabstractitemmodel_p.h>
-
 //
 //  W A R N I N G
 //  -------------
@@ -44,11 +42,11 @@ namespace QtAccountsService {
 
 class UsersModel;
 
-class UsersModelPrivate : public QAbstractItemModelPrivate
+class UsersModelPrivate
 {
     Q_DECLARE_PUBLIC(UsersModel)
 public:
-    UsersModelPrivate();
+    UsersModelPrivate(UsersModel *q);
     ~UsersModelPrivate();
 
     void populate();
@@ -59,6 +57,9 @@ public:
 public Q_SLOTS:
     void _q_userAdded(UserAccount *account);
     void _q_userDeleted(qlonglong uid);
+
+protected:
+    UsersModel *q_ptr;
 };
 
 }

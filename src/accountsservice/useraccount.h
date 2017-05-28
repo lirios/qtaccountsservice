@@ -160,6 +160,8 @@ private:
     friend class AccountsManager;
     friend class AccountsManagerPrivate;
 
+    UserAccountPrivate *const d_ptr;
+
     UserAccount(const QString &objectPath,
                 const QDBusConnection &bus = QDBusConnection::systemBus(),
                 QObject *parent = nullptr);
