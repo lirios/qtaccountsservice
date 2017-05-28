@@ -4,7 +4,7 @@ LiriModule {
     name: "Qt5AccountsService"
 
     targetName: "Qt5AccountsService"
-    version: "0.0.0"
+    version: "1.0.0"
 
     Depends { name: "Qt"; submodules: ["core", "dbus", "gui"] }
 

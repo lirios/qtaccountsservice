@@ -3,7 +3,7 @@ import qbs 1.0
 Project {
     name: "QtAccountsService"
 
-    readonly property string version: "0.7.0"
+    readonly property string version: "1.0.0"
 
     property bool withExamples: false
 
