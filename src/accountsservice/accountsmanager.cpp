@@ -95,9 +95,9 @@ AccountsManager::AccountsManager(const QDBusConnection &bus, QObject *parent)
 
     d_ptr->q_ptr = this;
 
-    connect(d_ptr->interface, SIGNAL(UserAdded(QDBusObjectPath)),
+    connect(d_ptr->interface, SIGNAL(UserAdded(QDBusObjectPath)), // clazy:exclude=old-style-connect
             this, SLOT(_q_userAdded(QDBusObjectPath)));
-    connect(d_ptr->interface, SIGNAL(UserDeleted(QDBusObjectPath)),
+    connect(d_ptr->interface, SIGNAL(UserDeleted(QDBusObjectPath)), // clazy:exclude=old-style-connect
             this, SLOT(_q_userDeleted(QDBusObjectPath)));
 }
 
