@@ -43,9 +43,7 @@ public Q_SLOTS:
     void UncacheUser(const QString &name);
     QList<QDBusObjectPath> ListCachedUsers();
 
-    QDBusObjectPath CreateUser(const QString &name,
-                               const QString &fullName,
-                               int accountType);
+    QDBusObjectPath CreateUser(const QString &name, const QString &fullName, int accountType);
     void DeleteUser(qlonglong id, bool removeFiles);
 
     QDBusObjectPath FindUserById(qlonglong id);

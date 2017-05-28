@@ -83,8 +83,7 @@ QList<QDBusObjectPath> FakeAccounts::ListCachedUsers()
     return paths;
 }
 
-QDBusObjectPath FakeAccounts::CreateUser(const QString &name,
-                                         const QString &fullName,
+QDBusObjectPath FakeAccounts::CreateUser(const QString &name, const QString &fullName,
                                          int accountType)
 {
     const QString path = QStringLiteral("/org/freedesktop/Accounts/User%1").arg(m_lastUid);

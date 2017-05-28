@@ -61,7 +61,6 @@ public Q_SLOTS:
 protected:
     UsersModel *q_ptr;
 };
-
 }
 
 #endif // QTACCOUNTSSERVICE_USERSMODEL_P_H

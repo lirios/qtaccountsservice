@@ -35,10 +35,9 @@ namespace QtAccountsService {
 
 AccountsManagerPrivate::AccountsManagerPrivate(const QDBusConnection &bus)
 {
-    interface = new OrgFreedesktopAccountsInterface(
-        QStringLiteral("org.freedesktop.Accounts"),
-        QStringLiteral("/org/freedesktop/Accounts"),
-        bus);
+    interface =
+        new OrgFreedesktopAccountsInterface(QStringLiteral("org.freedesktop.Accounts"),
+                                            QStringLiteral("/org/freedesktop/Accounts"), bus);
 }
 
 AccountsManagerPrivate::~AccountsManagerPrivate()
@@ -91,13 +90,14 @@ AccountsManager::AccountsManager(const QDBusConnection &bus, QObject *parent)
     , d_ptr(new AccountsManagerPrivate(bus))
 {
     qRegisterMetaType<UserAccount::AccountType>("UserAccount::AccountType");
-    qRegisterMetaType<UserAccount*>("UserAccount*");
+    qRegisterMetaType<UserAccount *>("UserAccount*");
 
     d_ptr->q_ptr = this;
 
     connect(d_ptr->interface, SIGNAL(UserAdded(QDBusObjectPath)), // clazy:exclude=old-style-connect
             this, SLOT(_q_userAdded(QDBusObjectPath)));
-    connect(d_ptr->interface, SIGNAL(UserDeleted(QDBusObjectPath)), // clazy:exclude=old-style-connect
+    connect(d_ptr->interface,
+            SIGNAL(UserDeleted(QDBusObjectPath)), // clazy:exclude=old-style-connect
             this, SLOT(_q_userDeleted(QDBusObjectPath)));
 }
 
@@ -130,8 +130,7 @@ void AccountsManager::cacheUser(const QString &userName)
         w->deleteLater();
         if (reply.isError()) {
             QDBusError error = reply.error();
-            qWarning("Couldn't cache user %s: %s",
-                     userName.toUtf8().constData(),
+            qWarning("Couldn't cache user %s: %s", userName.toUtf8().constData(),
                      error.errorString(error.type()).toUtf8().constData());
         } else {
             QDBusObjectPath path = reply.argumentAt<0>();
@@ -168,8 +167,7 @@ void AccountsManager::uncacheUser(const QString &userName)
         w->deleteLater();
         if (reply.isError()) {
             QDBusError error = reply.error();
-            qWarning("Couldn't uncache user %s: %s",
-                     userName.toUtf8().constData(),
+            qWarning("Couldn't uncache user %s: %s", userName.toUtf8().constData(),
                      error.errorString(error.type()).toUtf8().constData());
         } else {
             QMap<QString, UserAccount *>::iterator it = d->usersCache.begin();
@@ -198,7 +196,7 @@ void AccountsManager::listCachedUsers()
     QDBusPendingCall call = d->interface->ListCachedUsers();
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
-        QDBusPendingReply< QList<QDBusObjectPath> > reply = *w;
+        QDBusPendingReply<QList<QDBusObjectPath>> reply = *w;
         w->deleteLater();
         if (reply.isError()) {
             QDBusError error = reply.error();
@@ -236,7 +234,7 @@ UserAccountList AccountsManager::listCachedUsersSync()
 
     UserAccountList list;
 
-    QDBusPendingReply< QList<QDBusObjectPath> > reply = d->interface->ListCachedUsers();
+    QDBusPendingReply<QList<QDBusObjectPath>> reply = d->interface->ListCachedUsers();
     reply.waitForFinished();
 
     if (reply.isError()) {
@@ -334,8 +332,7 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
 
     if (reply.isError()) {
         QDBusError error = reply.error();
-        qWarning("Couldn't find user by user name %s: %s",
-                 userName.toUtf8().constData(),
+        qWarning("Couldn't find user by user name %s: %s", userName.toUtf8().constData(),
                  error.errorString(error.type()).toUtf8().constData());
         return nullptr;
     }
@@ -363,13 +360,13 @@ UserAccount *AccountsManager::findUserByName(const QString &userName)
     \param accountType The account type.
     \return whether the user was created successfully.
 */
-bool AccountsManager::createUser(const QString &userName,
-                                 const QString &fullName,
+bool AccountsManager::createUser(const QString &userName, const QString &fullName,
                                  UserAccount::AccountType accountType)
 {
     Q_D(AccountsManager);
 
-    QDBusPendingReply<QDBusObjectPath> reply = d->interface->CreateUser(userName, fullName, accountType);
+    QDBusPendingReply<QDBusObjectPath> reply =
+        d->interface->CreateUser(userName, fullName, accountType);
     if (reply.isError()) {
         QDBusError error = reply.error();
         qWarning("Couldn't create user %s: %s", userName.toUtf8().constData(),
@@ -417,7 +414,6 @@ bool AccountsManager::deleteUser(UserAccount *account, bool removeFiles)
 {
     return deleteUser(account->userId(), removeFiles);
 }
-
 }
 
 #include "moc_accountsmanager.cpp"

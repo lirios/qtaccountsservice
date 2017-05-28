@@ -54,8 +54,7 @@ public:
     Q_INVOKABLE UserAccount *findUserById(qlonglong uid);
     Q_INVOKABLE UserAccount *findUserByName(const QString &userName);
 
-    Q_INVOKABLE bool createUser(const QString &userName,
-                                const QString &fullName,
+    Q_INVOKABLE bool createUser(const QString &userName, const QString &fullName,
                                 UserAccount::AccountType accountType);
 
     Q_INVOKABLE bool deleteUser(qlonglong uid, bool removeFiles);
@@ -76,7 +75,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_userAdded(const QDBusObjectPath &path))
     Q_PRIVATE_SLOT(d_func(), void _q_userDeleted(const QDBusObjectPath &path))
 };
-
 }
 
 #endif // QTACCOUNTSSERVICE_ACCOUNTSMANAGER_H
