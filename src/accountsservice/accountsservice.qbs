@@ -1,65 +1,62 @@
 import qbs 1.0
+import "../../qbs/shared/imports/LiriUtils.js" as LiriUtils
 
-LiriModule {
+LiriModuleProject {
+    id: root
+
     name: "Qt5AccountsService"
+    moduleName: "Qt5AccountsService"
+    description: "Qt-style wrapper for Accounts Service"
 
-    targetName: "Qt5AccountsService"
-    version: "1.0.0"
-
-    Depends { name: "Qt"; submodules: ["core", "dbus", "gui"] }
-
-    cpp.defines: base.concat([
-        "QTACCOUNTSSERVICE_VERSION=" + project.version,
-        "QT_BUILD_QTACCOUNTSSERVICE_LIB"
-    ])
-
-    create_headers.headersMap: ({
-        "accountsmanager.h": "AccountsManager",
-        "useraccount.h": "UserAccount",
-        "usersmodel.h": "UsersModel",
+    resolvedProperties: ({
+        Depends: [{ name: LiriUtils.quote("Qt.core") }, { name: LiriUtils.quote("Qt.dbus") },
+                  { name: LiriUtils.quote("Qt.gui") }],
     })
 
-    create_pkgconfig.name: "Qt Accounts Service"
-    create_pkgconfig.description: "Qt-style wrapper for Accounts Service"
-    create_pkgconfig.version: project.version
-    create_pkgconfig.dependencies: ["Qt5Core", "Qt5DBus", "Qt5Gui"]
+    pkgConfigDependencies: ["Qt5Core", "Qt5DBus", "Qt5Gui"]
 
-    create_cmake.version: project.version
-    create_cmake.dependencies: ({
-        "Qt5Core": "5.8",
-        "Qt5DBus": "5.8",
-        "Qt5Gui": "5.8"
-    })
-    create_cmake.linkLibraries: ["Qt5::Core", "Qt5::DBus", "Qt5::Gui"]
+    cmakeDependencies: ({ "Qt5Core": "5.8", "Qt5DBus": "5.8", "Qt5Gui": "5.8" })
+    cmakeLinkLibraries: ["Qt5::Core", "Qt5::DBus", "Qt5::Gui"]
 
-    files: ["*.cpp"]
+    LiriHeaders {
+        name: root.headersName
+        sync.module: root.moduleName
 
-    Group {
-        name: "Headers"
-        files: ["*.h"]
-        excludeFiles: ["*_p.h"]
-        fileTags: ["public_headers"]
+        Group {
+            name: "Headers"
+            files: "**/*.h"
+            fileTags: ["hpp_syncable"]
+        }
     }
 
-    Group {
-        name: "Private Headers"
-        files: ["*_p.h"]
-        fileTags: ["private_headers"]
-    }
+    LiriModule {
+        name: root.moduleName
+        targetName: root.targetName
+        version: "1.0.0"
 
-    Group {
-        name: "D-Bus Interfaces"
-        files: [
-            "org.freedesktop.Accounts.xml",
-            "org.freedesktop.Accounts.User.xml"
-        ]
-        fileTags: ["qt.dbus.interface"]
-    }
-
-    Export {
-        Depends { name: "cpp" }
+        Depends { name: root.headersName }
         Depends { name: "Qt"; submodules: ["core", "dbus", "gui"] }
 
-        cpp.includePaths: product.generatedHeadersDir
+        cpp.defines: base.concat([
+            "QTACCOUNTSSERVICE_VERSION=" + project.version,
+            "QT_BUILD_QTACCOUNTSSERVICE_LIB"
+        ])
+
+        files: ["*.cpp", "*.h"]
+
+        Group {
+            name: "D-Bus Interfaces"
+            files: [
+                "org.freedesktop.Accounts.xml",
+                "org.freedesktop.Accounts.User.xml"
+            ]
+            fileTags: ["qt.dbus.interface"]
+        }
+
+        Export {
+            Depends { name: "cpp" }
+            Depends { name: root.headersName }
+            Depends { name: "Qt"; submodules: ["core", "dbus", "gui"] }
+        }
     }
 }
