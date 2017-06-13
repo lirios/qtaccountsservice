@@ -12,6 +12,9 @@ Project {
         archiver.outputDirectory: project.buildDirectory
 
         Depends { name: "Qt5AccountsService" }
+        Depends { name: "Qt5AccountsService-cmake" }
+        Depends { name: "Qt5AccountsService-pkgconfig" }
+        Depends { name: "Qt5AccountsService-qbs" }
         Depends { name: "qtaccountsserviceplugin" }
         Depends { productTypes: ["installable"] }
     }
