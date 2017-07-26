@@ -35,6 +35,8 @@ addons:
     branch_pattern: coverity_scan
 
 arch:
+  artifacts:
+    - qbs-shared-artifacts.tar.gz
   packages:
     - qbs
     - qt5-tools
