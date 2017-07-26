@@ -14,8 +14,6 @@ Project {
 
     minimumQbsVersion: "1.6"
 
-    qbsSearchPaths: ["qbs/shared"]
-
     references: [
         "src/deployment.qbs",
         "src/accountsservice/accountsservice.qbs",
