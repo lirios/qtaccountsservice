@@ -51,9 +51,8 @@ class FakeUser : public QObject
     Q_PROPERTY(QString XSession READ xSession)
 
 public:
-    FakeUser(const QString &path, qlonglong uid, const QString &name,
-             const QString &fullName, int accountType,
-             QObject *parent = 0);
+    FakeUser(const QString &path, qlonglong uid, const QString &name, const QString &fullName,
+             int accountType, QObject *parent = 0);
 
     int accountType() const;
     bool automaticLogin() const;

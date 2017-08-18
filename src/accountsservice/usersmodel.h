@@ -80,7 +80,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_userAdded(UserAccount *account))
     Q_PRIVATE_SLOT(d_func(), void _q_userDeleted(qlonglong uid))
 };
-
 }
 
 #endif // QTACCOUNTSSERVICE_USERSMODEL_H

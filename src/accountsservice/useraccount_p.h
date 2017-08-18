@@ -70,7 +70,6 @@ public:
 protected:
     UserAccount *q_ptr;
 };
-
 }
 
 #endif // QTACCOUNTSSERVICE_USERACCOUNT_P_H

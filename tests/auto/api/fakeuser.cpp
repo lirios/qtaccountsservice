@@ -26,8 +26,8 @@
 
 #include "fakeuser.h"
 
-FakeUser::FakeUser(const QString &path, qlonglong uid, const QString &name,
-                   const QString &fullName, int accountType, QObject *parent)
+FakeUser::FakeUser(const QString &path, qlonglong uid, const QString &name, const QString &fullName,
+                   int accountType, QObject *parent)
     : QObject(parent)
     , cached(false)
     , m_uid(uid)

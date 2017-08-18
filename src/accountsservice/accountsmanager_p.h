@@ -57,7 +57,6 @@ public:
     void _q_userAdded(const QDBusObjectPath &path);
     void _q_userDeleted(const QDBusObjectPath &path);
 };
-
 }
 
 #endif // QTACCOUNTSSERVICE_ACCOUNTSMANAGER_P_H

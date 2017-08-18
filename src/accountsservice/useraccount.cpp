@@ -52,16 +52,15 @@ void UserAccountPrivate::initialize(const QDBusConnection &connection, const QSt
     bus = connection;
 
     if (user) {
-        q->disconnect(user, &OrgFreedesktopAccountsUserInterface::Changed,
-                      q, &UserAccount::handleAccountChanged);
+        q->disconnect(user, &OrgFreedesktopAccountsUserInterface::Changed, q,
+                      &UserAccount::handleAccountChanged);
         user = nullptr;
     }
 
-    user = new OrgFreedesktopAccountsUserInterface(
-                QStringLiteral("org.freedesktop.Accounts"),
-                objectPath, bus, q);
-    q->connect(user, &OrgFreedesktopAccountsUserInterface::Changed,
-               q, &UserAccount::handleAccountChanged);
+    user = new OrgFreedesktopAccountsUserInterface(QStringLiteral("org.freedesktop.Accounts"),
+                                                   objectPath, bus, q);
+    q->connect(user, &OrgFreedesktopAccountsUserInterface::Changed, q,
+               &UserAccount::handleAccountChanged);
 
     emitSignals();
 }
@@ -108,7 +107,8 @@ UserAccount::UserAccount(const QDBusConnection &bus, QObject *parent)
 {
     Q_D(UserAccount);
 
-    QString objectPath = QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(getuid());
+    QString objectPath =
+        QStringLiteral("/org/freedesktop/Accounts/User") + QString::number(getuid());
     d->initialize(bus, objectPath);
 }
 
@@ -673,7 +673,6 @@ void UserAccount::handleAccountChanged()
         Q_EMIT xsessionChanged();
     }
 }
-
 }
 
 #include "moc_useraccount.cpp"

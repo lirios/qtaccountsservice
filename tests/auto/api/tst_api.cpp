@@ -65,8 +65,7 @@ private Q_SLOTS:
         QVERIFY(manager->findUserById(1000) == nullptr);
 
         // Create user
-        bool ret = manager->createUser(QStringLiteral("testuser"),
-                                       QStringLiteral("Test User"),
+        bool ret = manager->createUser(QStringLiteral("testuser"), QStringLiteral("Test User"),
                                        UserAccount::StandardAccountType);
         QVERIFY(ret == true);
 

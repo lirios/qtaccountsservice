@@ -7,7 +7,7 @@ import QtQuick.tooling 1.2
 // 'qmlplugindump -notrelocatable QtAccountsService 1.0'
 
 Module {
-    dependencies: []
+    dependencies: ["QtQuick 2.8"]
     Component {
         name: "QtAccountsService::AccountsManager"
         prototype: "QObject"
@@ -15,11 +15,60 @@ Module {
         exportMetaObjectRevisions: [0]
         Signal {
             name: "userAdded"
-            Parameter { type: "UserAccount"; isPointer: true }
+            Parameter { name: "account"; type: "UserAccount"; isPointer: true }
         }
         Signal {
             name: "userDeleted"
-            Parameter { type: "UserAccount"; isPointer: true }
+            Parameter { name: "uid"; type: "qlonglong" }
+        }
+        Signal {
+            name: "userCached"
+            Parameter { name: "userName"; type: "string" }
+        }
+        Signal {
+            name: "userUncached"
+            Parameter { name: "userName"; type: "string" }
+        }
+        Signal {
+            name: "listCachedUsersFinished"
+            Parameter { name: "userList"; type: "UserAccountList" }
+        }
+        Method {
+            name: "cacheUser"
+            Parameter { name: "userName"; type: "string" }
+        }
+        Method {
+            name: "uncacheUser"
+            Parameter { name: "userName"; type: "string" }
+        }
+        Method { name: "listCachedUsers" }
+        Method {
+            name: "cachedUser"
+            type: "UserAccount*"
+            Parameter { name: "userName"; type: "string" }
+        }
+        Method {
+            name: "findUserById"
+            type: "UserAccount*"
+            Parameter { name: "uid"; type: "qlonglong" }
+        }
+        Method {
+            name: "findUserByName"
+            type: "UserAccount*"
+            Parameter { name: "userName"; type: "string" }
+        }
+        Method {
+            name: "createUser"
+            type: "bool"
+            Parameter { name: "userName"; type: "string" }
+            Parameter { name: "fullName"; type: "string" }
+            Parameter { name: "accountType"; type: "UserAccount::AccountType" }
+        }
+        Method {
+            name: "deleteUser"
+            type: "bool"
+            Parameter { name: "uid"; type: "qlonglong" }
+            Parameter { name: "removeFiles"; type: "bool" }
         }
     }
     Component {
@@ -42,8 +91,8 @@ Module {
                 "NonePasswordMode": 2
             }
         }
-        Property { name: "uid"; type: "int"; isReadonly: true }
-        Property { name: "gid"; type: "int"; isReadonly: true }
+        Property { name: "userId"; type: "qlonglong" }
+        Property { name: "groupId"; type: "qlonglong"; isReadonly: true }
         Property { name: "accountType"; type: "AccountType" }
         Property { name: "locked"; type: "bool" }
         Property { name: "automaticLogin"; type: "bool" }
@@ -64,5 +113,50 @@ Module {
         Property { name: "location"; type: "string" }
         Property { name: "xsession"; type: "string" }
         Signal { name: "accountChanged" }
+        Method {
+            name: "setPassword"
+            Parameter { name: "password"; type: "string" }
+            Parameter { name: "hint"; type: "string" }
+        }
+        Method {
+            name: "setPassword"
+            Parameter { name: "password"; type: "string" }
+        }
+        Method {
+            name: "setPasswordHint"
+            Parameter { name: "hint"; type: "string" }
+        }
+    }
+    Component {
+        name: "QtAccountsService::UsersModel"
+        prototype: "QAbstractListModel"
+        exports: ["QtAccountsService/UsersModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "UserAccountRole": 257,
+                "UserIdRole": 258,
+                "AccountTypeRole": 259,
+                "LockedRole": 260,
+                "AutomaticLoginRole": 261,
+                "LoginFrequencyRole": 262,
+                "LoginTimeRole": 263,
+                "PasswordModeRole": 264,
+                "PasswordHintRole": 265,
+                "LocalAccount": 266,
+                "SystemAccount": 267,
+                "UserNameRole": 268,
+                "RealNameRole": 269,
+                "DisplayNameRole": 270,
+                "HomeDirectoryRole": 271,
+                "ShellRole": 272,
+                "IconFileNameRole": 273,
+                "EmailRole": 274,
+                "LanguageRole": 275,
+                "LocationRole": 276,
+                "XSessionRole": 277
+            }
+        }
     }
 }

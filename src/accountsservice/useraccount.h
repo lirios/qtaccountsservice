@@ -41,38 +41,36 @@ class Q_ACCOUNTS_SERVICE_EXPORT UserAccount : public QObject
     Q_OBJECT
     Q_PROPERTY(qlonglong userId READ userId WRITE setUserId NOTIFY userIdChanged)
     Q_PROPERTY(qlonglong groupId READ groupId NOTIFY groupIdChanged)
-    Q_PROPERTY(AccountType accountType READ accountType WRITE setAccountType NOTIFY accountTypeChanged)
+    Q_PROPERTY(
+        AccountType accountType READ accountType WRITE setAccountType NOTIFY accountTypeChanged)
     Q_PROPERTY(bool locked READ isLocked WRITE setLocked NOTIFY lockedChanged)
-    Q_PROPERTY(bool automaticLogin READ automaticLogin WRITE setAutomaticLogin NOTIFY automaticLoginChanged)
+    Q_PROPERTY(bool automaticLogin READ automaticLogin WRITE setAutomaticLogin NOTIFY
+                   automaticLoginChanged)
     Q_PROPERTY(qlonglong loginFrequency READ loginFrequency)
     Q_PROPERTY(qlonglong loginTime READ loginTime)
-    Q_PROPERTY(PasswordMode passwordMode READ passwordMode WRITE setPasswordMode NOTIFY passwordModeChanged)
+    Q_PROPERTY(PasswordMode passwordMode READ passwordMode WRITE setPasswordMode NOTIFY
+                   passwordModeChanged)
     Q_PROPERTY(QString passwordHint READ passwordHint)
     Q_PROPERTY(bool localAccount READ isLocalAccount)
     Q_PROPERTY(bool systemAccount READ isSystemAccount)
     Q_PROPERTY(QString userName READ userName WRITE setUserName NOTIFY userNameChanged)
     Q_PROPERTY(QString realName READ realName WRITE setRealName NOTIFY realNameChanged)
     Q_PROPERTY(QString displayName READ displayName NOTIFY displayNameChanged)
-    Q_PROPERTY(QString homeDirectory READ homeDirectory WRITE setHomeDirectory NOTIFY homeDirectoryChanged)
+    Q_PROPERTY(
+        QString homeDirectory READ homeDirectory WRITE setHomeDirectory NOTIFY homeDirectoryChanged)
     Q_PROPERTY(QString shell READ shell WRITE setShell NOTIFY shellChanged)
-    Q_PROPERTY(QString iconFileName READ iconFileName WRITE setIconFileName NOTIFY iconFileNameChanged)
+    Q_PROPERTY(
+        QString iconFileName READ iconFileName WRITE setIconFileName NOTIFY iconFileNameChanged)
     Q_PROPERTY(QString email READ email WRITE setEmail NOTIFY emailChanged)
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString location READ location WRITE setLocation NOTIFY locationChanged)
     Q_PROPERTY(QString xsession READ xsession WRITE setXSession NOTIFY xsessionChanged)
     Q_DECLARE_PRIVATE(UserAccount)
 public:
-    enum AccountType {
-        StandardAccountType = 0,
-        AdministratorAccountType
-    };
+    enum AccountType { StandardAccountType = 0, AdministratorAccountType };
     Q_ENUM(AccountType)
 
-    enum PasswordMode {
-        RegularPasswordMode = 0,
-        SetAtLoginPasswordMode,
-        NonePasswordMode
-    };
+    enum PasswordMode { RegularPasswordMode = 0, SetAtLoginPasswordMode, NonePasswordMode };
     Q_ENUM(PasswordMode)
 
     UserAccount(const QDBusConnection &bus = QDBusConnection::systemBus(),
@@ -171,7 +169,6 @@ private Q_SLOTS:
 };
 
 typedef QList<UserAccount *> UserAccountList;
-
 }
 
 #endif // QTACCOUNTSSERVICE_USERACCOUNT_H

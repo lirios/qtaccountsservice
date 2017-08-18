@@ -3,7 +3,8 @@ import qbs 1.0
 Project {
     name: "QtAccountsService"
 
-    readonly property string version: "1.0.0"
+    readonly property string version: "1.1.0"
+    readonly property var versionParts: version.split('.').map(function(part) { return parseInt(part); })
 
     property bool withExamples: false
 
@@ -13,11 +14,10 @@ Project {
 
     minimumQbsVersion: "1.6"
 
-    qbsSearchPaths: ["qbs/shared"]
-
     references: [
+        "src/deployment.qbs",
         "src/accountsservice/accountsservice.qbs",
-        "src/imports/accountsservice/accountsservice.qbs",
+        "src/imports/imports.qbs",
         "tests/auto/auto.qbs",
     ]
 
@@ -26,25 +26,5 @@ Project {
         Properties {
             condition: parent.withExamples
         }
-    }
-
-    AutotestRunner {
-        builtByDefault: autotestEnabled
-        name: "qtaccountsservice-autotest"
-        arguments: project.autotestArguments
-        wrapper: project.autotestWrapper
-    }
-
-    InstallPackage {
-        name: "qtaccountsservice-artifacts"
-        targetName: name
-        builtByDefault: false
-
-        archiver.type: "tar"
-        archiver.outputDirectory: project.buildDirectory
-
-        Depends { name: "Qt5AccountsService" }
-        Depends { name: "QtAccountsService" }
-        Depends { productTypes: ["installable"] }
     }
 }

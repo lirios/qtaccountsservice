@@ -50,7 +50,7 @@ void UsersModelPrivate::_q_userAdded(UserAccount *account)
     q->connect(account, &UserAccount::accountChanged, [account, q, this]() {
         auto index = q->index(list.indexOf(account));
         if (index.isValid())
-            q->dataChanged(index, index);
+            Q_EMIT q->dataChanged(index, index);
     });
 
     q->beginInsertRows(QModelIndex(), list.size(), list.size());
@@ -84,15 +84,16 @@ UsersModel::UsersModel(QObject *parent)
 {
     Q_D(UsersModel);
 
-    connect(d->manager, SIGNAL(userAdded(UserAccount*)),
-            this, SLOT(_q_userAdded(UserAccount*)));
-    connect(d->manager, SIGNAL(userDeleted(qlonglong)),
+    connect(d->manager, SIGNAL(userAdded(UserAccount *)), // clazy:exclude=old-style-connect
+            this, SLOT(_q_userAdded(UserAccount *)));
+    connect(d->manager, SIGNAL(userDeleted(qlonglong)), // clazy:exclude=old-style-connect
             this, SLOT(_q_userDeleted(qlonglong)));
 
-    connect(d->manager, &AccountsManager::listCachedUsersFinished, [this, d](const UserAccountList &list) {
-        for (auto account : list)
-            d->_q_userAdded(account);
-    });
+    connect(d->manager, &AccountsManager::listCachedUsersFinished,
+            [this, d](const UserAccountList &list) {
+                for (auto account : list)
+                    d->_q_userAdded(account);
+            });
     d->manager->listCachedUsers();
 }
 
@@ -209,7 +210,7 @@ bool UsersModel::setData(const QModelIndex &index, const QVariant &value, int ro
         user->setIconFileName(value.toString());
         break;
     case UsersModel::AccountTypeRole:
-        user->setAccountType((UserAccount::AccountType) value.toInt());
+        user->setAccountType((UserAccount::AccountType)value.toInt());
         break;
     case UsersModel::LanguageRole:
         user->setLanguage(value.toString());
@@ -232,7 +233,6 @@ UserAccount *UsersModel::userAccount(const QModelIndex &index) const
 
     return d->list[index.row()];
 }
-
 }
 
 #include "moc_usersmodel.cpp"
