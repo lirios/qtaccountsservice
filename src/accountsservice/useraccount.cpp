@@ -156,19 +156,22 @@ qlonglong UserAccount::groupId() const
 {
     Q_D(const UserAccount);
 
-    size_t bufsize = ::sysconf(_SC_GETPW_R_SIZE_MAX);
-    if (bufsize <= 0)
-        bufsize = 16384;
-    char *buf = (char *)::malloc(bufsize);
+    size_t bufSize = 0;
+    long sizeMax = ::sysconf(_SC_GETPW_R_SIZE_MAX);
+    if (sizeMax <= 0)
+        bufSize = 16384;
+    else
+        bufSize = static_cast<size_t>(sizeMax);
+    char *buf = static_cast<char *>(::malloc(bufSize));
     if (!buf)
-        qFatal("Cannot allocate %lu bytes: %s", (long)bufsize, strerror(errno));
+        qFatal("Cannot allocate %lu bytes: %s", static_cast<long>(bufSize), strerror(errno));
 
     struct passwd pwd;
     struct passwd *result;
-    int s = ::getpwuid_r(d->user->uid(), &pwd, buf, bufsize, &result);
+    int s = ::getpwuid_r(d->user->uid(), &pwd, buf, bufSize, &result);
     if (!result) {
         if (s == 0)
-            qCritical("User with uid %ld not found", (long)d->user->uid());
+            qCritical("User with uid %lld not found", d->user->uid());
         else
             qCritical("Failed to get group information: %s", strerror(s));
         return 0;

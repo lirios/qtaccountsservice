@@ -90,7 +90,7 @@ UsersModel::UsersModel(QObject *parent)
             this, SLOT(_q_userDeleted(qlonglong)));
 
     connect(d->manager, &AccountsManager::listCachedUsersFinished,
-            [this, d](const UserAccountList &list) {
+            [d](const UserAccountList &list) {
                 for (auto account : list)
                     d->_q_userAdded(account);
             });
