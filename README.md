@@ -8,7 +8,7 @@ Qt Accounts Service
 [![Build Status](https://travis-ci.org/lirios/qtaccountsservice.svg?branch=master)](https://travis-ci.org/lirios/qtaccountsservice)
 [![Coverity Status](https://img.shields.io/coverity/scan/5911.svg)](https://scan.coverity.com/projects/5911)
 [![GitHub issues](https://img.shields.io/github/issues/lirios/qtaccountsservice.svg)](https://github.com/lirios/qtaccountsservice/issues)
-[![Maintained](https://img.shields.io/maintenance/yes/2017.svg)](https://github.com/lirios/qtaccountsservice/commits/master)
+[![Maintained](https://img.shields.io/maintenance/yes/2018.svg)](https://github.com/lirios/qtaccountsservice/commits/develop)
 
 Qt-style API to use freedesktop.org's AccountsService DBus service.
 
