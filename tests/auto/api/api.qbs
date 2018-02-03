@@ -1,7 +1,7 @@
 import qbs 1.0
 
 QtApplication {
-    name: "tst_api"
+    name: "tst_qtaccountsservice"
     type: base.concat(["autotest"])
 
     Depends { name: "Qt"; submodules: ["core", "dbus", "testlib"]; versionAtLeast: project.minimumQtVersion }
