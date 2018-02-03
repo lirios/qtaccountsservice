@@ -4,7 +4,7 @@ QtApplication {
     name: "tst_api"
     type: base.concat(["autotest"])
 
-    Depends { name: "Qt"; submodules: ["core", "dbus", "testlib"] }
+    Depends { name: "Qt"; submodules: ["core", "dbus", "testlib"]; versionAtLeast: project.minimumQtVersion }
     Depends { name: "Qt5AccountsService" }
 
     files: [

@@ -15,7 +15,7 @@ LiriModuleProject {
 
     pkgConfigDependencies: ["Qt5Core", "Qt5DBus", "Qt5Gui"]
 
-    cmakeDependencies: ({ "Qt5Core": "5.8", "Qt5DBus": "5.8", "Qt5Gui": "5.8" })
+    cmakeDependencies: ({ "Qt5Core": project.minimumQtVersion, "Qt5DBus": project.minimumQtVersion, "Qt5Gui": project.minimumQtVersion })
     cmakeLinkLibraries: ["Qt5::Core", "Qt5::DBus", "Qt5::Gui"]
 
     LiriHeaders {
@@ -35,7 +35,7 @@ LiriModuleProject {
         version: "1.0.0"
 
         Depends { name: root.headersName }
-        Depends { name: "Qt"; submodules: ["core", "dbus", "gui"] }
+        Depends { name: "Qt"; submodules: ["core", "dbus", "gui"]; versionAtLeast: project.minimumQtVersion }
 
         cpp.defines: base.concat([
             "QTACCOUNTSSERVICE_VERSION=" + project.version,
@@ -56,7 +56,7 @@ LiriModuleProject {
         Export {
             Depends { name: "cpp" }
             Depends { name: root.headersName }
-            Depends { name: "Qt"; submodules: ["core", "dbus", "gui"] }
+            Depends { name: "Qt"; submodules: ["core", "dbus", "gui"]; versionAtLeast: project.minimumQtVersion }
         }
     }
 }
