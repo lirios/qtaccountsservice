@@ -13,12 +13,10 @@ env:
   global:
     # COVERITY_SCAN_TOKEN
     - secure: "DC/d6QXq6JiGP416PbFvSUcn7ri/9gNsUF27KnWMbVEvqkO/LKdiD6Wx/jJ2g+TQ7hBrpiy4GuG1cBBtjaaeYJ5r998aDCnJbL6uK/x+NkSEWGkyOXq5jwPDvdJ1YSG8Wg2tga5gwnMUapA9EVeaCMAKVrhu6eih/tnk7UFHfQoOe7k3iNDsXKsfT9TRTGWJrJfp3L9D/TTi3cEmGWpeGrzC1+ze0q6j7c6qmUK1aIXLpxgkmk1CkwtmPHiR/xzP8Yf4x9vbv5EUeL0Nux/yqWpVR1EHaTJaKPS5pb/QPzNuS2pxE5Hw+rjCvP3isF7iPESGuxPugGuXJ02sZmuxgRxRXQ7i/0x+umnoPZPOpiZONVcJd9pBHe9ND5o3eGTHQHkeDbRtsYLRTavPQ4tF+U2fpJH62+dVhTWWLMioPWPQSyAGOOlOW9ikGA15whvMc1msuwgptUzEJJzOm6pr2tk7kx3gKAWKcBEM6gwC6nd2QRORbMQ6GZnJ768hmU0W2dog4qD0IfNNemNwY03J9pNuQxcsOYoD8wfXhc3uaO7cPO/jxyiwDdc30U/C90go2usAxyCrLgPyRVBoCswrP7F9TFDY7FRR0y4zEMRbQ0LxmLmkBNkgNeJ5Qva3kurTbebHtyIkOTeYZasLLCNd3kRi/E0L022N65tZNB+cT08="
-    # FTP_USER
-    - secure: "A4/529yzbT5nRdzDh6Ns2dVOJ3YtIp7e8TaqtsOHs+z++7PwASeWnZ3buCk4dGfdtSZ28NtMDd2hLQE2qQQieXhHmBGl7Uv94qwI/N0IpRpboQvdUIki/pM5jiNtJAt0RyMyLKoEKbGsPX23rpDGuZrH/d36YfxCb6fJ1z6yZ3CHRILC3Q0XILcp84e39MkRdgco9Y/cKiZQpi5PdvVQGd/rCpUCZePrCnNcFuYRfxBzNWz+BMJFOjgeguFdmGNl9GlF5FyXZzwGw0k+KtPd2bnPJzN1t5fyoJjOGi14Zf42mBEcTpDGlEn2PtwHtJI2FMaBRI9+7efPiEILfap1ikYsGsm4cjddtpB0K3RT1Je0aSQ2Q7gTJpRsh0Lc/J9fgGjuilznWnJId6LpO9FuE0J6Y16k/4jbViIxds1ZEL4QjWbNQRdzu5Wv+ldWAYXLvTXVD/g/RcgdVAMA4Uq6ksD/9iVA2gDOfE3WOAuPvRkhnFZmeGnZaC5uF3znWfhj0BU4FtZblWtI8Br8j7GRG3JnyNS3ZXl1zfFmKCiTE4Pj5mnmCIWvoHfmqSg1TCa+5dMJ//LSFxw7tzRIZdtPklzqTQGC6mfa+fSYe2HZKsVwdXz8QDNeiqbdGlOvStSqm/qhPQchBbzBfPqTnQ548+GkmFX/RWB7lGr9PDXDJww="
-    # FTP_PASSWORD
-    - secure: "ZJJBj1waxb3Z0lKzDQEXHV/l6n4MIgeod73wWc1zOv0Mdhh+Vb3vhmt3ePioD0dAJ6esFbk6Bhl1Pc53rLwqPy5T8RVQQJdY9LtMYfBTvtdG0zh/abp9I1vF2Vdxve87IgwlHHQp5Kdb+YcARUxc6cZc7jO/LxTzJMQEQtZHQkTJ+h0aIm4kY7JFu8UGaFXNKv9O2IQO4r1BCRMSZMi1a3l8x6V9lV3hWvNwxZ+7MukldynanEgOzAJFnCAQcLuBVfQHzpon7sHgeRJPAJrDx9OjaUy4iXUQRmMzIMAGEcTlMTYOPCIGzda0fZZOejpGrj3hblFMVjai/ibf/d53WvzlluHRMMJ2tCCm05iX5Yrp+jreC00K4QHsEQ9yMrN5cUKDihlKbpdcWtQUka/otQ+Cj81AXUaz/z0/y9B0tp69pBnhAG7VOLJXVLoWxB6nvMTNqrCv0N3GyzBOqCyD+wBf3+DhsN77/ZAqpnHMPHUUbKC/L4rDkW8O5Pj04vLnHNI6MZF5YdMk88W0AHFwho7Y2Y2HdLu8Xb+gwOtCmtWfZo+AFJ3IpMzdIK2Yft2rU0gvQ20fs8AYi1NR3gm3WhV+ZfxqRH0i82Tv+eyg6Ns05cV0WE73mwiqVnnnSnmrX7b6ZhYxUXql7iJGG/t4zRZmHnz/wyW7s8pYEOKA2gQ="
-    # FTP_URL
-    - secure: "WaHqVaAOSvZdt4NV55FmKzFApl0KGB/Cq5Si52SLstzu4656jiH809SY5mc9Va5X0HylsBTkZuI0noJiL5kqn1hF9hpJ3/65VbqjsqrbYVd/Foet9l0iFP18kZgrT4nDfYwOwCyIVhHIM6mkmIK5YqsNDq6IWmM7onlIGigg3IDcstmS1+PI33TatY4ZS+CmYtVsGEa7UrG19JAMo5joIzKdszqHovJWfWXAiRCr1RDdrT0M0TZkla6PjxTR4gkHoqtwc62YbPQ7zVRdubaM2UfOYvp5TxO+4wS+bcD85+UjQhFNCwZLZIW1VHU2XaZMyM11O1uE2t8JojsFZ59Z1DgU64SPOM4qSa2K2LOZH4qun9byoOClBe4GuquRlJbViPJuDA/ZzVmBkcAjcD/1qcXLsADh+8PaJ9zXoXFUbf+4c2180lRqbqO8aVps3NuukfqbyfkYYyj3yz29dwlQ6Xf3jdkHoIfWFLbRdgmzxaoS8ySerYgy5gIMzzG6ZMNOTFjPlU5BgcYgHAwEcqauPAEFGfxtAbkrxAM1u2QttxhUNCQtimjZAGmTgUIJIl6rnHIZ3kjmCRJTP6lFP0koY7zFwoeMx0v02xhP18xm9jweLM+5OCWrRCWGC1I2itYhnaUVEtZEiO8HUyrXVhY/Zrh3eIpKTVDY8Prh/fC+wyA="
+    # DEPLOY_USER
+    - secure: "BAcuVbPb25SUI9Dg1N2AIh1IimPUJRccxx8iA7EjuO2mXhtf2XjRQCTsgITsezP8U65vjfjIqXFOfySNE4yJpGgEW5Z/Vw7KSSB1t3B9tkOBPDIiIgQLktSjGlCNnSGlzl4S4VjdFSLMti6iA2huViPxkeu/lY9hbUsW7TYHJaCxhKcv6n0xgIPy7ZIDzCcnXPR+E6AIW8wI+btuFIJZt8hNPvXyjprdNK6pwugjrIw08xZfR3sxakRF9QuipknCYRS7aZ5VxH7nCpTcKQQj472TpJQ3Ti9qTVvE2yyPws+ZDeZEZ6HKv3BwiaoiRjZQuqAfz9I+3KffbVgXIE4ownYGH/CwIJ+WfXuaCXT6SlesPmBMWgqHBdspfUk5SoA9wPB1TtdAEcWakUEu4M/ZTws0UKrk7vyxoxpWqrmgfE+MNmo4X2VVndrok16GURGHVuNvIqFiXzVJ2GPj3XTFAferCEzdf9LqPriXTUNRIwI3SQkcwqivUB3EM1gtRY5Mrrk/HBk3tBPWnX3YDR2Lb/cNaOrLwZ7lBBiUw3SwZ74vGfbvy4pPJXUOISQsqZRbExwWiphR4IL0NpQ23rnAsBT5D9ksocf4vozSsC63cSXndo7NoIu0awETpRqKnnZfi5Vb9YZKoHxkW26mAbeb/dOjD3cBzkKgtwuyIHfhdQc="
+    # DEPLOY_HOST
+    - secure: "MDNCRCRDai2dkwwwDHH84abIoBtR9J7Aq8uFBMGw/L0nERCgHoXd/AdjXux4/o/QQqlSJm8eKKMbMBicQNRnFsm3wp9mZdCQnIC5GSWxzcU/tfJkjwQTxdwj0GqN/fcVd7FDjVlhNFrtwKkHQ/IqgDZU6xLY3fQHMT5iO/nvvdIW3sNbL6nd2+X74eAByUoyItLug5oIGlAtNY9fhYYRGBsPnhYxhNOBxHovvPdIBCDpddJ3h+S6YfOHrWPlDIf3q/4RW1Y82QAJa8Wfs9Zc3VwWpR28703iteK74Yvoe21WoZ2UfOMpLRYHAc4sEvW1PYt6y0smfi1hv4gwAufxXfe5YrfRsIuZ2lw/Lpp07mpDBu0wuXtuL0Lc9CLvqWsG018f52r/tkAqphgbFnOBS7lFbXg0Il5KXiBrhWqpavdksoB0i3pdKXUJsQT1Zge8l7kEevoiIRQRYoFpO2JRnNdHQMTacIZpOsb8q2dxiZzUEjQwq3Yg2ERwdVKd09cMsEHdP+GXOj7/7K3FVjU7pQE10BGm7/5qjIELz3gItQm+EkQMq2ESCL5/JntTQlEBoatDXjA8AjJezEiKpfKgNqgb8j/BkTh/z3nQDNjSBw7bap2eUqdWMXzgbSoNDtVw4ApmXUKJZfUbmosgstdYMzDf5GdQZXnKJoQEjy0gRPI="
 
 before_install:
   # Download Coverity certificate
@@ -56,17 +54,17 @@ script:
 
 deploy:
   - provider: script
-    script: curl --ftp-create-dirs -T build/default/qtaccountsservice-artifacts.tar.gz -u $FTP_USER:$FTP_PASSWORD $FTP_URL/artifacts/master/qtaccountsservice-artifacts.tar.gz
+    script: .travis/deploy.sh build/default/qtaccountsservice-artifacts.tar.gz
     skip_cleanup: true
     on:
       branch: master
-      condition: "$CC = gcc"
+      condition: "$CC = gcc) && ($TRAVIS_PULL_REQUEST = false"
   - provider: script
-    script: curl --ftp-create-dirs -T build/default/qtaccountsservice-artifacts.tar.gz -u $FTP_USER:$FTP_PASSWORD $FTP_URL/artifacts/develop/qtaccountsservice-artifacts.tar.gz
+    script: .travis/deploy.sh build/default/qtaccountsservice-artifacts.tar.gz
     skip_cleanup: true
     on:
       branch: develop
-      condition: "$CC = gcc"
+      condition: "$CC = gcc) && ($TRAVIS_PULL_REQUEST = false"
 
 notifications:
   email: false
