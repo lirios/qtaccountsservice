@@ -4,9 +4,9 @@ Project {
     name: "Examples"
 
     references: [
-        "examples/listusers/listusers.qbs",
-        "examples/loggedinuser/loggedinuser.qbs",
-        "examples/useraccount/useraccount.qbs",
-        "examples/userslistview/userslistview.qbs",
+        "listusers/listusers.qbs",
+        "loggedinuser/loggedinuser.qbs",
+        "useraccount/useraccount.qbs",
+        "userslistview/userslistview.qbs",
     ]
 }
