@@ -34,9 +34,12 @@ int main(int argc, char *argv[])
     QCoreApplication app(argc, argv);
 
     AccountsManager *manager = new AccountsManager();
-    UserAccountList list = manager->listCachedUsers();
-    Q_FOREACH (UserAccount *account, list)
-        qInfo() << account->realName() << account->userName();
+    app.connect(manager, &AccountsManager::listCachedUsersFinished, [](const UserAccountList &list) {
+        for (UserAccount *account : list)
+            qInfo() << account->realName() << account->userName();
+        QCoreApplication::quit();
+    });
+    manager->listCachedUsers();
 
     return app.exec();
 }
