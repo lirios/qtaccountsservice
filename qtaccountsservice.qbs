@@ -28,7 +28,7 @@ Project {
     SubProject {
         filePath: "examples/examples.qbs"
         Properties {
-            condition: parent.withExamples
+            condition: withExamples
         }
     }
 }
