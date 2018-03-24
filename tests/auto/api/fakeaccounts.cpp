@@ -51,7 +51,7 @@ QString FakeAccounts::daemonVersion() const
 
 QDBusObjectPath FakeAccounts::CacheUser(const QString &name)
 {
-    Q_FOREACH (FakeUser *entry, m_users) {
+    for (FakeUser *entry : qAsConst(m_users)) {
         if (entry->userName() == name) {
             entry->cached = true;
             return entry->path();
@@ -63,7 +63,7 @@ QDBusObjectPath FakeAccounts::CacheUser(const QString &name)
 
 void FakeAccounts::UncacheUser(const QString &name)
 {
-    Q_FOREACH (FakeUser *entry, m_users) {
+    for (FakeUser *entry : qAsConst(m_users)) {
         if (entry->userName() == name) {
             entry->cached = false;
             return;
@@ -75,7 +75,7 @@ QList<QDBusObjectPath> FakeAccounts::ListCachedUsers()
 {
     QList<QDBusObjectPath> paths;
 
-    Q_FOREACH (FakeUser *entry, m_users) {
+    for (FakeUser *entry : qAsConst(m_users)) {
         if (entry->cached)
             paths.append(entry->path());
     }
@@ -98,7 +98,7 @@ void FakeAccounts::DeleteUser(qlonglong id, bool removeFiles)
 {
     Q_UNUSED(removeFiles);
 
-    Q_FOREACH (FakeUser *entry, m_users) {
+    for (FakeUser *entry : qAsConst(m_users)) {
         if ((qlonglong)entry->uid() == id) {
             m_users.removeOne(entry);
             delete entry;
@@ -109,7 +109,7 @@ void FakeAccounts::DeleteUser(qlonglong id, bool removeFiles)
 
 QDBusObjectPath FakeAccounts::FindUserById(qlonglong id)
 {
-    Q_FOREACH (FakeUser *entry, m_users) {
+    for (FakeUser *entry : qAsConst(m_users)) {
         if ((qlonglong)entry->uid() == id)
             return entry->path();
     }
@@ -119,7 +119,7 @@ QDBusObjectPath FakeAccounts::FindUserById(qlonglong id)
 
 QDBusObjectPath FakeAccounts::FindUserByName(const QString &name)
 {
-    Q_FOREACH (FakeUser *entry, m_users) {
+    for (FakeUser *entry : qAsConst(m_users)) {
         if (entry->userName() == name)
             return entry->path();
     }
