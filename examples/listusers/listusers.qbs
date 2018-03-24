@@ -3,7 +3,7 @@ import qbs 1.0
 QtApplication {
     name: "listusers"
 
-    Depends { name: "libQtAccountsService" }
+    Depends { name: "Qt5AccountsService" }
 
     files: ["main.cpp"]
 }
