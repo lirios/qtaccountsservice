@@ -24,7 +24,7 @@ apt-get install -y \
 
 # Install artifacts
 msg "Install artifacts..."
-curl https://raw.githubusercontent.com/lirios/repotools/develop/travis/download-aritfacts | bash -s $TRAVIS_BRANCH qbs-shared-artifacts.tar.gz
+curl https://raw.githubusercontent.com/lirios/repotools/develop/travis/download-artifacts | bash -s $TRAVIS_BRANCH qbs-shared-artifacts.tar.gz
 
 # Configure qbs
 msg "Setup qbs..."
