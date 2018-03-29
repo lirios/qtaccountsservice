@@ -15,7 +15,6 @@ apt-get install -y \
     git \
     xvfb \
     dbus \
-    curl \
     qt5-default \
     qbs \
     qtbase5-dev qtbase5-dev-tools qtbase5-private-dev \
@@ -25,9 +24,7 @@ apt-get install -y \
 
 # Install artifacts
 msg "Install artifacts..."
-curl https://raw.githubusercontent.com/lirios/repotools/develop/travis/download-aritfacts > /tmp/download-artifacts
-chmod 755 /tmp/download-artifacts
-/tmp/download-artifacts $TRAVIS_BRANCH qbs-shared-artifacts.tar.gz
+curl https://raw.githubusercontent.com/lirios/repotools/develop/travis/download-aritfacts | bash -s $TRAVIS_BRANCH qbs-shared-artifacts.tar.gz
 
 # Configure qbs
 msg "Setup qbs..."
