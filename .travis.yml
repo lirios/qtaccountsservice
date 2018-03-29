@@ -32,25 +32,8 @@ addons:
     build_command: "qbs build --no-install -d coveralls-build profile:qt5"
     branch_pattern: coverity_scan
 
-arch:
-  artifacts:
-    - qbs-shared-artifacts.tar.gz
-  packages:
-    - qbs
-    - qt5-tools
-    - qt5-declarative
-    #- clazy-git
-    - dbus
-    - xorg-server-xvfb
-  script:
-    #- export CLAZY_CHECKS="level1"
-    - qbs-setup-toolchains --detect
-    - qbs-setup-qt /usr/bin/qmake-qt5 qt5
-    - qbs config profiles.qt5.baseProfile ${CC}
-    - dbus-run-session -- xvfb-run -a -s "-screen 0 800x600x24" qbs build -d build -j $(nproc) --all-products profile:qt5 modules.qbs.installRoot:/ modules.lirideployment.prefix:/usr project.withExamples:true
-
 script:
-  - "curl -s https://raw.githubusercontent.com/lirios/repotools/develop/travis/docker-travis.sh | bash"
+  - ./.travis/run.sh
 
 deploy:
   - provider: script
