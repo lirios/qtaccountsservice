@@ -15,6 +15,7 @@ apt-get install -y \
     git \
     xvfb \
     dbus \
+    curl \
     qt5-default \
     qbs \
     qtbase5-dev qtbase5-dev-tools qtbase5-private-dev \
