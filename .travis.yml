@@ -32,6 +32,10 @@ addons:
     build_command: "qbs build --no-install -d coveralls-build profile:qt5"
     branch_pattern: coverity_scan
 
+branches:
+  except:
+    - /^(?i:continuous)$/
+
 script:
   - ./.travis/run.sh
 

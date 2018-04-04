@@ -2,37 +2,26 @@
 
 set -e
 
-msg() {
-    lightblue='\033[1;34m'
-    reset='\e[0m'
-    echo -e "${lightblue}$@${reset}"
-}
+curl "https://raw.githubusercontent.com/lirios/infra-travis/master/installer" | bash
 
-# Install
-msg "Install packages..."
-apt-get install -y \
-    g++ clang \
-    git \
-    xvfb \
-    dbus \
-    qt5-default \
-    qbs \
-    qtbase5-dev qtbase5-dev-tools qtbase5-private-dev \
-    qtdeclarative5-dev qtdeclarative5-dev-tools qtdeclarative5-private-dev \
-    qttools5-dev qttools5-dev-tools qttools5-private-dev \
-    qml-module-qtquick2 qml-module-qtquick-window2 qml-module-qtquick-layouts qml-module-qttest
+source /usr/local/share/liri-travis/functions
 
 # Install artifacts
+travis_start "artifacts"
 msg "Install artifacts..."
-curl https://raw.githubusercontent.com/lirios/repotools/develop/travis/download-artifacts | bash -s $TRAVIS_BRANCH qbs-shared-artifacts.tar.gz
+/usr/local/bin/liri-download-artifacts $TRAVIS_BRANCH qbs-shared-artifacts.tar.gz
+travis_end "artifacts"
 
 # Configure qbs
+travis_start "qbs_setup"
 msg "Setup qbs..."
 qbs setup-toolchains --detect
 qbs setup-qt $(which qmake) travis-qt5
 qbs config profiles.travis-qt5.baseProfile $CC
+travis_end "qbs_setup"
 
 # Build
+travis_start "build"
 msg "Build..."
 dbus-run-session -- \
 xvfb-run -a -s "-screen 0 800x600x24" \
@@ -42,3 +31,4 @@ qbs -d build -j $(nproc) --all-products profile:travis-qt5 \
     modules.lirideployment.qmlDir:/usr/lib/x86_64-linux-gnu/qt5/qml \
     modules.lirideployment.pluginsDir:/usr/lib/x86_64-linux-gnu/qt5/plugins \
     project.withExamples:true
+travis_end "build"
