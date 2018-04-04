@@ -37,7 +37,7 @@ branches:
     - /^(?i:continuous)$/
 
 script:
-  - ./.travis/run.sh
+  - curl "https://raw.githubusercontent.com/lirios/infra-travis/master/run" | bash -s ./.travis/build.sh
 
 deploy:
   - provider: script
