@@ -1,8 +1,6 @@
 Qt Accounts Service
 ===================
 
-[![ZenHub.io](https://img.shields.io/badge/supercharged%20by-zenhub.io-blue.svg)](https://zenhub.io)
-
 [![License](https://img.shields.io/badge/license-LGPLv3.0-blue.svg)](http://www.gnu.org/licenses/lgpl.txt)
 [![GitHub release](https://img.shields.io/github/release/lirios/qtaccountsservice.svg)](https://github.com/lirios/qtaccountsservice)
 [![Build Status](https://travis-ci.org/lirios/qtaccountsservice.svg?branch=master)](https://travis-ci.org/lirios/qtaccountsservice)
@@ -23,8 +21,8 @@ Qt >= 5.8.0 with at least the following modules is required:
 
 The following modules and their dependencies are required:
 
- * [qbs >= 1.9.0](http://code.qt.io/cgit/qbs/qbs.git)
- * [qbs-shared >= 1.2.0](https://github.com/lirios/qbs-shared.git)
+ * [qbs](http://code.qt.io/cgit/qbs/qbs.git) >= 1.9.0
+ * [qbs-shared](https://github.com/lirios/qbs-shared.git) >= 1.2.0
 
 ## Installation
 
