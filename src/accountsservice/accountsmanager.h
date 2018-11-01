@@ -35,7 +35,7 @@ namespace QtAccountsService {
 
 class AccountsManagerPrivate;
 
-class Q_ACCOUNTS_SERVICE_EXPORT AccountsManager : public QObject
+class QT5ACCOUNTSSERVICE_EXPORT AccountsManager : public QObject
 {
     Q_OBJECT
 public:

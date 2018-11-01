@@ -28,7 +28,7 @@
 #include <QtCore/QString>
 #include <QtDBus/QDBusConnection>
 
-#include <Qt5AccountsService/qtaccountsserviceglobal.h>
+#include <Qt5AccountsService/qt5accountsserviceglobal.h>
 
 namespace QtAccountsService {
 
@@ -36,7 +36,7 @@ class AccountsManager;
 class AccountsManagerPrivate;
 class UserAccountPrivate;
 
-class Q_ACCOUNTS_SERVICE_EXPORT UserAccount : public QObject
+class QT5ACCOUNTSSERVICE_EXPORT UserAccount : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(qlonglong userId READ userId WRITE setUserId NOTIFY userIdChanged)

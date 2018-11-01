@@ -1,0 +1,13 @@
+liri_add_test(tst_qtaccountsservice
+    SOURCES
+        fakeaccounts.cpp
+        fakeaccounts.h
+        fakeuser.cpp
+        fakeuser.h
+        tst_api.cpp
+    DBUS_ADAPTOR_SOURCES
+        ../../../src/accountsservice/org.freedesktop.Accounts.xml
+        ../../../src/accountsservice/org.freedesktop.Accounts.User.xml
+    LIBRARIES
+        Liri::Qt5AccountsService
+)

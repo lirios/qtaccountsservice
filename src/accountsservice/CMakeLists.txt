@@ -1,0 +1,40 @@
+liri_add_module(Qt5AccountsService
+    DESCRIPTION
+        "Qt style API for Accounts Service"
+    MODULE_NAME
+        Qt5AccountsService
+    VERSIONED_MODULE_NAME
+        Qt5AccountsService
+    SOURCES
+        accountsmanager.cpp
+        accountsmanager.h
+        accountsmanager_p.h
+        useraccount.cpp
+        useraccount.h
+        useraccount_p.h
+        usersmodel.cpp
+        usersmodel.h
+        usersmodel_p.h
+    DBUS_INTERFACE_SOURCES
+        org.freedesktop.Accounts.xml
+        org.freedesktop.Accounts.User.xml
+    FORWARDING_HEADERS
+        AccountsManager
+        UserAccount
+        UsersModel
+    PRIVATE_HEADERS
+        accountsmanager_p.h
+        useraccount_p.h
+        usersmodel_p.h
+    DEFINES
+        QT_NO_CAST_FROM_ASCII
+        QT_NO_FOREACH
+    PUBLIC_LIBRARIES
+        Qt5::Core
+        Qt5::DBus
+        Qt5::Gui
+    PKGCONFIG_DEPENDENCIES
+        Qt5Core
+        Qt5DBus
+        Qt5Gui
+)
