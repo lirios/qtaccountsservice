@@ -18,9 +18,6 @@ set(QT_MIN_VERSION "5.8.0")
 ## Liri specific setup common for all modules:
 include(LiriSetup)
 
-## Packaging:
-include(LiriCPack)
-
 ## Features:
 option(QTACCOUNTSSERVICE_WITH_EXAMPLES "Build examples" ON)
 add_feature_info("QtAccountsService Examples" QTACCOUNTSSERVICE_WITH_EXAMPLES "Build QtAccountsService examples")
