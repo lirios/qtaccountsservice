@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10.0)
 
 project("QtAccountsService"
-    VERSION "1.2.0"
+    VERSION "1.3.0"
     DESCRIPTION "Qt-style API for Accounts Service"
     LANGUAGES CXX C
 )
