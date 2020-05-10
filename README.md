@@ -3,8 +3,8 @@ Qt Accounts Service
 
 [![License](https://img.shields.io/badge/license-LGPLv3.0-blue.svg)](http://www.gnu.org/licenses/lgpl.txt)
 [![GitHub release](https://img.shields.io/github/release/lirios/qtaccountsservice.svg)](https://github.com/lirios/qtaccountsservice)
-[![CI](https://github.com/lirios/qtaccountsservice/workflows/CI/badge.svg?branch=develop)](https://github.com/lirios/qtaccountsservice/actions?query=workflow%3ACI)
 [![GitHub issues](https://img.shields.io/github/issues/lirios/qtaccountsservice.svg)](https://github.com/lirios/qtaccountsservice/issues)
+[![CI](https://github.com/lirios/qtaccountsservice/workflows/CI/badge.svg?branch=develop)](https://github.com/lirios/qtaccountsservice/actions?query=workflow%3ACI)
 
 Qt-style API to use freedesktop.org's AccountsService DBus service.
 
