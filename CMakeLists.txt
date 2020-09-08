@@ -34,6 +34,9 @@ find_package(Qt5 "${QT_MIN_VERSION}"
         QuickTest
 )
 
+## Treat warnings as errors:
+add_compile_options(-Wall -Wextra -Werror)
+
 ## Add subdirectories:
 add_subdirectory(src/accountsservice)
 if(QTACCOUNTSSERVICE_WITH_EXAMPLES)
