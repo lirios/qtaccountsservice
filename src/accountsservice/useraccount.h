@@ -46,13 +46,13 @@ class QT5ACCOUNTSSERVICE_EXPORT UserAccount : public QObject
     Q_PROPERTY(bool locked READ isLocked WRITE setLocked NOTIFY lockedChanged)
     Q_PROPERTY(bool automaticLogin READ automaticLogin WRITE setAutomaticLogin NOTIFY
                    automaticLoginChanged)
-    Q_PROPERTY(qlonglong loginFrequency READ loginFrequency)
-    Q_PROPERTY(qlonglong loginTime READ loginTime)
+    Q_PROPERTY(qlonglong loginFrequency READ loginFrequency CONSTANT)
+    Q_PROPERTY(qlonglong loginTime READ loginTime CONSTANT)
     Q_PROPERTY(PasswordMode passwordMode READ passwordMode WRITE setPasswordMode NOTIFY
                    passwordModeChanged)
-    Q_PROPERTY(QString passwordHint READ passwordHint)
-    Q_PROPERTY(bool localAccount READ isLocalAccount)
-    Q_PROPERTY(bool systemAccount READ isSystemAccount)
+    Q_PROPERTY(QString passwordHint READ passwordHint CONSTANT)
+    Q_PROPERTY(bool localAccount READ isLocalAccount CONSTANT)
+    Q_PROPERTY(bool systemAccount READ isSystemAccount CONSTANT)
     Q_PROPERTY(QString userName READ userName WRITE setUserName NOTIFY userNameChanged)
     Q_PROPERTY(QString realName READ realName WRITE setRealName NOTIFY realNameChanged)
     Q_PROPERTY(QString displayName READ displayName NOTIFY displayNameChanged)
