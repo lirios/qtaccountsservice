@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     QCoreApplication app(argc, argv);
 
     AccountsManager *manager = new AccountsManager();
-    app.connect(manager, &AccountsManager::listCachedUsersFinished, [](const UserAccountList &list) {
+    app.connect(manager, &AccountsManager::listCachedUsersFinished, &app, [](const UserAccountList &list) {
         for (UserAccount *account : list)
             qInfo() << account->realName() << account->userName();
         QCoreApplication::quit();

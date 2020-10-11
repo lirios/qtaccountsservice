@@ -47,7 +47,7 @@ void UsersModelPrivate::_q_userAdded(UserAccount *account)
 {
     Q_Q(UsersModel);
 
-    q->connect(account, &UserAccount::accountChanged, [account, q, this]() {
+    q->connect(account, &UserAccount::accountChanged, q, [account, q, this]() {
         auto index = q->index(list.indexOf(account));
         if (index.isValid())
             Q_EMIT q->dataChanged(index, index);
@@ -90,7 +90,7 @@ UsersModel::UsersModel(QObject *parent)
             this, SLOT(_q_userDeleted(qlonglong)));
 
     connect(d->manager, &AccountsManager::listCachedUsersFinished,
-            [d](const UserAccountList &list) {
+            this, [d](const UserAccountList &list) {
                 for (auto account : list)
                     d->_q_userAdded(account);
             });

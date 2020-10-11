@@ -49,10 +49,10 @@ public:
     Q_INVOKABLE void listCachedUsers();
     UserAccountList listCachedUsersSync();
 
-    Q_INVOKABLE UserAccount *cachedUser(const QString &userName) const;
+    Q_INVOKABLE QtAccountsService::UserAccount *cachedUser(const QString &userName) const;
 
-    Q_INVOKABLE UserAccount *findUserById(qlonglong uid);
-    Q_INVOKABLE UserAccount *findUserByName(const QString &userName);
+    Q_INVOKABLE QtAccountsService::UserAccount *findUserById(qlonglong uid);
+    Q_INVOKABLE QtAccountsService::UserAccount *findUserByName(const QString &userName);
 
     Q_INVOKABLE bool createUser(const QString &userName, const QString &fullName,
                                 UserAccount::AccountType accountType);
@@ -61,11 +61,11 @@ public:
     bool deleteUser(UserAccount *account, bool removeFiles);
 
 Q_SIGNALS:
-    void userAdded(UserAccount *account);
+    void userAdded(QtAccountsService::UserAccount *account);
     void userDeleted(qlonglong uid);
     void userCached(const QString &userName);
     void userUncached(const QString &userName);
-    void listCachedUsersFinished(const UserAccountList &userList);
+    void listCachedUsersFinished(const QtAccountsService::UserAccountList &userList);
 
 protected:
     AccountsManagerPrivate *d_ptr;
