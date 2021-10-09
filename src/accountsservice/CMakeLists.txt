@@ -18,14 +18,6 @@ liri_add_module(Qt5AccountsService
     DBUS_INTERFACE_SOURCES
         org.freedesktop.Accounts.xml
         org.freedesktop.Accounts.User.xml
-    FORWARDING_HEADERS
-        AccountsManager
-        UserAccount
-        UsersModel
-    PRIVATE_HEADERS
-        accountsmanager_p.h
-        useraccount_p.h
-        usersmodel_p.h
     DEFINES
         QT_NO_CAST_FROM_ASCII
         QT_NO_FOREACH
@@ -38,3 +30,5 @@ liri_add_module(Qt5AccountsService
         Qt5DBus
         Qt5Gui
 )
+
+liri_finalize_module(Qt5AccountsService)

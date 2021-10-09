@@ -13,3 +13,5 @@ liri_add_qml_plugin(qtaccountsservice
     PUBLIC_LIBRARIES
         Liri::Qt5AccountsService
 )
+
+liri_finalize_qml_plugin(qtaccountsservice)

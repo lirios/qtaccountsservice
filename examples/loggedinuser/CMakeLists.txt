@@ -10,3 +10,5 @@ liri_add_executable(loggedinuser
         Qt5::Qml
     NO_TARGET_INSTALLATION
 )
+
+liri_finalize_executable(loggedinuser)

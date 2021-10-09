@@ -6,3 +6,5 @@ liri_add_executable(listusers
         Liri::Qt5AccountsService
     NO_TARGET_INSTALLATION
 )
+
+liri_finalize_executable(listusers)
