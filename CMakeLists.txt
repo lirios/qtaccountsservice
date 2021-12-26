@@ -18,6 +18,12 @@ set(QT_MIN_VERSION "5.8.0")
 ## Liri specific setup common for all modules:
 include(LiriSetup)
 
+## Only build on the appropriate platforms.
+if(NOT UNIX OR ANDROID)
+    message(NOTICE "Skipping the build as the condition \"UNIX OR ANDROID\" is not met.")
+    return()
+endif()
+
 ## Features:
 option(QTACCOUNTSSERVICE_WITH_EXAMPLES "Build examples" ON)
 add_feature_info("QtAccountsService Examples" QTACCOUNTSSERVICE_WITH_EXAMPLES "Build QtAccountsService examples")
