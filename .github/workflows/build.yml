@@ -9,11 +9,13 @@ on:
     branches:
       - master
       - develop
+    tags:
+      - v*
   pull_request:
     branches:
       - master
       - develop
 
 jobs:
-  build:
+  linux:
     uses: lirios/.github/.github/workflows/build-linux.yml@master
