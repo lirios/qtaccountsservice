@@ -1,10 +1,10 @@
-liri_add_module(Qt5AccountsService
+liri_add_module(Qt6AccountsService
     DESCRIPTION
         "Qt style API for Accounts Service"
     MODULE_NAME
-        Qt5AccountsService
+        Qt6AccountsService
     VERSIONED_MODULE_NAME
-        Qt5AccountsService
+        Qt6AccountsService
     SOURCES
         accountsmanager.cpp
         accountsmanager.h
@@ -22,13 +22,13 @@ liri_add_module(Qt5AccountsService
         QT_NO_CAST_FROM_ASCII
         QT_NO_FOREACH
     PUBLIC_LIBRARIES
-        Qt5::Core
-        Qt5::DBus
-        Qt5::Gui
+        Qt6::Core
+        Qt6::DBus
+        Qt6::Gui
     PKGCONFIG_DEPENDENCIES
-        Qt5Core
-        Qt5DBus
-        Qt5Gui
+        Qt6Core
+        Qt6DBus
+        Qt6Gui
 )
 
-liri_finalize_module(Qt5AccountsService)
+liri_finalize_module(Qt6AccountsService)

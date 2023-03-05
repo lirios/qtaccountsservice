@@ -24,8 +24,8 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
 
-#include <Qt5AccountsService/AccountsManager>
-#include <Qt5AccountsService/UserAccount>
+#include <Qt6AccountsService/AccountsManager>
+#include <Qt6AccountsService/UserAccount>
 
 using namespace QtAccountsService;
 

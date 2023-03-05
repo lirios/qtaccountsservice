@@ -26,9 +26,9 @@
 #include <QtQml/qqmlengine.h>
 #include <QtQml/qqmlcomponent.h>
 
-#include <Qt5AccountsService/AccountsManager>
-#include <Qt5AccountsService/UserAccount>
-#include <Qt5AccountsService/UsersModel>
+#include <Qt6AccountsService/AccountsManager>
+#include <Qt6AccountsService/UserAccount>
+#include <Qt6AccountsService/UsersModel>
 
 QT_BEGIN_NAMESPACE
 

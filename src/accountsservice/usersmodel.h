@@ -26,14 +26,14 @@
 
 #include <QtCore/QAbstractListModel>
 
-#include <Qt5AccountsService/qt5accountsserviceglobal.h>
+#include <Qt6AccountsService/qt6accountsserviceglobal.h>
 
 namespace QtAccountsService {
 
 class UserAccount;
 class UsersModelPrivate;
 
-class QT5ACCOUNTSSERVICE_EXPORT UsersModel : public QAbstractListModel
+class QT6ACCOUNTSSERVICE_EXPORT UsersModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(UsersModel)

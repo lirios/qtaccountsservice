@@ -24,8 +24,8 @@
 #ifndef QTACCOUNTSSERVICE_USERSMODEL_P_H
 #define QTACCOUNTSSERVICE_USERSMODEL_P_H
 
-#include <Qt5AccountsService/AccountsManager>
-#include <Qt5AccountsService/UserAccount>
+#include <Qt6AccountsService/AccountsManager>
+#include <Qt6AccountsService/UserAccount>
 
 //
 //  W A R N I N G
