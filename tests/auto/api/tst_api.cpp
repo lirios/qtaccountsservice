@@ -23,8 +23,8 @@
 
 #include <QtTest/QtTest>
 
-#include <Qt5AccountsService/AccountsManager>
-#include <Qt5AccountsService/UserAccount>
+#include <Qt6AccountsService/AccountsManager>
+#include <Qt6AccountsService/UserAccount>
 
 #include "fakeaccounts.h"
 #include "accounts_adaptor.h"

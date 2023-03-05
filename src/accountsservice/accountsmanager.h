@@ -27,7 +27,7 @@
 #include <QtCore/QObject>
 #include <QtDBus/QDBusConnection>
 
-#include <Qt5AccountsService/UserAccount>
+#include <Qt6AccountsService/UserAccount>
 
 QT_FORWARD_DECLARE_CLASS(QDBusObjectPath)
 
@@ -35,7 +35,7 @@ namespace QtAccountsService {
 
 class AccountsManagerPrivate;
 
-class QT5ACCOUNTSSERVICE_EXPORT AccountsManager : public QObject
+class QT6ACCOUNTSSERVICE_EXPORT AccountsManager : public QObject
 {
     Q_OBJECT
 public:

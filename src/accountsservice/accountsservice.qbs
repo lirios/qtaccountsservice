@@ -4,8 +4,8 @@ import LiriUtils
 LiriModuleProject {
     id: root
 
-    name: "Qt5AccountsService"
-    moduleName: "Qt5AccountsService"
+    name: "Qt6AccountsService"
+    moduleName: "Qt6AccountsService"
     description: "Qt-style wrapper for Accounts Service"
 
     resolvedProperties: ({
@@ -13,10 +13,10 @@ LiriModuleProject {
                   { name: LiriUtils.quote("Qt.gui") }],
     })
 
-    pkgConfigDependencies: ["Qt5Core", "Qt5DBus", "Qt5Gui"]
+    pkgConfigDependencies: ["Qt6Core", "Qt6DBus", "Qt6Gui"]
 
-    cmakeDependencies: ({ "Qt5Core": project.minimumQtVersion, "Qt5DBus": project.minimumQtVersion, "Qt5Gui": project.minimumQtVersion })
-    cmakeLinkLibraries: ["Qt5::Core", "Qt5::DBus", "Qt5::Gui"]
+    cmakeDependencies: ({ "Qt6Core": project.minimumQtVersion, "Qt6DBus": project.minimumQtVersion, "Qt6Gui": project.minimumQtVersion })
+    cmakeLinkLibraries: ["Qt6::Core", "Qt6::DBus", "Qt6::Gui"]
 
     LiriHeaders {
         name: root.headersName

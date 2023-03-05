@@ -2,8 +2,8 @@ liri_add_executable(listusers
     SOURCES
         main.cpp
     LIBRARIES
-        Qt5::Core
-        Liri::Qt5AccountsService
+        Qt6::Core
+        Liri::Qt6AccountsService
     NO_TARGET_INSTALLATION
 )
 

@@ -5,9 +5,9 @@ liri_add_executable(userslistview
     RESOURCES
         resources.qrc
     LIBRARIES
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Qml
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Qml
     NO_TARGET_INSTALLATION
 )
 

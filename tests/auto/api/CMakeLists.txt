@@ -9,5 +9,5 @@ liri_add_test(tst_qtaccountsservice
         ../../../src/accountsservice/org.freedesktop.Accounts.xml
         ../../../src/accountsservice/org.freedesktop.Accounts.User.xml
     LIBRARIES
-        Liri::Qt5AccountsService
+        Liri::Qt6AccountsService
 )

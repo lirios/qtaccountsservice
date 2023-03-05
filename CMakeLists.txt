@@ -13,7 +13,7 @@ if(NOT LIRI_LOCAL_ECM)
 endif()
 
 ## Set minimum versions required:
-set(QT_MIN_VERSION "5.8.0")
+set(QT_MIN_VERSION "6.4.0")
 
 ## Liri specific setup common for all modules:
 include(LiriSetup)
@@ -29,7 +29,7 @@ option(QTACCOUNTSSERVICE_WITH_EXAMPLES "Build examples" ON)
 add_feature_info("QtAccountsService Examples" QTACCOUNTSSERVICE_WITH_EXAMPLES "Build QtAccountsService examples")
 
 ## Find Qt 5:
-find_package(Qt5 "${QT_MIN_VERSION}"
+find_package(Qt6 "${QT_MIN_VERSION}"
     CONFIG REQUIRED
     COMPONENTS
         Core

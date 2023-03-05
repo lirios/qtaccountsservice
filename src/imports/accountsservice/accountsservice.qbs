@@ -4,7 +4,7 @@ LiriQmlPlugin {
     name: "qtaccountsserviceplugin"
     pluginPath: "QtAccountsService"
 
-    Depends { name: "Qt5AccountsService" }
+    Depends { name: "Qt6AccountsService" }
 
     files: ["*.cpp", "qmldir", "*.qmltypes"]
 }

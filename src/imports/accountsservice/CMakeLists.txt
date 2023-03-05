@@ -11,7 +11,7 @@ liri_add_qml_plugin(qtaccountsservice
         QT_NO_CAST_FROM_ASCII
         QT_NO_FOREACH
     PUBLIC_LIBRARIES
-        Liri::Qt5AccountsService
+        Liri::Qt6AccountsService
 )
 
 liri_finalize_qml_plugin(qtaccountsservice)
