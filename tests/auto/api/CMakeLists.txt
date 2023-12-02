@@ -19,4 +19,4 @@ qt6_add_dbus_adaptor(
 
 add_executable(tst_qtaccountsservice ${SOURCES})
 
-target_link_libraries(tst_qtaccountsservice PRIVATE Liri::Qt6AccountsService)
+target_link_libraries(tst_qtaccountsservice PRIVATE Qt6::Test Liri::Qt6AccountsService)
