@@ -24,7 +24,7 @@
 #ifndef QTACCOUNTSSERVICE_ACCOUNTSMANAGER_P_H
 #define QTACCOUNTSSERVICE_ACCOUNTSMANAGER_P_H
 
-#include "accounts_interface.h"
+#include "accountsinterface.h"
 
 //
 //  W A R N I N G

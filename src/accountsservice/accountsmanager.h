@@ -24,8 +24,9 @@
 #ifndef QTACCOUNTSSERVICE_ACCOUNTSMANAGER_H
 #define QTACCOUNTSSERVICE_ACCOUNTSMANAGER_H
 
-#include <QtCore/QObject>
-#include <QtDBus/QDBusConnection>
+#include <QObject>
+#include <QDBusConnection>
+#include <QtQmlIntegration>
 
 #include <Qt6AccountsService/UserAccount>
 
@@ -38,6 +39,7 @@ class AccountsManagerPrivate;
 class QT6ACCOUNTSSERVICE_EXPORT AccountsManager : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
 public:
     explicit AccountsManager(const QDBusConnection &bus = QDBusConnection::systemBus(),
                              QObject *parent = nullptr);

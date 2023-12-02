@@ -27,7 +27,7 @@
 #include <Qt6AccountsService/UserAccount>
 
 #include "fakeaccounts.h"
-#include "accounts_adaptor.h"
+#include "accountsadaptor.h"
 
 using namespace QtAccountsService;
 

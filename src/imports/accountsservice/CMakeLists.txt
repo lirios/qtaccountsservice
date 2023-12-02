@@ -1,17 +1,18 @@
-liri_add_qml_plugin(qtaccountsservice
-    MODULE_PATH
+ecm_add_qml_module(QtAccountsServiceQmlModule
+    URI
         "QtAccountsService"
     VERSION
-        "1.0"
-    SOURCES
-        main.cpp
-    QML_FILES
-        qmldir
-    DEFINES
-        QT_NO_CAST_FROM_ASCII
-        QT_NO_FOREACH
-    PUBLIC_LIBRARIES
+        "2.0"
+    GENERATE_PLUGIN_SOURCE
+)
+
+target_link_libraries(QtGSettingsQmlModule
+    PUBLIC
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Qml
+        Qt6::Quick
         Liri::Qt6AccountsService
 )
 
-liri_finalize_qml_plugin(qtaccountsservice)
+ecm_finalize_qml_module(QtAccountsServiceQmlModule)

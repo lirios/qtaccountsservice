@@ -192,6 +192,11 @@ void FakeUser::SetPassword(const QString &password, const QString &hint)
     Q_UNUSED(hint);
 }
 
+void FakeUser::SetPasswordHint(const QString &hint)
+{
+    Q_UNUSED(hint);
+}
+
 void FakeUser::SetPasswordMode(int mode)
 {
     Q_UNUSED(mode);

@@ -1,14 +1,15 @@
-liri_add_executable(loggedinuser
-    SOURCES
-        loggedinuser.qml
-        main.cpp
-    RESOURCES
-        resources.qrc
-    LIBRARIES
+set(SOURCES
+    loggedinuser.qml
+    main.cpp
+)
+
+qt6_add_resources(SOURCES resources.qrc)
+
+qt6_add_executable(loggedinuser ${SOURCES})
+
+target_link_libraries(loggedinuser
+    PRIVATE
         Qt6::Core
         Qt6::Gui
         Qt6::Qml
-    NO_TARGET_INSTALLATION
 )
-
-liri_finalize_executable(loggedinuser)

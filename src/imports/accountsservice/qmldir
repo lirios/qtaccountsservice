@@ -1,4 +1,0 @@
-module QtAccountsService
-plugin qtaccountsserviceplugin
-class QtAccountsServicePlugin
-typeinfo plugins.qmltypes

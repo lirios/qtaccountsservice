@@ -25,7 +25,7 @@
 #include <QtDBus/QDBusError>
 
 #include "fakeaccounts.h"
-#include "user_adaptor.h"
+#include "useradaptor.h"
 
 FakeAccounts::FakeAccounts(QObject *parent)
     : QObject(parent)

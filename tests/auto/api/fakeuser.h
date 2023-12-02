@@ -88,6 +88,7 @@ public Q_SLOTS:
     void SetLocation(const QString &location);
     void SetLocked(bool locked);
     void SetPassword(const QString &password, const QString &hint);
+    void SetPasswordHint(const QString &hint);
     void SetPasswordMode(int mode);
     void SetRealName(const QString &name);
     void SetShell(const QString &shell);

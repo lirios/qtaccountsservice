@@ -24,9 +24,10 @@
 #ifndef QTACCOUNTSSERVICE_USERACCOUNT_H
 #define QTACCOUNTSSERVICE_USERACCOUNT_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtDBus/QDBusConnection>
+#include <QObject>
+#include <QString>
+#include <QDBusConnection>
+#include <QtQmlIntegration>
 
 #include <Qt6AccountsService/qt6accountsserviceglobal.h>
 
@@ -66,6 +67,7 @@ class QT6ACCOUNTSSERVICE_EXPORT UserAccount : public QObject
     Q_PROPERTY(QString location READ location WRITE setLocation NOTIFY locationChanged)
     Q_PROPERTY(QString xsession READ xsession WRITE setXSession NOTIFY xsessionChanged)
     Q_DECLARE_PRIVATE(UserAccount)
+    QML_ELEMENT
 public:
     enum AccountType { StandardAccountType = 0, AdministratorAccountType };
     Q_ENUM(AccountType)

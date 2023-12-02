@@ -24,7 +24,8 @@
 #ifndef QTACCOUNTSSERVICE_USERSMODEL_H
 #define QTACCOUNTSSERVICE_USERSMODEL_H
 
-#include <QtCore/QAbstractListModel>
+#include <QAbstractListModel>
+#include <QtQmlIntegration>
 
 #include <Qt6AccountsService/qt6accountsserviceglobal.h>
 
@@ -37,6 +38,7 @@ class QT6ACCOUNTSSERVICE_EXPORT UsersModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(UsersModel)
+    QML_ELEMENT
 public:
     enum Roles {
         UserAccountRole = Qt::UserRole + 1,
