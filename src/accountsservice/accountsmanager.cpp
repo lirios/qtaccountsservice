@@ -125,7 +125,7 @@ void AccountsManager::cacheUser(const QString &userName)
 
     QDBusPendingCall call = d->interface->CacheUser(userName);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [&](QDBusPendingCallWatcher *w) {
         QDBusPendingReply<QDBusObjectPath> reply = *w;
         w->deleteLater();
         if (reply.isError()) {
@@ -162,7 +162,7 @@ void AccountsManager::uncacheUser(const QString &userName)
 
     QDBusPendingCall call = d->interface->UncacheUser(userName);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [&](QDBusPendingCallWatcher *w) {
         QDBusPendingReply<QDBusObjectPath> reply = *w;
         w->deleteLater();
         if (reply.isError()) {
@@ -195,7 +195,7 @@ void AccountsManager::listCachedUsers()
 
     QDBusPendingCall call = d->interface->ListCachedUsers();
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, [=](QDBusPendingCallWatcher *w) {
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [&](QDBusPendingCallWatcher *w) {
         QDBusPendingReply<QList<QDBusObjectPath>> reply = *w;
         w->deleteLater();
         if (reply.isError()) {
