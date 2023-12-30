@@ -67,12 +67,12 @@ public:
 
     explicit UsersModel(QObject *parent = nullptr);
 
-    QHash<int, QByteArray> roleNames() const;
+    QHash<int, QByteArray> roleNames() const override;
 
-    int rowCount(const QModelIndex &parent) const;
+    int rowCount(const QModelIndex &parent) const override;
 
-    QVariant data(const QModelIndex &index, int role) const;
-    bool setData(const QModelIndex &index, const QVariant &value, int role);
+    QVariant data(const QModelIndex &index, int role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
     UserAccount *userAccount(const QModelIndex &index) const;
 
