@@ -29,3 +29,13 @@ liri_add_module(Qt6AccountsService
 )
 
 liri_finalize_module(Qt6AccountsService)
+
+if(TARGET Qt6::Qml)
+    ecm_add_qml_module(Qt6AccountsService
+        URI QtAccountsService
+        VERSION 2.0
+        GENERATE_PLUGIN_SOURCE
+    )
+
+    ecm_finalize_qml_module(Qt6AccountsService)
+endif()
